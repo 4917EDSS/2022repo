@@ -8,6 +8,7 @@
 
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
+#include "subsystems/IntakeSub.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -25,6 +26,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   ExampleSubsystem m_subsystem;
+  IntakeSub m_intakeSub;
   ExampleCommand m_autonomousCommand;
 
   void ConfigureButtonBindings();
