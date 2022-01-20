@@ -23,10 +23,9 @@ namespace CanIds {
     constexpr int kRightMotor3 = 6;
     constexpr int kFrontRollerIntakeMotor = 7;
     constexpr int kMagazineMotor = 8;
-
-
 }
 
 namespace PneumaticIds {
     constexpr int kShifter = 1;
 }
+
