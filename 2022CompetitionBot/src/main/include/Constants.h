@@ -13,3 +13,20 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+namespace CanIds {
+    // in order of CAN Ids
+    constexpr int kLeftMotor1 = 1;
+    constexpr int kLeftMotor2 = 2;
+    constexpr int kLeftMotor3 = 3;
+    constexpr int kRightMotor1 = 4;
+    constexpr int kRightMotor2 = 5;
+    constexpr int kRightMotor3 = 6;
+    constexpr int kFrontRollerIntakeMotor = 7;
+    constexpr int kMagazineMotor = 8;
+
+
+}
+
+namespace PneumaticIds {
+    constexpr int kShifter = 1;
+}
