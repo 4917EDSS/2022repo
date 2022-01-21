@@ -9,7 +9,7 @@ DrivetrainSub::DrivetrainSub() = default;
 // This method will be called once per scheduler run
 void DrivetrainSub::Periodic() {}
 
-//Drive funtions
+//Drive functions
 void  DrivetrainSub::tankDrive(double lPower, double rPower) {
     m_leftMotor1.Set(lPower);
     m_leftMotor2.Set(-lPower);
