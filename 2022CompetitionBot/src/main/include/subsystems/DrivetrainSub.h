@@ -14,6 +14,10 @@ class DrivetrainSub : public frc2::SubsystemBase {
  public:
   DrivetrainSub();
 
+  void tankDrive(double lPower, double rPower);
+  void shiftUp();
+  void shiftDown();
+  
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
