@@ -17,12 +17,16 @@ class IntakeSub : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
+  void enableFrontRollerIntakeMotor();
+  void disableFrontRollerIntakeMotor();
+  void enableMagazineMotor();
+  void disableMagazineMotor();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax m_frontRollerIntakeMotor{1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax m_magazineMotor{1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax m_magazineMotor{CanIds::kMagazineMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
 
 //#include <rev/CANSparkMaxLowLevel.h>
