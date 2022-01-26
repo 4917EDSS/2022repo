@@ -1,0 +1,18 @@
+Create 2 new subsystems:
+    1. ShooterSub   (or ShootSub?)
+    2. ClimbSub     (or ClimberSub?)
+
+    Steps:
+        - create new subsystem:
+            - fill in header include file:
+                - what actions need to be performed?
+                    => define public methods
+                - what motors/solenoids will be used? what kinds? how many?
+                    => define private member variables
+            - fill in CPP code file:
+                => implement methods making use of member variables
+        - identify what actions may need to be performed on the joystick:
+            - do we have subsystem methods to support each?
+            - create new commands:
+                => hook up to subsystem and joystick
+                => fill in Execute implementation
