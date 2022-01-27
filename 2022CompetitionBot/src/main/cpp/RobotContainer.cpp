@@ -71,6 +71,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
 void RobotContainer::initSubsystems() { 
   m_drivetrainSub.init(); // I n i t i a l i z e
+  m_shooterSub.init(); // I n i t i a l i z e
+  m_climberSub.init(); // I n i t i a l i z e
+  m_intakeSub.init(); // I n i t i a l i z e
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

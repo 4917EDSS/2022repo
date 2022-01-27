@@ -11,7 +11,8 @@
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/IntakeSub.h"
-
+#include "subsystems/ClimberSub.h"
+#include "subsystems/ShooterSub.h"
 
 constexpr int kDriverControllorPort = 0;
 constexpr int kOperatorControllorPort = 1;
@@ -36,6 +37,8 @@ class RobotContainer {
   ExampleSubsystem m_subsystem;
   DrivetrainSub m_drivetrainSub;
   IntakeSub m_intakeSub;
+  ShooterSub m_shooterSub;
+  ClimberSub m_climberSub;
   ExampleCommand m_autonomousCommand;
   frc::Joystick m_driverController{kDriverControllorPort};
   frc::Joystick m_operatorController{kOperatorControllorPort};

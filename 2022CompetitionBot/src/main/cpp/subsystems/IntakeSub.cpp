@@ -10,6 +10,9 @@ constexpr int kMagazineMotorPower = 0.2;
 
 IntakeSub::IntakeSub() = default;
 
+void IntakeSub::init() { //Reset all hardware to a safe state
+}
+
 // This method will be called once per scheduler run
 void IntakeSub::Periodic() {}
 

@@ -13,6 +13,7 @@ class IntakeSub : public frc2::SubsystemBase {
  public:
   IntakeSub();
 
+  void init(); // Resets all of the subsystem's hardware 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
