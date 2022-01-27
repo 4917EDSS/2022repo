@@ -22,9 +22,22 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void Periodic() override;
 
   void tankDrive(double lPower, double rPower);
+  void arcadeDrive(double drivePwr, double rotatePwr);
   void shiftUp();
   void shiftDown();
-  void arcadeDrive(double drivePwr, double rotatePwr);
+
+  void autoShift();
+  bool isShiftedInHighGear();
+  void zeroDrivetrainEncoders();
+
+  double getLeftEncoderRaw();
+  double getRightEncoderRaw();
+
+  double getLeftEncoderDistanceM(); //meters
+  double getRightEncoderDistanceM(); 
+
+  double getLeftVelocity();
+  double getRightVelocity();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -42,4 +55,6 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::MotorControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3};
   frc::MotorControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3};
   frc::DifferentialDrive m_drive{m_leftMotors, m_rightMotors};
+
+  double getEncoderRotationsToMeterFactor();
 };
