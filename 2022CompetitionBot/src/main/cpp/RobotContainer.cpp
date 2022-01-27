@@ -48,6 +48,8 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
 ////////////////////////////////////////////////////////////////////////////////////
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
+  
+
   // Initialize all of your commands and subsystems here
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   // Configure the button bindings
@@ -65,6 +67,10 @@ void RobotContainer::ConfigureButtonBindings() {
   m_operatorController.SetYChannel(1);
   m_operatorController.SetZChannel(2);
   m_operatorController.SetThrottleChannel(3);
+}
+
+void RobotContainer::initSubsystems() { 
+  m_drivetrainSub.init(); // I n i t i a l i z e
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

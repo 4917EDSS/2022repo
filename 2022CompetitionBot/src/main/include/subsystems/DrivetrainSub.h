@@ -6,22 +6,25 @@
 
 #include <rev/CANSparkMax.h>
 #include <frc/Solenoid.h>
-#include <frc2/command/SubsystemBase.h> 
+#include <frc2/command/SubsystemBase.h>
+#include <frc/motorcontrol/MotorControllerGroup.h>
+#include <frc/drive/DifferentialDrive.h> 
 
 #include "Constants.h"
+
+
 
 class DrivetrainSub : public frc2::SubsystemBase {
  public:
   DrivetrainSub();
 
+  void init(); // Resets all of the subsystem's hardware 
+  void Periodic() override;
+
   void tankDrive(double lPower, double rPower);
   void shiftUp();
   void shiftDown();
-  
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic() override;
+  void arcadeDrive(double drivePwr, double rotatePwr);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -35,4 +38,8 @@ class DrivetrainSub : public frc2::SubsystemBase {
   rev::CANSparkMax m_rightMotor3{CanIds::kRightMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   
   frc::Solenoid m_shifter{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kShifter};
+
+  frc::MotorControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3};
+  frc::MotorControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3};
+  frc::DifferentialDrive m_drive{m_leftMotors, m_rightMotors};
 };

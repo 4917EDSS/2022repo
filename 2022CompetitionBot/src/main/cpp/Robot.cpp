@@ -26,7 +26,9 @@ void Robot::RobotPeriodic() {
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+  m_isInitialized = false; //allow it to initialize again
+}
 
 void Robot::DisabledPeriodic() {}
 
@@ -40,6 +42,9 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
+
+  m_container.initSubsystems();
+  m_isInitialized = true; //don't want to initialize again
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -52,6 +57,11 @@ void Robot::TeleopInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
+  }
+
+  if(!m_isInitialized) { // only initialize if haven't before
+    m_container.initSubsystems();
+    m_isInitialized = true;
   }
 }
 
