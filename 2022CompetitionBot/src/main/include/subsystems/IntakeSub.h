@@ -28,10 +28,4 @@ class IntakeSub : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax m_magazineMotor{CanIds::kMagazineMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-
-
-//#include <rev/CANSparkMaxLowLevel.h>
-//rev::CANSparkMax myCanSparkMaxMotorController(27, rev::CANSparkMaxLowLevel::MotorType::kBrushless); // SparkMax via CAN (ID 27) for brushless motor (e.g. Neo)
-
-
 };
