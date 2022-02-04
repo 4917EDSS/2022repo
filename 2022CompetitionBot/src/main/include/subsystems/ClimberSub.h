@@ -17,6 +17,8 @@ class ClimberSub : public frc2::SubsystemBase {
   void setStationaryArmClimbPower(double power);
   void setPivotingArmClimbPower(double power);
   void setPivotingArmPivotPower(double power);
+  void zeroClimberEncoders(); 
+  void homeArm();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

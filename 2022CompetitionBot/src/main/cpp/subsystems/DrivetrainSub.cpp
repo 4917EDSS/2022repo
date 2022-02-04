@@ -10,10 +10,12 @@ constexpr double kShiftDownSpeed = 1.15;
 constexpr double kEncoderRotationsToMetersLowGear = 1.; //Find these actual values
 constexpr double kEncoderRotationsToMetersHighGear = 1.;
 
-DrivetrainSub::DrivetrainSub() = default;
+DrivetrainSub::DrivetrainSub() {
+  init(); 
+}
 
 void DrivetrainSub::init() { //Reset all hardware to a safe state
-    tankDrive(0.,0.);
+    tankDrive(0., 0.);
     shiftDown();
     zeroDrivetrainEncoders();
 

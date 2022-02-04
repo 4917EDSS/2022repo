@@ -18,10 +18,11 @@ class IntakeSub : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void enableFrontRollerIntakeMotor();
+  void enableFrontRollerIntakeMotor(bool isReversed);
   void disableFrontRollerIntakeMotor();
-  void enableMagazineMotor();
+  void enableMagazineMotor(bool isReversed);
   void disableMagazineMotor();
+  void zeroIntakeEncoders();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

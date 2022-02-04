@@ -18,6 +18,11 @@
   "files.associations": {
     "*.tcc": "cpp",
     "cmath": "cpp",
-    "complex": "cpp"
+    "complex": "cpp",
+    "unordered_map": "cpp",
+    "fstream": "cpp",
+    "istream": "cpp",
+    "ostream": "cpp",
+    "sstream": "cpp"
   }
 }

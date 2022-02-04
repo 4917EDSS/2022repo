@@ -4,6 +4,7 @@
 
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystickCmd.h"
+#include "commands/KillEverythingCmd.h"
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -47,6 +48,14 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
+//Driver Buttons
+constexpr int kKillEverything1Btn = 11;
+constexpr int kKillEverything2Btn = 12;
+
+//Operator Buttons
+// constexpr int kKillEverything1Btn = 11;  // Same as driver
+// constexpr int kKillEverything2Btn = 12;
+
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   
 
@@ -57,6 +66,13 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
+
+  //frc2::JoystickButton killEverythingBtn1d(&m_driverController, kKillEverything1Btn);
+  //killEverythingBtn1d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+
+  //frc2::JoystickButton killEverythingBtn2d(&m_driverController, kKillEverything2Btn);
+  //killEverythingBtn2d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+
   // Configure your button bindings here
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);

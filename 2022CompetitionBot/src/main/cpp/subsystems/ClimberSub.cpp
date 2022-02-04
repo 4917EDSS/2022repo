@@ -4,9 +4,22 @@
 
 #include "subsystems/ClimberSub.h"
 
-ClimberSub::ClimberSub() = default;
+ClimberSub::ClimberSub() {
+    init();
+}
 
 void ClimberSub::init() { //Reset all hardware to a safe state
+    setStationaryArmClimbPower(0.);
+    setPivotingArmClimbPower(0.);
+    setPivotingArmPivotPower(0.);
+    zeroClimberEncoders();
+
+    m_stationaryArmClimbMotor.SetInverted(false);
+    m_pivotingArmClimbMotor.SetInverted(false);
+    m_pivotingArmPivotMotor.SetInverted(false);
+
+    homeArm();
+    //Plus anymore hardware added 
 }
 
 // This method will be called once per scheduler run
@@ -22,4 +35,15 @@ void ClimberSub::setPivotingArmClimbPower(double power) {
 
 void ClimberSub::setPivotingArmPivotPower(double power) {
     m_pivotingArmPivotMotor.Set(power);
+}
+
+void ClimberSub::zeroClimberEncoders() {
+    m_stationaryArmClimbMotor.GetEncoder().SetPosition(0.);
+    m_pivotingArmClimbMotor.GetEncoder().SetPosition(0.);
+    m_pivotingArmPivotMotor.GetEncoder().SetPosition(0.);
+}
+
+//Put arms in home position so that everything is in known state for beginning of game
+void ClimberSub::homeArm(){
+    //TBD 
 }
