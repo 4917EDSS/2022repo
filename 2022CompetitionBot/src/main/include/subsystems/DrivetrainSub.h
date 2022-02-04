@@ -9,6 +9,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/drive/DifferentialDrive.h> 
+#include <AHRS.h>
 
 #include "Constants.h"
 
@@ -39,6 +40,9 @@ class DrivetrainSub : public frc2::SubsystemBase {
   double getLeftVelocity();
   double getRightVelocity();
 
+  double getHeading();
+  double getTurnRate();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -50,11 +54,12 @@ class DrivetrainSub : public frc2::SubsystemBase {
   rev::CANSparkMax m_rightMotor2{CanIds::kRightMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax m_rightMotor3{CanIds::kRightMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   
-  frc::Solenoid m_shifter{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kShifter};
-
   frc::MotorControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3};
   frc::MotorControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3};
   frc::DifferentialDrive m_drive{m_leftMotors, m_rightMotors};
+  frc::Solenoid m_shifter{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kShifter};
+
+  AHRS m_gyro{frc::SPI::kMXP};
 
   double getEncoderRotationsToMeterFactor();
 };

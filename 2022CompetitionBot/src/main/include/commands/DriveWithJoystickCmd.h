@@ -31,4 +31,7 @@ class DriveWithJoystickCmd
 private:
   DrivetrainSub *m_drivetrainSubPtr;
   frc::Joystick *m_joystickPtr;
+
+  double m_prevFwdPower;
+  double m_prevTurnPower;
 };
