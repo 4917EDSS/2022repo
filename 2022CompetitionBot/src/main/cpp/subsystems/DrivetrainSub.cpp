@@ -9,6 +9,7 @@ constexpr double kShiftDownSpeed = 1.15;
 
 constexpr double kEncoderRotationsToMetersLowGear = 1.; //Find these actual values
 constexpr double kEncoderRotationsToMetersHighGear = 1.;
+constexpr bool kGyroReversed = true;
 
 DrivetrainSub::DrivetrainSub() {
   init(); 
@@ -26,6 +27,8 @@ void DrivetrainSub::init() { //Reset all hardware to a safe state
     m_rightMotor1.SetInverted(false);
     m_rightMotor2.SetInverted(true);
     m_rightMotor3.SetInverted(false);
+
+    m_gyro.Reset();
     //Plus anymore hardware added
 }
 
@@ -33,16 +36,10 @@ void DrivetrainSub::Periodic() {}
 
 //Drive functions
 void  DrivetrainSub::tankDrive(double lPower, double rPower) {
-    m_leftMotor1.Set(lPower);
-    m_leftMotor2.Set(-lPower);
-    m_leftMotor3.Set(lPower);
-
-    m_rightMotor1.Set(-rPower);
-    m_rightMotor2.Set(rPower);
-    m_rightMotor3.Set(-rPower);
+    m_drive.TankDrive(lPower, rPower);
 }
 void DrivetrainSub::arcadeDrive(double drivePwr, double rotatePwr) {
-    m_drive.ArcadeDrive(drivePwr,rotatePwr);
+    m_drive.ArcadeDrive(drivePwr, rotatePwr);
 }
 void  DrivetrainSub::shiftUp() { //Gear shift up
     m_shifter.Set(1);
@@ -99,4 +96,12 @@ double DrivetrainSub::getLeftVelocity() {
 }
 double DrivetrainSub::getRightVelocity() {
     return m_rightMotor1.GetEncoder().GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
+}
+
+double DrivetrainSub::getHeading() {
+    return std::remainder(m_gyro.GetAngle(),360.) * (kGyroReversed ? -1. : 1.);
+}
+
+double DrivetrainSub::getTurnRate () {
+    return m_gyro.GetRate() * (kGyroReversed ? -1. : 1.);
 }
