@@ -27,6 +27,6 @@
     "chrono": "cpp",
     "random": "cpp",
     "limits": "cpp",
-    "sstream": "cpp"
+    "*.inc": "cpp"
   }
 }
