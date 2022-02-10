@@ -32,5 +32,7 @@ namespace CanIds {
 
 namespace PneumaticIds {
     constexpr int kShifter = 1;
+    constexpr int kArm1 = 2;
+    constexpr int kArm2 = 3;
 }
 

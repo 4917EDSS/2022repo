@@ -5,6 +5,7 @@
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/KillEverythingCmd.h"
+#include <frc2/command/button/JoystickButton.h>
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -49,12 +50,12 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
 ////////////////////////////////////////////////////////////////////////////////////
 
 //Driver Buttons
-constexpr int kKillEverything1Btn = 11;
-constexpr int kKillEverything2Btn = 12;
+constexpr int kKillEverythingDrv1Btn = 11;
+constexpr int kKillEverythingDrv2Btn = 12;
 
-//Operator Buttons
-// constexpr int kKillEverything1Btn = 11;  // Same as driver
-// constexpr int kKillEverything2Btn = 12;
+// Operator Buttons
+constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
+constexpr int kKillEverythingOp2Btn = 12;
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   
@@ -66,12 +67,18 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
+  
+  frc2::JoystickButton killEverythingDrv1Btn(&m_driverController, kKillEverythingDrv1Btn);
+  killEverythingDrv1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
-  //frc2::JoystickButton killEverythingBtn1d(&m_driverController, kKillEverything1Btn);
-  //killEverythingBtn1d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+  frc2::JoystickButton killEverythingDrv2Btn(&m_driverController, kKillEverythingDrv2Btn);
+  killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
-  //frc2::JoystickButton killEverythingBtn2d(&m_driverController, kKillEverything2Btn);
-  //killEverythingBtn2d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+  frc2::JoystickButton killEverythingOp1Btn(&m_operatorController, kKillEverythingOp1Btn);
+  killEverythingOp1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
+
+  frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
+  killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   // Configure your button bindings here
   m_driverController.SetXChannel(0);
@@ -86,10 +93,10 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 void RobotContainer::initSubsystems() { 
-  m_drivetrainSub.init(); // I n i t i a l i z e
-  m_shooterSub.init(); // I n i t i a l i z e
-  m_climberSub.init(); // I n i t i a l i z e
-  m_intakeSub.init(); // I n i t i a l i z e
+  m_drivetrainSub.init(); 
+  m_shooterSub.init();
+  m_climberSub.init();
+  m_intakeSub.init(); 
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

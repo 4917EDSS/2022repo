@@ -6,6 +6,7 @@
 
 #include <rev/CANSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
+#include <frc/Solenoid.h>
 
 #include "Constants.h"
 
@@ -23,10 +24,15 @@ class IntakeSub : public frc2::SubsystemBase {
   void enableMagazineMotor(bool isReversed);
   void disableMagazineMotor();
   void zeroIntakeEncoders();
+  void raiseIntake();
+  void lowerIntake();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax m_magazineMotor{CanIds::kMagazineMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+
+  frc::Solenoid m_armSolenoid1{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm1};
+  frc::Solenoid m_armSolenoid2{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm2};
 };
