@@ -17,6 +17,7 @@ void IntakeSub::init() { //Reset all hardware to a safe state
   disableFrontRollerIntakeMotor();
   disableMagazineMotor();
   zeroIntakeEncoders();
+  raiseIntake();
 
   m_frontRollerIntakeMotor.SetInverted(false);
   m_magazineMotor.SetInverted(false);
@@ -57,4 +58,14 @@ void IntakeSub::disableMagazineMotor() {
 void IntakeSub::zeroIntakeEncoders() {
   m_frontRollerIntakeMotor.GetEncoder().SetPosition(0.);
   m_magazineMotor.GetEncoder().SetPosition(0.);
+}
+
+void IntakeSub::raiseIntake() {
+  m_armSolenoid1.Set(true);
+  m_armSolenoid2.Set(true);
+}
+
+void IntakeSub::lowerIntake() {
+  m_armSolenoid1.Set(false);
+  m_armSolenoid2.Set(false);
 }

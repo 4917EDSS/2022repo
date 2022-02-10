@@ -6,6 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/ClimberSub.h"
+#include "subsystems/DrivetrainSub.h"
+#include "subsystems/IntakeSub.h"
+#include "subsystems/ShooterSub.h"
 
 /**
  * An example command.
@@ -17,7 +21,7 @@
 class KillEverythingCmd
     : public frc2::CommandHelper<frc2::CommandBase, KillEverythingCmd> {
  public:
-  KillEverythingCmd();
+  KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub);
 
   void Initialize() override;
 
