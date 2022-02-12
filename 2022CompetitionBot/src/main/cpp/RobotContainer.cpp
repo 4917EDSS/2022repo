@@ -5,28 +5,9 @@
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/KillEverythingCmd.h"
+#include "commands/IntakeCargoCmd.h"
 #include <frc2/command/button/JoystickButton.h>
 
-/*
- * ON LOGITECH F310 CONTROLLER:
- * X = 1            (Blue)
- * A = 2            (Green)
- * B = 3            (Red)
- * Y = 4            (Yellow)
- * LB = 5           (Left-Bumper: top button)
- * RB = 6           (Right-Bumper: top button)
- * LT = 7           (Left-Trigger: bottom button)
- * RT = 8           (Right-Trigger: bottom button)
- * Select/Back = 9  (Above left joystick)
- * Start = 10       (Above right joystick)
- * L3 = 11          (Press left joystick)
- * R3 = 12          (Press right joystick)
- * 
- * Left Joystick Vertical Axis = 1
- * Left Joystick Horizontal Axis = 0
- * Right Joystick Vertical Axis = 3
- * Right Joystick Horizontal Axis = 2
- */
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
 // DO NOT leave this enabled.  Testing only.
@@ -49,11 +30,33 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
+/*
+ * ON LOGITECH F310 CONTROLLER:
+ * X = 1            (Blue)
+ * A = 2            (Green)
+ * B = 3            (Red)
+ * Y = 4            (Yellow)
+ * LB = 5           (Left-Bumper: top button)
+ * RB = 6           (Right-Bumper: top button)
+ * LT = 7           (Left-Trigger: bottom button)
+ * RT = 8           (Right-Trigger: bottom button)
+ * Select/Back = 9  (Above left joystick)
+ * Start = 10       (Above right joystick)
+ * L3 = 11          (Press left joystick)
+ * R3 = 12          (Press right joystick)
+ * 
+ * Left Joystick Vertical Axis = 1
+ * Left Joystick Horizontal Axis = 0
+ * Right Joystick Vertical Axis = 3
+ * Right Joystick Horizontal Axis = 2
+ */
+
 //Driver Buttons
 constexpr int kKillEverythingDrv1Btn = 11;
 constexpr int kKillEverythingDrv2Btn = 12;
 
 // Operator Buttons
+constexpr int kIntakeCargoOpBtn = 2;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
 
@@ -74,11 +77,18 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton killEverythingDrv2Btn(&m_driverController, kKillEverythingDrv2Btn);
   killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
+
+
+
   frc2::JoystickButton killEverythingOp1Btn(&m_operatorController, kKillEverythingOp1Btn);
   killEverythingOp1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
   killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
+
+  frc2::JoystickButton intakeCargoOpBtn(&m_operatorController, kIntakeCargoOpBtn);
+  intakeCargoOpBtn.WhileHeld(IntakeCargoCmd(&m_intakeSub));
+
 
   // Configure your button bindings here
   m_driverController.SetXChannel(0);
