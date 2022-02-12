@@ -18,6 +18,7 @@ class ShooterSub : public frc2::SubsystemBase {
   void init(); // Resets all of the subsystem's hardware 
   void setPower(double power);
   void zeroShooterEncoders();
+  double getSpeed();
   
 
   /**

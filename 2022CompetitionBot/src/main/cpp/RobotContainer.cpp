@@ -6,6 +6,7 @@
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/IntakeCargoCmd.h"
+#include "commands/ShootCargoCmd.h"
 #include <frc2/command/button/JoystickButton.h>
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +58,7 @@ constexpr int kKillEverythingDrv2Btn = 12;
 
 // Operator Buttons
 constexpr int kIntakeCargoOpBtn = 2;
+constexpr int kShootCargoOpBtn = 7;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
 
@@ -88,6 +90,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton intakeCargoOpBtn(&m_operatorController, kIntakeCargoOpBtn);
   intakeCargoOpBtn.WhileHeld(IntakeCargoCmd(&m_intakeSub));
+
+  frc2::JoystickButton shootCargoOPBtn(&m_operatorController, kShootCargoOpBtn);
+  shootCargoOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub));
 
 
   // Configure your button bindings here

@@ -30,3 +30,7 @@ void ShooterSub::zeroShooterEncoders() {
     m_shootMotor1.GetEncoder().SetPosition(0.);
     m_shootMotor2.GetEncoder().SetPosition(0.);
 }
+
+double ShooterSub::getSpeed() {
+    return m_shootMotor1.GetEncoder().GetVelocity();
+}

@@ -6,7 +6,7 @@
 
 IntakeCargoCmd::IntakeCargoCmd(IntakeSub* intakeSub) {
   // Use addRequirements() here to declare subsystem dependencies.
-   AddRequirements({intakeSub});
+  AddRequirements({intakeSub});
   m_intakeSubPtr = intakeSub;
 }
 
