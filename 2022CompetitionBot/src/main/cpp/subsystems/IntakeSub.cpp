@@ -9,7 +9,9 @@ constexpr int kFrontRollerIntakeMotorPower = 0.2;
 constexpr int kMagazineMotorPower = 0.2;
 
 
-IntakeSub::IntakeSub() {
+IntakeSub::IntakeSub() :
+  m_frontIntakeSensor{DioIds::kFrontInTakeSensor},
+  m_topMagazineSensor{DioIds::kMagazineTopSensor} {
   init(); 
 }
 
@@ -18,9 +20,11 @@ void IntakeSub::init() { //Reset all hardware to a safe state
   disableMagazineMotor();
   zeroIntakeEncoders();
   raiseIntake();
+  
 
   m_frontRollerIntakeMotor.SetInverted(false);
   m_magazineMotor.SetInverted(false);
+
   //Plus anymore hardware added 
 }
 
@@ -69,3 +73,23 @@ void IntakeSub::lowerIntake() {
   m_armSolenoid1.Set(false);
   m_armSolenoid2.Set(false);
 }
+
+bool IntakeSub::isCargoAtMagazineBack(){
+  if( m_topMagazineSensor.Get()) {
+    return true;
+  } else {
+    return false;
+  } 
+}
+
+bool IntakeSub::isCargoAtMagazineFront(){
+  if(m_frontIntakeSensor.Get()) {
+    return true;
+  } else {
+   return false;
+  }
+}
+
+
+
+ 

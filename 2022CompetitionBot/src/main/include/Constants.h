@@ -35,4 +35,8 @@ namespace PneumaticIds {
     constexpr int kArm1 = 2;
     constexpr int kArm2 = 3;
 }
+namespace DioIds{
+constexpr int kFrontInTakeSensor = 0;
+constexpr int kMagazineTopSensor = 1;
+} 
 

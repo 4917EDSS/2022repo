@@ -7,6 +7,7 @@
 #include <rev/CANSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
 #include <frc/Solenoid.h>
+#include <frc/DigitalInput.h>
 
 #include "Constants.h"
 
@@ -26,6 +27,8 @@ class IntakeSub : public frc2::SubsystemBase {
   void zeroIntakeEncoders();
   void raiseIntake();
   void lowerIntake();
+  bool isCargoAtMagazineFront();
+  bool isCargoAtMagazineBack();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -35,4 +38,7 @@ class IntakeSub : public frc2::SubsystemBase {
 
   frc::Solenoid m_armSolenoid1{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm1};
   frc::Solenoid m_armSolenoid2{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm2};
+
+  frc::DigitalInput m_frontIntakeSensor;
+  frc::DigitalInput m_topMagazineSensor;
 };

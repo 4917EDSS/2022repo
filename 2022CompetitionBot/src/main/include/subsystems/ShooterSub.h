@@ -9,7 +9,15 @@
 
 #include "Constants.h"
 
-
+namespace ShooterConstants {
+  //All values need to be updated and tested
+  constexpr double kMaxRPM = 21750;
+  constexpr double kLowerBinSpeed = 15000;
+  constexpr double kUpperBinSpeed = 17800;   
+  constexpr double kMaxSpeed = 20500; 
+  static_assert(kUpperBinSpeed < kMaxSpeed, "Upper Bin must be less than max speed");
+  static_assert(kLowerBinSpeed < kMaxSpeed, "Lower Bin must be less than max speed");
+}
 
 class ShooterSub : public frc2::SubsystemBase {
  public:
