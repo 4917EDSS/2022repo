@@ -5,9 +5,14 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/Joystick.h>
+
 
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
+
+constexpr int kDriverControllerPort = 0;
+constexpr int kOperatorControllerPort = 1;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -28,4 +33,7 @@ class RobotContainer {
   ExampleCommand m_autonomousCommand;
 
   void ConfigureButtonBindings();
+  //Controllers and Buttons
+  frc::Joystick m_driverController{kDriverControllerPort};
+  frc::Joystick m_operatorController{kOperatorControllerPort};
 };
