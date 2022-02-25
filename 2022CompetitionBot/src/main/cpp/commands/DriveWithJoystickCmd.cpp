@@ -11,6 +11,7 @@ constexpr double kMaxTurnAccl = 0.08;
 
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Joystick *joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({drivetrainSub});
   m_drivetrainSubPtr = drivetrainSub;
   m_joystickPtr = joystick;
 }
