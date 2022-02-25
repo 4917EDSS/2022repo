@@ -41,4 +41,7 @@ class IntakeSub : public frc2::SubsystemBase {
 
   frc::DigitalInput m_frontIntakeSensor;
   frc::DigitalInput m_topMagazineSensor;
+
+  rev::SparkMaxRelativeEncoder m_frontRollerIntakeEncoder{m_frontRollerIntakeMotor.GetEncoder()};
+  rev::SparkMaxRelativeEncoder m_magazineEncoder{m_magazineMotor.GetEncoder()};
 };

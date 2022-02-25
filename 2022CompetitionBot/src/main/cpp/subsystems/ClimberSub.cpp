@@ -9,14 +9,18 @@ ClimberSub::ClimberSub() {
 }
 
 void ClimberSub::init() { //Reset all hardware to a safe state
+    m_stationaryArmClimbMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+    m_stationaryArmClimbMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_stationaryArmClimbMotor.ConfigVelocityMeasurementWindow(4);
+
     setStationaryArmClimbPower(0.);
     setPivotingArmClimbPower(0.);
     setPivotingArmPivotPower(0.);
     zeroClimberEncoders();
 
     m_stationaryArmClimbMotor.SetInverted(false);
-    m_pivotingArmClimbMotor.SetInverted(false);
-    m_pivotingArmPivotMotor.SetInverted(false);
+ //   m_pivotingArmClimbMotor.SetInverted(false);
+ //   m_pivotingArmPivotMotor.SetInverted(false);
 
     homeArm();
     //Plus anymore hardware added 
@@ -30,17 +34,17 @@ void ClimberSub::setStationaryArmClimbPower(double power) {
 }
 
 void ClimberSub::setPivotingArmClimbPower(double power) {
-    m_pivotingArmClimbMotor.Set(power);
+//    m_pivotingArmClimbMotor.Set(power);
 }
 
 void ClimberSub::setPivotingArmPivotPower(double power) {
-    m_pivotingArmPivotMotor.Set(power);
+//    m_pivotingArmPivotMotor.Set(power);
 }
 
 void ClimberSub::zeroClimberEncoders() {
-    m_stationaryArmClimbMotor.GetEncoder().SetPosition(0.);
-    m_pivotingArmClimbMotor.GetEncoder().SetPosition(0.);
-    m_pivotingArmPivotMotor.GetEncoder().SetPosition(0.);
+   // m_stationaryArmClimbMotor.GetEncoder().SetPosition(0.);
+ //   m_pivotingArmClimbMotor.GetEncoder().SetPosition(0.);
+ //   m_pivotingArmPivotMotor.GetEncoder().SetPosition(0.);
 }
 
 //Put arms in home position so that everything is in known state for beginning of game

@@ -18,16 +18,18 @@ namespace CanIds {
     constexpr int kLeftMotor1 = 1;
     constexpr int kLeftMotor2 = 2;
     constexpr int kLeftMotor3 = 3;
-    constexpr int kRightMotor1 = 4;
-    constexpr int kRightMotor2 = 5;
-    constexpr int kRightMotor3 = 6;
-    constexpr int kFrontRollerIntakeMotor = 7;
-    constexpr int kMagazineMotor = 8;
-    constexpr int kShootMotor1 = 9;
-    constexpr int kShootMotor2 = 10;
-    constexpr int kStationaryArmClimbMotor = 11;
-    constexpr int kPivotingArmClimbMotor = 12;
-    constexpr int kPivotingArmPivotMotor = 13;
+    constexpr int kLeftMotor4 = 4;
+    constexpr int kRightMotor1 = 5;
+    constexpr int kRightMotor2 = 6;
+    constexpr int kRightMotor3 = 7;
+    constexpr int kRightMotor4 = 8;
+    constexpr int kFrontRollerIntakeMotor = 10;
+    constexpr int kMagazineMotor = 11;
+    constexpr int kShootMotor1 = 12;
+    constexpr int kShootMotor2 = 16;
+    constexpr int kStationaryArmClimbMotor = 15;
+//    constexpr int kPivotingArmClimbMotor = 20;
+//    constexpr int kPivotingArmPivotMotor = 21;
 }
 
 namespace PneumaticIds {

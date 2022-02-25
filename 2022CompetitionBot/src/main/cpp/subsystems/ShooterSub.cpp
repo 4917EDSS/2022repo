@@ -10,11 +10,18 @@ ShooterSub::ShooterSub() {
 
 void ShooterSub::init() { //Reset all hardware to a safe state
     setPower(0.);
-    zeroShooterEncoders();
 
     m_shootMotor1.SetInverted(false);
     m_shootMotor2.SetInverted(true); 
     //Plus anymore hardware added 
+
+    m_shootMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+    m_shootMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_shootMotor1.ConfigVelocityMeasurementWindow(4);
+
+    m_shootMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+    m_shootMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_shootMotor2.ConfigVelocityMeasurementWindow(4);
 }
 
 // This method will be called once per scheduler run
@@ -26,11 +33,6 @@ void ShooterSub::setPower(double power) {
     m_shootMotor2.Set(power); 
 }
 
-void ShooterSub::zeroShooterEncoders() {
-    m_shootMotor1.GetEncoder().SetPosition(0.);
-    m_shootMotor2.GetEncoder().SetPosition(0.);
-}
-
 double ShooterSub::getSpeed() {
-    return m_shootMotor1.GetEncoder().GetVelocity();
+    return m_shootMotor1.GetSelectedSensorVelocity();
 }

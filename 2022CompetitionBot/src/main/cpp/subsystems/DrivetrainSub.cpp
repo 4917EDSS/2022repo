@@ -16,17 +16,17 @@ DrivetrainSub::DrivetrainSub() {
 }
 
 void DrivetrainSub::init() { //Reset all hardware to a safe state
-    tankDrive(0., 0.);
-    shiftDown();
-    zeroDrivetrainEncoders();
-
-    m_leftMotor1.SetInverted(false); //Find which motor is acutally reversed and you can remove the false SetInverted functions
+    m_leftMotor1.SetInverted(true); //Find which motor is acutally reversed and you can remove the false SetInverted functions
     m_leftMotor2.SetInverted(true);
-    m_leftMotor3.SetInverted(false);
+    m_leftMotor3.SetInverted(true);
 
     m_rightMotor1.SetInverted(false);
-    m_rightMotor2.SetInverted(true);
+    m_rightMotor2.SetInverted(false);
     m_rightMotor3.SetInverted(false);
+
+    zeroDrivetrainEncoders();
+    tankDrive(0., 0.);
+    shiftDown();
 
     m_gyro.Reset();
     //Plus anymore hardware added
@@ -64,20 +64,15 @@ void DrivetrainSub::autoShift() {
 }
 
 void DrivetrainSub::zeroDrivetrainEncoders() {
-    m_leftMotor1.GetEncoder().SetPosition(0.);
-    m_leftMotor2.GetEncoder().SetPosition(0.);
-    m_leftMotor3.GetEncoder().SetPosition(0.);
-
-    m_rightMotor1.GetEncoder().SetPosition(0.);
-    m_rightMotor2.GetEncoder().SetPosition(0.);
-    m_rightMotor3.GetEncoder().SetPosition(0.);
+    m_leftMotorEncoder.SetPosition(0.);
+    m_rightMotorEncoder.SetPosition(0.);
 }
 
 double DrivetrainSub::getLeftEncoderRaw() { //Returns rotations (1 full motor rotation = 1.)
-    return -m_leftMotor1.GetEncoder().GetPosition(); //verify which encoder is reversed
+    return -m_leftMotorEncoder.GetPosition(); //verify which encoder is reversed
 }
 double DrivetrainSub::getRightEncoderRaw() { 
-    return m_rightMotor1.GetEncoder().GetPosition();
+    return m_rightMotorEncoder.GetPosition();
 }
 
 double DrivetrainSub::getLeftEncoderDistanceM() {
@@ -92,10 +87,10 @@ double DrivetrainSub::getEncoderRotationsToMeterFactor() {
 }
 
 double DrivetrainSub::getLeftVelocity() {
-    return m_leftMotor1.GetEncoder().GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
+    return m_leftMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
 }
 double DrivetrainSub::getRightVelocity() {
-    return m_rightMotor1.GetEncoder().GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
+    return m_rightMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
 }
 
 double DrivetrainSub::getHeading() {

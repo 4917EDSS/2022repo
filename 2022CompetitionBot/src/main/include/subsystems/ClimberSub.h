@@ -6,7 +6,7 @@
 
 #include <rev/CANSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
-
+#include <ctre/Phoenix.h>
 #include "Constants.h"
 
 class ClimberSub : public frc2::SubsystemBase {
@@ -29,8 +29,8 @@ class ClimberSub : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  rev::CANSparkMax m_stationaryArmClimbMotor{CanIds::kStationaryArmClimbMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax m_pivotingArmClimbMotor{CanIds::kPivotingArmClimbMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax m_pivotingArmPivotMotor{CanIds::kPivotingArmPivotMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  ctre::phoenix::motorcontrol::can::WPI_TalonFX m_stationaryArmClimbMotor{CanIds::kStationaryArmClimbMotor};
+  //rev::CANSparkMax m_pivotingArmClimbMotor{CanIds::kPivotingArmClimbMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  //rev::CANSparkMax m_pivotingArmPivotMotor{CanIds::kPivotingArmPivotMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 };
 

@@ -54,6 +54,9 @@ class DrivetrainSub : public frc2::SubsystemBase {
   rev::CANSparkMax m_rightMotor2{CanIds::kRightMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax m_rightMotor3{CanIds::kRightMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   
+  rev::SparkMaxRelativeEncoder m_leftMotorEncoder{m_leftMotor1.GetEncoder()};
+  rev::SparkMaxRelativeEncoder m_rightMotorEncoder{m_rightMotor1.GetEncoder()};
+
   frc::MotorControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3};
   frc::MotorControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3};
   frc::DifferentialDrive m_drive{m_leftMotors, m_rightMotors};
