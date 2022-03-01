@@ -48,7 +48,7 @@ double capAcceleration(double targetPower, double curPower, double maxAccelerati
       newPower = curPower - maxAcceleration;
     } 
   }
-printf ("test");
+
   return newPower;
 }
 // Called when the command is initially scheduled.
