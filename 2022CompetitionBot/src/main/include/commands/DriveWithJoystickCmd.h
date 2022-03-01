@@ -32,6 +32,6 @@ private:
   DrivetrainSub *m_drivetrainSubPtr;
   frc::Joystick *m_joystickPtr;
 
-  double m_prevFwdPower;
-  double m_prevTurnPower;
+  double m_curFwdPower;
+  double m_curTurnPower;
 };

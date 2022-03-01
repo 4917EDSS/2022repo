@@ -6,7 +6,7 @@
 
 constexpr int kSensitivityPower = 2;
 constexpr double kDeadband = 0.03;
-constexpr double kMaxForwardAccl = 0.045;
+constexpr double kMaxForwardAccl = 0.1;
 constexpr double kMaxTurnAccl = 0.08;
 
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Joystick *joystick) {
@@ -14,6 +14,9 @@ DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Jo
   AddRequirements({drivetrainSub});
   m_drivetrainSubPtr = drivetrainSub;
   m_joystickPtr = joystick;
+  m_curFwdPower = 0.;
+  m_curTurnPower = 0.;
+
 }
 
 double adjustSensitivity(double power) {
@@ -27,38 +30,50 @@ double applyDeadband(double power) {
   return (fabs(power) <= kDeadband) ? 0. : power; 
 }
 
-double capAcceleration(double power,double prevPower,double cap) {
-  double dir = (prevPower-power)/fabs(prevPower-power); 
-  if(fabs(power-prevPower) > cap) {
-    power = prevPower+(cap*dir); 
+double capAcceleration(double targetPower, double curPower, double maxAcceleration) {
+  // double accelerationDirection = (curPower - targetPower) / fabs(curPower - targetPower);
+  bool positiveAcceleration;
+  double newPower = targetPower; // start by assuming that we don't need to step
+  if(curPower - targetPower < 0) {
+    positiveAcceleration = true;
+  } else {
+    positiveAcceleration = false;
   }
-  return power;
+
+  // check if we do need to do a step 
+  if(fabs(targetPower - curPower) > maxAcceleration) {
+    if(positiveAcceleration) {
+      newPower = curPower + maxAcceleration;
+    } else {
+      newPower = curPower - maxAcceleration;
+    } 
+  }
+printf ("test");
+  return newPower;
 }
 // Called when the command is initially scheduled.
 void DriveWithJoystickCmd::Initialize() {
-  m_prevFwdPower = 0.;
-  m_prevTurnPower = 0.;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
-  double fwdPower = m_joystickPtr->GetY();
-  double turnPower = m_joystickPtr->GetThrottle();
+  double fwdPower = -m_joystickPtr->GetY();
+  double turnPower = m_joystickPtr->GetZ();
 
   fwdPower = adjustSensitivity(fwdPower);
   turnPower = adjustSensitivity(turnPower);
 
-  fwdPower = capAcceleration(fwdPower, m_prevFwdPower,kMaxForwardAccl);
-  turnPower = capAcceleration(turnPower, m_prevTurnPower,kMaxTurnAccl);
+  fwdPower = capAcceleration(fwdPower, m_curFwdPower, kMaxForwardAccl);
+  turnPower = capAcceleration(turnPower, m_curTurnPower, kMaxTurnAccl);
 
-  fwdPower = applyDeadband(fwdPower);
-  turnPower = applyDeadband(turnPower);
+  // fwdPower = applyDeadband(fwdPower);
+  // turnPower = applyDeadband(turnPower);
 
   m_drivetrainSubPtr->arcadeDrive(fwdPower, turnPower);
-  m_prevFwdPower = fwdPower;
-  m_prevTurnPower = turnPower;
+  m_curFwdPower = fwdPower;
+  m_curTurnPower = turnPower;
 
-  m_drivetrainSubPtr->autoShift();
+  // m_drivetrainSubPtr->autoShift();
 }
 
 // Called once the command ends or is interrupted.
