@@ -7,6 +7,7 @@
 #include "commands/KillEverythingCmd.h"
 #include "commands/IntakeCargoCmd.h"
 #include "commands/ShootCargoCmd.h"
+#include "commands/SpinFlywheelCmd.h"
 #include <frc2/command/button/JoystickButton.h>
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@ constexpr int kIntakeCargoOpBtn = 2;
 constexpr int kShootCargoOpBtn = 7;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
+constexpr int kSpinFlywheelOpBtn = 1;
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   
@@ -93,6 +95,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton shootCargoOPBtn(&m_operatorController, kShootCargoOpBtn);
   shootCargoOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub));
+  
+  frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn);
+  shootCargoOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));
 
 
   // Configure your button bindings here

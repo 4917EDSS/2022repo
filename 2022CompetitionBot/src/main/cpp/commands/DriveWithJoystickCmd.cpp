@@ -66,8 +66,8 @@ void DriveWithJoystickCmd::Execute() {
   fwdPower = capAcceleration(fwdPower, m_curFwdPower, kMaxForwardAccl);
   turnPower = capAcceleration(turnPower, m_curTurnPower, kMaxTurnAccl);
 
-  // fwdPower = applyDeadband(fwdPower);
-  // turnPower = applyDeadband(turnPower);
+  fwdPower = applyDeadband(fwdPower);
+  turnPower = applyDeadband(turnPower);
 
   m_drivetrainSubPtr->arcadeDrive(fwdPower, turnPower);
   m_curFwdPower = fwdPower;
