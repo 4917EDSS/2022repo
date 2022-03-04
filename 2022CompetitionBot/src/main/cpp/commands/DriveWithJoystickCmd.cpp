@@ -20,10 +20,27 @@ DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Jo
 }
 
 double adjustSensitivity(double power) {
-  double dir = (power < 0) ? -1. : 1.; 
-  power = pow(power,kSensitivityPower) * dir;
+  // Check the direction and save that... sort of like this:  double dir = (power < 0) ? -1. : 1.; 
+  bool fwdDirection;
+  if(power < 0) {
+    //backwards
+    fwdDirection = false;
+    power *= -1;
+  } 
+  else {
+    //forward
+    fwdDirection = true;
+  }
 
-  return power;
+  // Run the pow on it
+  double outputPower = pow(power, kSensitivityPower);
+  
+  // Re-add the direction to it.
+  if(!fwdDirection) {
+    outputPower *= -1;
+  }
+  
+  return outputPower;
 }
 
 double applyDeadband(double power) { 
