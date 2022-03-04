@@ -90,6 +90,9 @@ bool IntakeSub::isCargoAtMagazineFront(){
   }
 }
 
-
+void IntakeSub::toggleIntakeArm() {
+  m_armSolenoid1.Set(!m_armSolenoid1.Get());
+  m_armSolenoid2.Set(!m_armSolenoid2.Get());
+}
 
  

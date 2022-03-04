@@ -29,6 +29,7 @@ class IntakeSub : public frc2::SubsystemBase {
   void lowerIntake();
   bool isCargoAtMagazineFront();
   bool isCargoAtMagazineBack();
+  void toggleIntakeArm();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
