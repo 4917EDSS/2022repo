@@ -23,5 +23,5 @@ void ToggleIntakeArmCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ToggleIntakeArmCmd::IsFinished() {
-  return false;
+  return true; 
 }

@@ -63,7 +63,7 @@ constexpr int kKillEverythingDrv2Btn = 12;
 
 // Operator Buttons
 constexpr int kIntakeCargoOpBtn = 2;
-constexpr int kToggleIntakeArmOpCmd = 3;
+constexpr int kToggleIntakeArmOpCmd = 4;
 constexpr int kShootCargoLowOpBtn = 7;
 constexpr int kShootCargoHighOpBtn = 8;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
@@ -89,28 +89,25 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton killEverythingDrv2Btn(&m_driverController, kKillEverythingDrv2Btn);
   killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
-
-
-
   frc2::JoystickButton killEverythingOp1Btn(&m_operatorController, kKillEverythingOp1Btn);
   killEverythingOp1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
   killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
-  frc2::JoystickButton intakeCargoOpBtn(&m_operatorController, kIntakeCargoOpBtn);
+  frc2::JoystickButton intakeCargoOpBtn(&m_operatorController, kIntakeCargoOpBtn); //Intake cargo
   intakeCargoOpBtn.WhileHeld(IntakeCargoCmd(&m_intakeSub));
 
-  frc2::JoystickButton toggleIntakeArmOpBtn(&m_operatorController, kToggleIntakeArmOpCmd);
-  toggleIntakeArmOpBtn.WhileHeld(ToggleIntakeArmCmd(&m_intakeSub));
+  frc2::JoystickButton toggleIntakeArmOpBtn(&m_operatorController, kToggleIntakeArmOpCmd); //Toggle intake
+  toggleIntakeArmOpBtn.WhenPressed(ToggleIntakeArmCmd(&m_intakeSub));
 
-  frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn);
+  frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn); //Low cargo shoot
   shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, false));
 
-  frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn);
+  frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn); //High cargo shoot
   shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, true));
   
-  frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn);
+  frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn); //Spin flywheel
   spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));
 
 
