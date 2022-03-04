@@ -22,12 +22,7 @@ void IntakeJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void IntakeJoystickCmd::Execute() {
-  bool isReversed;
-  if (applyIntakeDeadband(-m_joystickPtr->GetY()) > 0.0) 
-    isReversed = true;
-  else 
-    isReversed = false;
-  m_intakeSubPtr->enableFrontRollerIntakeMotor(isReversed);
+  m_intakeSubPtr->setFrontRollerIntakeMotor(applyIntakeDeadband(-m_joystickPtr->GetY())); //Set power of front roller
 }
 
 // Called once the command ends or is interrupted.

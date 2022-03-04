@@ -21,6 +21,7 @@ class IntakeSub : public frc2::SubsystemBase {
    */
   void Periodic() override;
   void enableFrontRollerIntakeMotor(bool isReversed);
+  void setFrontRollerIntakeMotor(double power); //Set power of intake motor
   void disableFrontRollerIntakeMotor();
   void enableMagazineMotor(bool isReversed);
   void disableMagazineMotor();

@@ -39,6 +39,10 @@ void IntakeSub::enableFrontRollerIntakeMotor(bool isReversed) {
     m_frontRollerIntakeMotor.Set(kFrontRollerIntakeMotorPower);
   }
 }
+//Set the front roller power
+void IntakeSub::setFrontRollerIntakeMotor(double power) {
+  m_frontRollerIntakeMotor.Set(power);
+}
 
 //Disables the front roller intake motor.
 void IntakeSub::disableFrontRollerIntakeMotor() {
