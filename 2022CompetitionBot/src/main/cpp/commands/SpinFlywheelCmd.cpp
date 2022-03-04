@@ -13,8 +13,8 @@ SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, bool isUpper) {
 
 // Called when the command is initially scheduled.
 void SpinFlywheelCmd::Initialize() {
-  m_targetSpeed =(m_isUpper ? ShooterConstants::kUpperBinSpeed : ShooterConstants::kLowerBinSpeed);
-  double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
+  // m_targetSpeed =(m_isUpper ? ShooterConstants::kDefaultUpperBinSpeed : ShooterConstants::kDefaultLowerBinSpeed);
+  // double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
   m_shooterSub->setPower(0.1); ////////////////////////////////////////////////// temporarily setting to 10%
 }
 
