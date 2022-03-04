@@ -4,18 +4,16 @@
 
 #include "commands/ShootCargoCmd.h"
 
-constexpr double kTargetSpeed = 7000;
-constexpr double kPowerAdded = 0.04;
-constexpr double kP = 0.1;
-constexpr double kI = 0.1;
 
-ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) {
+ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
   m_shooterSubPtr = shooterSub;
 
   AddRequirements({intakeSub});
   m_intakeSubPtr = intakeSub;
+  
+  m_isUpperGoal = isUpperGoal;
 }
 
 // Called when the command is initially scheduled.
@@ -26,15 +24,21 @@ void ShootCargoCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootCargoCmd::Execute() {
+  int targetSpeed;
+  if(m_isUpperGoal) {
+    targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+  } else {
+    targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
+  }
   double speed = m_shooterSubPtr->getSpeed();
   double i = m_previousI;
-  double difference = (kTargetSpeed - speed) / kTargetSpeed;
+  double difference = (targetSpeed - speed) / targetSpeed;
  
   i += difference;
-  m_shooterSubPtr->setPower((difference * kP) + (i * kI));
+  m_shooterSubPtr->setPower((difference * m_shooterSubPtr->m_kP) + (i * m_shooterSubPtr->m_kI));
   m_previousI = i;
 
-  if(fabs(kTargetSpeed - speed) < 100) {
+  if(fabs(targetSpeed - speed) < 100) {
     m_intakeSubPtr->enableMagazineMotor(false);
   } else {
     m_intakeSubPtr->disableMagazineMotor();

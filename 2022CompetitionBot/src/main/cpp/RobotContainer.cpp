@@ -2,13 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc2/command/button/JoystickButton.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/IntakeCargoCmd.h"
 #include "commands/ShootCargoCmd.h"
 #include "commands/SpinFlywheelCmd.h"
-#include <frc2/command/button/JoystickButton.h>
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -59,7 +60,8 @@ constexpr int kKillEverythingDrv2Btn = 12;
 
 // Operator Buttons
 constexpr int kIntakeCargoOpBtn = 2;
-constexpr int kShootCargoOpBtn = 7;
+constexpr int kShootCargoLowOpBtn = 7;
+constexpr int kShootCargoHighOpBtn = 8;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
 constexpr int kSpinFlywheelOpBtn = 1;
@@ -93,11 +95,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton intakeCargoOpBtn(&m_operatorController, kIntakeCargoOpBtn);
   intakeCargoOpBtn.WhileHeld(IntakeCargoCmd(&m_intakeSub));
 
-  frc2::JoystickButton shootCargoOPBtn(&m_operatorController, kShootCargoOpBtn);
-  shootCargoOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub));
+  frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn);
+  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, false));
+
+  frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn);
+  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, true));
   
   frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn);
-  shootCargoOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));
+  spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));
 
 
   // Configure your button bindings here
@@ -117,6 +122,16 @@ void RobotContainer::initSubsystems() {
   m_shooterSub.init();
   m_climberSub.init();
   m_intakeSub.init(); 
+}
+
+void RobotContainer::updateDashboard() {
+  frc::SmartDashboard::GetNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
+  frc::SmartDashboard::GetNumber("High Speed", m_shooterSub.m_upperBinSpeed);
+  frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kP);
+  frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kD);
+  frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kI);
+  frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.getSpeed());
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

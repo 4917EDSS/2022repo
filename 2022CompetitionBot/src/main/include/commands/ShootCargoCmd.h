@@ -19,7 +19,7 @@
 class ShootCargoCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCargoCmd> {
  public:
-  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub);
+  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal);
 
   void Initialize() override;
 
@@ -33,5 +33,6 @@ private:
   ShooterSub *m_shooterSubPtr;
   IntakeSub *m_intakeSubPtr;
 
+  int m_isUpperGoal;
   double m_previousI;
 };

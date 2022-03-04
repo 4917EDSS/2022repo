@@ -11,16 +11,20 @@
 
 namespace ShooterConstants {
   //All values need to be updated and tested
-  constexpr double kMaxRPM = 21750;
-  constexpr double kLowerBinSpeed = 15000;
-  constexpr double kUpperBinSpeed = 17800;   
-  constexpr double kMaxSpeed = 20500; 
-  static_assert(kUpperBinSpeed < kMaxSpeed, "Upper Bin must be less than max speed");
-  static_assert(kLowerBinSpeed < kMaxSpeed, "Lower Bin must be less than max speed");
+  constexpr int kDefaultLowerBinSpeed = 15000;
+  constexpr int kDefaultUpperBinSpeed = 17800;
+  constexpr double kDefaultP = 0.1;
+  constexpr double kDefaultI = 0;
+  constexpr double kDefaultD = 0;
 }
 
 class ShooterSub : public frc2::SubsystemBase {
  public:
+  int m_lowerBinSpeed;
+  int m_upperBinSpeed;
+  double m_kP;
+  double m_kI;
+  double m_kD;
   ShooterSub();
 
   void init(); // Resets all of the subsystem's hardware 
