@@ -70,7 +70,7 @@ constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
 constexpr int kSpinFlywheelOpBtn = 1;
 
-RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
+RobotContainer::RobotContainer() : m_autonomousCommand() {
   
 
   // Initialize all of your commands and subsystems here

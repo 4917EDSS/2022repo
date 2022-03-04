@@ -7,12 +7,11 @@
 #include <frc2/command/Command.h>
 #include <frc/Joystick.h>
 
-#include "commands/ExampleCommand.h"
-#include "subsystems/ExampleSubsystem.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/IntakeSub.h"
 #include "subsystems/ClimberSub.h"
 #include "subsystems/ShooterSub.h"
+#include "commands/AutoDoNothingCmd.h"
 
 constexpr int kDriverControllorPort = 0;
 constexpr int kOperatorControllorPort = 1;
@@ -35,12 +34,11 @@ class RobotContainer {
 
  private:
   // The robot's subsystems and commands are defined here...
-  ExampleSubsystem m_subsystem;
   DrivetrainSub m_drivetrainSub;
   IntakeSub m_intakeSub;
   ShooterSub m_shooterSub;
   ClimberSub m_climberSub;
-  ExampleCommand m_autonomousCommand;
+  AutoDoNothingCmd m_autonomousCommand;
   frc::Joystick m_driverController{kDriverControllorPort};
   frc::Joystick m_operatorController{kOperatorControllorPort};
 
