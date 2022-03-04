@@ -30,6 +30,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
   void initSubsystems();
+  void initSmartDashboard();
   void updateDashboard();
 
  private:

@@ -71,7 +71,6 @@ constexpr int kKillEverythingOp2Btn = 12;
 constexpr int kSpinFlywheelOpBtn = 1;
 
 RobotContainer::RobotContainer() : m_autonomousCommand() {
-  
 
   // Initialize all of your commands and subsystems here
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
@@ -129,6 +128,13 @@ void RobotContainer::initSubsystems() {
   m_climberSub.init();
   m_intakeSub.init(); 
 }
+void RobotContainer::initSmartDashboard(){
+  frc::SmartDashboard::PutNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
+  frc::SmartDashboard::PutNumber("High Speed", m_shooterSub.m_upperBinSpeed);
+  frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kP);
+  frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kD);
+  frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kI);
+}
 
 void RobotContainer::updateDashboard() {
   frc::SmartDashboard::GetNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
@@ -136,7 +142,7 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kP);
   frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kD);
   frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kI);
-  frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.getSpeed());
+  frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
 
 }
 

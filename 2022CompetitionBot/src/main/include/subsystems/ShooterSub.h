@@ -11,9 +11,9 @@
 
 namespace ShooterConstants {
   //All values need to be updated and tested
-  constexpr int kDefaultLowerBinSpeed = 15000;
-  constexpr int kDefaultUpperBinSpeed = 17800;
-  constexpr double kDefaultP = 0.1;
+  constexpr int kDefaultLowerBinSpeed = 17000;
+  constexpr int kDefaultUpperBinSpeed = 100000;
+  constexpr double kDefaultP = 1;
   constexpr double kDefaultI = 0;
   constexpr double kDefaultD = 0;
 }
