@@ -23,6 +23,7 @@ void IntakeJoystickCmd::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void IntakeJoystickCmd::Execute() {
   m_intakeSubPtr->setFrontRollerIntakeMotor(applyIntakeDeadband(-m_joystickPtr->GetY())); //Set power of front roller
+  m_intakeSubPtr->setMagazineMotor(applyIntakeDeadband(-m_joystickPtr->GetThrottle())); //Also set power of magazine 
 }
 
 // Called once the command ends or is interrupted.

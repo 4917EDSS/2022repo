@@ -39,7 +39,7 @@ void IntakeSub::enableFrontRollerIntakeMotor(bool isReversed) {
     m_frontRollerIntakeMotor.Set(kFrontRollerIntakeMotorPower);
   }
 }
-//Set the front roller power
+//Set the front roller 
 void IntakeSub::setFrontRollerIntakeMotor(double power) {
   m_frontRollerIntakeMotor.Set(power);
 }
@@ -56,6 +56,10 @@ void IntakeSub::enableMagazineMotor(bool isReversed) {
   } else {
     m_magazineMotor.Set(kMagazineMotorPower);
   }
+}
+
+void IntakeSub::setMagazineMotor(double power) {
+  m_magazineMotor.Set(power);
 }
 
 //Disables the magazine motor.
