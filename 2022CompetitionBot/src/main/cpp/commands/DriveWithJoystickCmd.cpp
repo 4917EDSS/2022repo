@@ -21,7 +21,7 @@ DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Jo
 
 double adjustSensitivity(double power) {
   double dir = (power < 0) ? -1. : 1.; 
-  power = pow(power,kSensitivityPower) * dir;
+  power = pow(power,kSensitivityPower) * dir; 
 
   return power;
 }
