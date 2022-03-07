@@ -10,22 +10,19 @@ constexpr int kMagazineMotorPower = 0.2;
 
 
 IntakeSub::IntakeSub() :
-  m_frontIntakeSensor{DioIds::kFrontInTakeSensor},
-  m_topMagazineSensor{DioIds::kMagazineTopSensor} {
+  m_magazineFrontSensor{DioIds::kMagazineFrontSensor},
+  m_magazineTopSensor{DioIds::kMagazineTopSensor} {
   init(); 
 }
 
 void IntakeSub::init() { //Reset all hardware to a safe state
+  m_frontRollerIntakeMotor.SetInverted(false);
+  m_magazineMotor.SetInverted(true);
+
   disableFrontRollerIntakeMotor();
   disableMagazineMotor();
   zeroIntakeEncoders();
   raiseIntake();
-  
-
-  m_frontRollerIntakeMotor.SetInverted(false);
-  m_magazineMotor.SetInverted(true);
-
-  //Plus anymore hardware added 
 }
 
 // This method will be called once per scheduler run
@@ -33,38 +30,39 @@ void IntakeSub::Periodic() {}
 
 //Enables the front roller intake motor.
 void IntakeSub::enableFrontRollerIntakeMotor(bool isReversed) {
-  if (isReversed) {
-    m_frontRollerIntakeMotor.Set(-kFrontRollerIntakeMotorPower);
+  if(isReversed) {
+    setFrontRollerIntakeMotor(-kFrontRollerIntakeMotorPower);
   } else {
-    m_frontRollerIntakeMotor.Set(kFrontRollerIntakeMotorPower);
+    setFrontRollerIntakeMotor(kFrontRollerIntakeMotorPower);
   }
 }
+
+//Disables the front roller intake motor.
+void IntakeSub::disableFrontRollerIntakeMotor() {
+  setFrontRollerIntakeMotor(0.0);
+}
+
 //Set the front roller 
 void IntakeSub::setFrontRollerIntakeMotor(double power) {
   m_frontRollerIntakeMotor.Set(power);
 }
 
-//Disables the front roller intake motor.
-void IntakeSub::disableFrontRollerIntakeMotor() {
-  m_frontRollerIntakeMotor.Set(0.0);
-}
-
 //Enables the magazine motor.
 void IntakeSub::enableMagazineMotor(bool isReversed) {
-  if (isReversed) {
-    m_magazineMotor.Set(-kMagazineMotorPower);
+  if(isReversed) {
+    setMagazineMotor(-kMagazineMotorPower);
   } else {
-    m_magazineMotor.Set(kMagazineMotorPower);
+    setMagazineMotor(kMagazineMotorPower);
   }
-}
-
-void IntakeSub::setMagazineMotor(double power) {
-  m_magazineMotor.Set(power);
 }
 
 //Disables the magazine motor.
 void IntakeSub::disableMagazineMotor() {
-  m_magazineMotor.Set(0.0);
+  setMagazineMotor(0.0);
+}
+
+void IntakeSub::setMagazineMotor(double power) {
+  m_magazineMotor.Set(power);
 }
 
 void IntakeSub::zeroIntakeEncoders() {
@@ -82,8 +80,13 @@ void IntakeSub::lowerIntake() {
   m_armSolenoid2.Set(false);
 }
 
+void IntakeSub::toggleIntakeArm() {
+  m_armSolenoid1.Set(!m_armSolenoid1.Get());
+  m_armSolenoid2.Set(!m_armSolenoid2.Get());
+}
+
 bool IntakeSub::isCargoAtMagazineBack(){
-  if( m_topMagazineSensor.Get()) {
+  if(m_magazineTopSensor.Get()) {
     return true;
   } else {
     return false;
@@ -91,16 +94,12 @@ bool IntakeSub::isCargoAtMagazineBack(){
 }
 
 bool IntakeSub::isCargoAtMagazineFront(){
-  if(m_frontIntakeSensor.Get()) {
+  if(m_magazineFrontSensor.Get()) {
     return true;
   } else {
    return false;
   }
 }
 
-void IntakeSub::toggleIntakeArm() {
-  m_armSolenoid1.Set(!m_armSolenoid1.Get());
-  m_armSolenoid2.Set(!m_armSolenoid2.Get());
-}
 
  

@@ -26,10 +26,10 @@ namespace CanIds {
     constexpr int kFrontRollerIntakeMotor = 10;
     constexpr int kMagazineMotor = 11;
     constexpr int kShootMotor1 = 12;
+    // constexpr int k = 13;
+    // constexpr int k = 14;
+    constexpr int kClimberArmbMotor = 15;
     constexpr int kShootMotor2 = 16;
-    constexpr int kStationaryArmClimbMotor = 15;
-//    constexpr int kPivotingArmClimbMotor = 20;
-//    constexpr int kPivotingArmPivotMotor = 21;
 }
 
 namespace PneumaticIds {
@@ -37,8 +37,8 @@ namespace PneumaticIds {
     constexpr int kArm1 = 2;
     constexpr int kArm2 = 3;
 }
-namespace DioIds{
-constexpr int kFrontInTakeSensor = 0;
-constexpr int kMagazineTopSensor = 1;
-} 
 
+namespace DioIds{
+    constexpr int kMagazineFrontSensor = 0;
+    constexpr int kMagazineTopSensor = 1;
+} 

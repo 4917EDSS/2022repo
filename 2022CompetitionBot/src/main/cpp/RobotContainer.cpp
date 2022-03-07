@@ -4,6 +4,7 @@
 
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/KillEverythingCmd.h"
@@ -62,13 +63,14 @@ constexpr int kKillEverythingDrv1Btn = 11;
 constexpr int kKillEverythingDrv2Btn = 12;
 
 // Operator Buttons
+constexpr int kSpinFlywheelOpBtn = 1;
 constexpr int kIntakeCargoOpBtn = 2;
 constexpr int kToggleIntakeArmOpCmd = 4;
 constexpr int kShootCargoLowOpBtn = 7;
 constexpr int kShootCargoHighOpBtn = 8;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
-constexpr int kSpinFlywheelOpBtn = 1;
+
 
 RobotContainer::RobotContainer() : m_autonomousCommand() {
 
@@ -82,18 +84,15 @@ RobotContainer::RobotContainer() : m_autonomousCommand() {
 
 void RobotContainer::ConfigureButtonBindings() {
   
+  // Driver Controller Button Mapping
   frc2::JoystickButton killEverythingDrv1Btn(&m_driverController, kKillEverythingDrv1Btn);
   killEverythingDrv1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton killEverythingDrv2Btn(&m_driverController, kKillEverythingDrv2Btn);
   killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
-  frc2::JoystickButton killEverythingOp1Btn(&m_operatorController, kKillEverythingOp1Btn);
-  killEverythingOp1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
-
-  frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
-  killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
-
+  
+  // Operator Controller Button Mapping
   frc2::JoystickButton intakeCargoOpBtn(&m_operatorController, kIntakeCargoOpBtn); //Intake cargo
   intakeCargoOpBtn.WhileHeld(IntakeCargoCmd(&m_intakeSub));
 
@@ -101,16 +100,22 @@ void RobotContainer::ConfigureButtonBindings() {
   toggleIntakeArmOpBtn.WhenPressed(ToggleIntakeArmCmd(&m_intakeSub));
 
   frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn); //Low cargo shoot
-  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, false));
+  shootCargoLowOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
 
   frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn); //High cargo shoot
-  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, true));
+  shootCargoHighOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
   
   frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn); //Spin flywheel
-  spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));
+  spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));
+
+  frc2::JoystickButton killEverythingOp1Btn(&m_operatorController, kKillEverythingOp1Btn);
+  killEverythingOp1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
+
+  frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
+  killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
 
-  // Configure your button bindings here
+  // Axis mappint
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);
   m_driverController.SetZChannel(2);
@@ -128,6 +133,7 @@ void RobotContainer::initSubsystems() {
   m_climberSub.init();
   m_intakeSub.init(); 
 }
+
 void RobotContainer::initSmartDashboard(){
   frc::SmartDashboard::PutNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
   frc::SmartDashboard::PutNumber("High Speed", m_shooterSub.m_upperBinSpeed);

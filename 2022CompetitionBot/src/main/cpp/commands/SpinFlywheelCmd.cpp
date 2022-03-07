@@ -4,32 +4,40 @@
 
 #include "commands/SpinFlywheelCmd.h"
 
-SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, bool isUpper) {
+SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
-  m_shooterSub = shooterSub;
-  m_isUpper = isUpper;
-  m_targetSpeed = 0.;
+  AddRequirements({shooterSub});
+  m_shooterSubPtr = shooterSub;
+  m_isUpperGoal = isUpperGoal;
 }
 
 // Called when the command is initially scheduled.
 void SpinFlywheelCmd::Initialize() {
-  // m_targetSpeed =(m_isUpper ? ShooterConstants::kDefaultUpperBinSpeed : ShooterConstants::kDefaultLowerBinSpeed);
-  // double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
-  m_shooterSub->setPower(0.1); ////////////////////////////////////////////////// temporarily setting to 10%
+  m_shooterSubPtr->setPower(0);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SpinFlywheelCmd::Execute() {}
+void SpinFlywheelCmd::Execute() {
+  int targetSpeed;
+
+  // Get the latest target speed (can be changed on Dashboard)
+  if(m_isUpperGoal) {
+    targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+  } else {
+    targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
+  }
+
+
+  double currentSpeed = m_shooterSubPtr->getSpeed();
+  double difference = (targetSpeed - currentSpeed) / targetSpeed;
+ 
+  m_shooterSubPtr->setPower(difference * m_shooterSubPtr->m_kP);
+}
 
 // Called once the command ends or is interrupted.
 void SpinFlywheelCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool SpinFlywheelCmd::IsFinished() {
-  if(m_shooterSub->getSpeed() >= (m_targetSpeed * 0.9)) {
-    return true;
-  }
-  else {
-    return false;
-  }
+  return false;
 }

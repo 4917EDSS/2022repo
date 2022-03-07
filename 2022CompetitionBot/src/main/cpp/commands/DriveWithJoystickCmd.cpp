@@ -19,18 +19,18 @@ DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Jo
 
 }
 
-double adjustSensitivity(double power) {
+double DriveWithJoystickCmd::adjustSensitivity(double power) {
   double dir = (power < 0) ? -1. : 1.; 
   power = pow(fabs(power),kSensitivityPower) * dir; 
 
   return power;
 }
 
-double applyDeadband(double power) { 
+double DriveWithJoystickCmd::applyDeadband(double power) { 
   return (fabs(power) <= kDeadband) ? 0. : power; 
 }
 
-double capAcceleration(double targetPower, double curPower, double maxAcceleration) {
+double DriveWithJoystickCmd::capAcceleration(double targetPower, double curPower, double maxAcceleration) {
   // double accelerationDirection = (curPower - targetPower) / fabs(curPower - targetPower);
   bool positiveAcceleration;
   double newPower = targetPower; // start by assuming that we don't need to step

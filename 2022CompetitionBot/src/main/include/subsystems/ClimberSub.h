@@ -12,25 +12,19 @@
 class ClimberSub : public frc2::SubsystemBase {
  public:
   ClimberSub();
- 
   void init(); // Resets all of the subsystem's hardware 
-  void setStationaryArmClimbPower(double power);
+  void Periodic() override;
+
+  void setClimberArmPower(double power);
   void setPivotingArmClimbPower(double power);
   void setPivotingArmPivotPower(double power);
   void zeroClimberEncoders(); 
   void homeArm();
 
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic() override;
-
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
-  ctre::phoenix::motorcontrol::can::WPI_TalonFX m_stationaryArmClimbMotor{CanIds::kStationaryArmClimbMotor};
-  //rev::CANSparkMax m_pivotingArmClimbMotor{CanIds::kPivotingArmClimbMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  //rev::CANSparkMax m_pivotingArmPivotMotor{CanIds::kPivotingArmPivotMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  ctre::phoenix::motorcontrol::can::WPI_TalonFX m_climbArmMotor{CanIds::kClimberArmbMotor};
+  
 };
 

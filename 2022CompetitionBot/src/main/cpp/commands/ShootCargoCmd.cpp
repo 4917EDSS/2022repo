@@ -8,11 +8,10 @@
 ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
-  m_shooterSubPtr = shooterSub;
+  AddRequirements({intakeSub});
 
-  //AddRequirements({intakeSub});
+  m_shooterSubPtr = shooterSub;
   m_intakeSubPtr = intakeSub;
-  
   m_isUpperGoal = isUpperGoal;
 }
 
@@ -38,11 +37,11 @@ void ShootCargoCmd::Execute() {
   m_shooterSubPtr->setPower((difference * m_shooterSubPtr->m_kP) + (i * m_shooterSubPtr->m_kI));
   m_previousI = i;
 
-  // if(fabs(targetSpeed - speed) < 100) {
-  //   m_intakeSubPtr->enableMagazineMotor(false);
-  // } else {
-  //   m_intakeSubPtr->disableMagazineMotor();
-  // }
+  if(fabs(targetSpeed - speed) < 100) {
+    m_intakeSubPtr->enableMagazineMotor(false);
+  } else {
+    m_intakeSubPtr->disableMagazineMotor();
+  }
 }
 
 // Called once the command ends or is interrupted.

@@ -160,3 +160,5 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+
+.~lock.Controller Mapping 2022.xlsx#

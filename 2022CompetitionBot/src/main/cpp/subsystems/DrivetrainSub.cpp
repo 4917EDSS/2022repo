@@ -29,7 +29,6 @@ void DrivetrainSub::init() { //Reset all hardware to a safe state
     shiftDown();
 
     m_gyro.Reset();
-    //Plus anymore hardware added
 }
 
 void DrivetrainSub::Periodic() {}
@@ -38,19 +37,19 @@ void DrivetrainSub::Periodic() {}
 void  DrivetrainSub::tankDrive(double lPower, double rPower) {
     m_drive.TankDrive(lPower, rPower);
 }
+
 void DrivetrainSub::arcadeDrive(double drivePwr, double rotatePwr) {
     m_drive.ArcadeDrive(drivePwr, rotatePwr);
 }
+
 void  DrivetrainSub::shiftUp() { //Gear shift up
     m_shifter.Set(1);
 }
+
 void  DrivetrainSub::shiftDown() { // Gear shift down
     m_shifter.Set(0);
 }
 
-bool DrivetrainSub::isShiftedInHighGear() {
-    return m_shifter.Get();
-}
 void DrivetrainSub::autoShift() {
     //get speed from robot
     double averageWheelSpeed = (getLeftVelocity() + getRightVelocity()) / 2.;
@@ -63,6 +62,10 @@ void DrivetrainSub::autoShift() {
     }
 }
 
+bool DrivetrainSub::isShiftedInHighGear() {
+    return m_shifter.Get();
+}
+
 void DrivetrainSub::zeroDrivetrainEncoders() {
     m_leftMotorEncoder.SetPosition(0.);
     m_rightMotorEncoder.SetPosition(0.);
@@ -71,6 +74,7 @@ void DrivetrainSub::zeroDrivetrainEncoders() {
 double DrivetrainSub::getLeftEncoderRaw() { //Returns rotations (1 full motor rotation = 1.)
     return -m_leftMotorEncoder.GetPosition(); //verify which encoder is reversed
 }
+
 double DrivetrainSub::getRightEncoderRaw() { 
     return m_rightMotorEncoder.GetPosition();
 }
@@ -89,6 +93,7 @@ double DrivetrainSub::getEncoderRotationsToMeterFactor() {
 double DrivetrainSub::getLeftVelocity() {
     return m_leftMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
 }
+
 double DrivetrainSub::getRightVelocity() {
     return m_rightMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
 }

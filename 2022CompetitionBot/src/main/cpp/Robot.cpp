@@ -10,7 +10,7 @@
 void Robot::RobotInit() {
   fmt::print("Robot v1.0");
   m_container.initSmartDashboard();
-  }
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use

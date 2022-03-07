@@ -19,11 +19,10 @@
 class SpinFlywheelCmd
     : public frc2::CommandHelper<frc2::CommandBase, SpinFlywheelCmd> {
  public:
-  SpinFlywheelCmd(ShooterSub* shooterSub, bool isUpper);
+  SpinFlywheelCmd(ShooterSub* shooterSub, bool isUpperGoal);
 
   void Initialize() override;
   
-
   void Execute() override;
 
   void End(bool interrupted) override;
@@ -31,7 +30,6 @@ class SpinFlywheelCmd
   bool IsFinished() override;
 
  private:
-  ShooterSub* m_shooterSub;
-  bool m_isUpper;
-  double m_targetSpeed;
+  ShooterSub* m_shooterSubPtr;
+  bool m_isUpperGoal;
 };

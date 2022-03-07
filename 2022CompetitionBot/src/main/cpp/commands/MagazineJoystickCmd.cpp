@@ -13,7 +13,7 @@ MagazineJoystickCmd::MagazineJoystickCmd(IntakeSub* intakeSub, frc::Joystick *jo
   m_joystickPtr = joystick;
 }
 
-double applyMagazineDeadband(double power) { 
+double MagazineJoystickCmd::applyDeadband(double power) { 
   return (fabs(power) <= kDeadband) ? 0. : power; 
 }
 
@@ -23,7 +23,7 @@ void MagazineJoystickCmd::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void MagazineJoystickCmd::Execute() {
   bool isReversed;
-  if (applyMagazineDeadband(-m_joystickPtr->GetThrottle()) > 0.0) 
+  if (applyDeadband(-m_joystickPtr->GetThrottle()) > 0.0) 
     isReversed = true;
   else 
     isReversed = false;

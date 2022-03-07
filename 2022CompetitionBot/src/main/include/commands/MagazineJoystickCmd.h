@@ -33,4 +33,5 @@ private:
   IntakeSub *m_intakeSubPtr;
   frc::Joystick *m_joystickPtr;
 
+  double applyDeadband(double power); // Turn the power off if the joystick is close to 0
 };

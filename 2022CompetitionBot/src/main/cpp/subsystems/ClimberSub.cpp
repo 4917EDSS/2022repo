@@ -9,42 +9,26 @@ ClimberSub::ClimberSub() {
 }
 
 void ClimberSub::init() { //Reset all hardware to a safe state
-    m_stationaryArmClimbMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-    m_stationaryArmClimbMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
-    m_stationaryArmClimbMotor.ConfigVelocityMeasurementWindow(4);
+    m_climbArmMotor.SetInverted(false);
 
-    setStationaryArmClimbPower(0.);
-    setPivotingArmClimbPower(0.);
-    setPivotingArmPivotPower(0.);
+    m_climbArmMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+    m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_climbArmMotor.ConfigVelocityMeasurementWindow(4);
+
+    setClimberArmPower(0.);
     zeroClimberEncoders();
-
-    m_stationaryArmClimbMotor.SetInverted(false);
- //   m_pivotingArmClimbMotor.SetInverted(false);
- //   m_pivotingArmPivotMotor.SetInverted(false);
-
     homeArm();
-    //Plus anymore hardware added 
 }
 
 // This method will be called once per scheduler run
 void ClimberSub::Periodic() {}
 
-void ClimberSub::setStationaryArmClimbPower(double power) {
-    m_stationaryArmClimbMotor.Set(power);
-}
-
-void ClimberSub::setPivotingArmClimbPower(double power) {
-//    m_pivotingArmClimbMotor.Set(power);
-}
-
-void ClimberSub::setPivotingArmPivotPower(double power) {
-//    m_pivotingArmPivotMotor.Set(power);
+void ClimberSub::setClimberArmPower(double power) {
+    m_climbArmMotor.Set(power);
 }
 
 void ClimberSub::zeroClimberEncoders() {
-   // m_stationaryArmClimbMotor.GetEncoder().SetPosition(0.);
- //   m_pivotingArmClimbMotor.GetEncoder().SetPosition(0.);
- //   m_pivotingArmPivotMotor.GetEncoder().SetPosition(0.);
+    // TODO   
 }
 
 //Put arms in home position so that everything is in known state for beginning of game

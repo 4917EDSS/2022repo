@@ -25,22 +25,17 @@ class ShooterSub : public frc2::SubsystemBase {
   double m_kP;
   double m_kI;
   double m_kD;
-  ShooterSub();
 
+  ShooterSub();
   void init(); // Resets all of the subsystem's hardware 
+  void Periodic() override;
+
   void setPower(double power);
   double getSpeed();
-  
-
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic() override;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  
   ctre::phoenix::motorcontrol::can::WPI_TalonFX m_shootMotor1{CanIds::kShootMotor1};
   ctre::phoenix::motorcontrol::can::WPI_TalonFX m_shootMotor2{CanIds::kShootMotor2};
 };

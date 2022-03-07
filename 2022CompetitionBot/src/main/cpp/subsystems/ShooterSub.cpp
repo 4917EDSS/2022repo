@@ -9,11 +9,9 @@ ShooterSub::ShooterSub() {
 }
 
 void ShooterSub::init() { //Reset all hardware to a safe state
-    setPower(0.);
-
     m_shootMotor1.SetInverted(false);
     m_shootMotor2.SetInverted(true); 
-    //Plus anymore hardware added 
+    setPower(0.);
 
     m_shootMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
     m_shootMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);

@@ -13,7 +13,7 @@ IntakeJoystickCmd::IntakeJoystickCmd(IntakeSub* intakeSub, frc::Joystick *joysti
   m_joystickPtr = joystick;
 }
 
-double applyIntakeDeadband(double power) { 
+double IntakeJoystickCmd::applyDeadband(double power) { 
   return (fabs(power) <= kDeadband) ? 0. : power; 
 }
 
@@ -22,8 +22,8 @@ void IntakeJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void IntakeJoystickCmd::Execute() {
-  m_intakeSubPtr->setFrontRollerIntakeMotor(applyIntakeDeadband(-m_joystickPtr->GetY())); //Set power of front roller
-  m_intakeSubPtr->setMagazineMotor(applyIntakeDeadband(-m_joystickPtr->GetThrottle())); //Also set power of magazine 
+  m_intakeSubPtr->setFrontRollerIntakeMotor(applyDeadband(-m_joystickPtr->GetY())); //Set power of front roller
+  m_intakeSubPtr->setMagazineMotor(applyDeadband(-m_joystickPtr->GetThrottle())); //Also set power of magazine 
 }
 
 // Called once the command ends or is interrupted.

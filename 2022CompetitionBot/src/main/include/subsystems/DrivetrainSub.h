@@ -18,17 +18,17 @@
 class DrivetrainSub : public frc2::SubsystemBase {
  public:
   DrivetrainSub();
-
   void init(); // Resets all of the subsystem's hardware 
   void Periodic() override;
 
   void tankDrive(double lPower, double rPower);
   void arcadeDrive(double drivePwr, double rotatePwr);
+
   void shiftUp();
   void shiftDown();
-
   void autoShift();
   bool isShiftedInHighGear();
+
   void zeroDrivetrainEncoders();
 
   double getLeftEncoderRaw();

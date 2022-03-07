@@ -31,7 +31,10 @@ class DriveWithJoystickCmd
 private:
   DrivetrainSub *m_drivetrainSubPtr;
   frc::Joystick *m_joystickPtr;
-
   double m_curFwdPower;
   double m_curTurnPower;
+
+  double adjustSensitivity(double power);
+  double applyDeadband(double power);
+  double capAcceleration(double targetPower, double curPower, double maxAcceleration);
 };
