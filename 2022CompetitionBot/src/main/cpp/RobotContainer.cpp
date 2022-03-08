@@ -14,7 +14,8 @@
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
 #include "commands/ClimberArmCmd.h"
-
+#include "commands/ShiftLowCmd.h"
+#include "commands/ShiftHighCmd.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -60,6 +61,8 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
  */
 
 //Driver Buttons
+constexpr int kShiftLowDrvBtn = 5;
+constexpr int kShiftHighDrvBtn = 6;
 constexpr int kKillEverythingDrv1Btn = 11;
 constexpr int kKillEverythingDrv2Btn = 12;
 
@@ -88,6 +91,12 @@ RobotContainer::RobotContainer() : m_autonomousCommand() {
 void RobotContainer::ConfigureButtonBindings() {
   
   // Driver Controller Button Mapping
+  frc2::JoystickButton shiftLowDrvBtn(&m_driverController, kShiftLowDrvBtn);
+  shiftLowDrvBtn.WhenPressed(ShiftLowCmd(&m_drivetrainSub));
+
+  frc2::JoystickButton shiftHighDrvBtn(&m_driverController, kShiftHighDrvBtn);
+  shiftHighDrvBtn.WhenPressed(ShiftHighCmd(&m_drivetrainSub));
+
   frc2::JoystickButton killEverythingDrv1Btn(&m_driverController, kKillEverythingDrv1Btn);
   killEverythingDrv1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
@@ -148,6 +157,8 @@ void RobotContainer::initSmartDashboard(){
   frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kP);
   frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kD);
   frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kI);
+  frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
+  frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
 }
 
 void RobotContainer::updateDashboard() {
@@ -157,7 +168,8 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kD);
   frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kI);
   frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
-
+  frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
+  frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
