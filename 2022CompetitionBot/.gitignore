@@ -162,3 +162,4 @@ bin/
 *-window.json
 
 .~lock.Controller Mapping 2022.xlsx#
+*.bak

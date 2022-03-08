@@ -12,6 +12,7 @@
 #include "subsystems/ClimberSub.h"
 #include "subsystems/ShooterSub.h"
 #include "commands/AutoDoNothingCmd.h"
+#include <frc/smartdashboard/SendableChooser.h>
 
 constexpr int kDriverControllorPort = 0;
 constexpr int kOperatorControllorPort = 1;
@@ -39,9 +40,10 @@ class RobotContainer {
   IntakeSub m_intakeSub;
   ShooterSub m_shooterSub;
   ClimberSub m_climberSub;
-  AutoDoNothingCmd m_autonomousCommand;
   frc::Joystick m_driverController{kDriverControllorPort};
   frc::Joystick m_operatorController{kOperatorControllorPort};
+  frc::SendableChooser<frc2::Command*> m_autoChooser;
 
   void ConfigureButtonBindings();
+  void autoChooserSetup();
 };
