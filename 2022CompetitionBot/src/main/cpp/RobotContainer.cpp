@@ -13,6 +13,7 @@
 #include "commands/ShootCargoCmd.h"
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
+#include "commands/ClimberArmCmd.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -70,6 +71,8 @@ constexpr int kShootCargoLowOpBtn = 7;
 constexpr int kShootCargoHighOpBtn = 8;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
+constexpr int kClimberExtendOpBtn = 6;
+constexpr int kClimberRetractOpBtn = 5;
 
 
 RobotContainer::RobotContainer() : m_autonomousCommand() {
@@ -114,6 +117,11 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
   killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
+  frc2::JoystickButton climberExtendOpBtn(&m_operatorController, kClimberExtendOpBtn); //raise climber
+  climberExtendOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, true));
+  
+  frc2::JoystickButton climberRetractOpBtn(&m_operatorController, kClimberRetractOpBtn); // retract climber
+  climberRetractOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, false));
 
   // Axis mappint
   m_driverController.SetXChannel(0);

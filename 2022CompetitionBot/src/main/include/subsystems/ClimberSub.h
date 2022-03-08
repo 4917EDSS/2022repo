@@ -7,6 +7,7 @@
 #include <rev/CANSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
+#include <frc/Solenoid.h>
 #include "Constants.h"
 
 class ClimberSub : public frc2::SubsystemBase {
@@ -14,17 +15,19 @@ class ClimberSub : public frc2::SubsystemBase {
   ClimberSub();
   void init(); // Resets all of the subsystem's hardware 
   void Periodic() override;
+  
+  void raiseArmSeparation();
+  void lowerArmSeparation();
+  void toggleArmSeparation();
 
   void setClimberArmPower(double power);
-  void setPivotingArmClimbPower(double power);
-  void setPivotingArmPivotPower(double power);
   void zeroClimberEncoders(); 
-  void homeArm();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   ctre::phoenix::motorcontrol::can::WPI_TalonFX m_climbArmMotor{CanIds::kClimberArmbMotor};
-  
+
+  frc::Solenoid m_armSeparationSolenoid{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArmSeparation};
 };
 
