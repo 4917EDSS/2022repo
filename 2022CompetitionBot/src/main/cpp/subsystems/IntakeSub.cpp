@@ -5,8 +5,8 @@
 #include "subsystems/IntakeSub.h"
 
 //Constants
-constexpr int kFrontRollerIntakeMotorPower = 0.2;
-constexpr int kMagazineMotorPower = 0.2;
+constexpr double kFrontRollerIntakeMotorPower = 1.0;
+constexpr double kMagazineMotorPower = 0.5;
 
 
 IntakeSub::IntakeSub() :

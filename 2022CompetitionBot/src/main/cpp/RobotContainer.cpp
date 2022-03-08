@@ -140,6 +140,8 @@ void RobotContainer::initSmartDashboard(){
   frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kP);
   frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kD);
   frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kI);
+  frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
+  frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
 }
 
 void RobotContainer::updateDashboard() {
@@ -149,7 +151,8 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kD);
   frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kI);
   frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
-
+  frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
+  frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
