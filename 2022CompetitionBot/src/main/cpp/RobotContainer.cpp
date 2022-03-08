@@ -14,7 +14,9 @@
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
 #include "commands/ShootAndTaxiGrp.h"
-
+#include "commands/ClimberArmCmd.h"
+#include "commands/ShiftLowCmd.h"
+#include "commands/ShiftHighCmd.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -60,6 +62,8 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
  */
 
 //Driver Buttons
+constexpr int kShiftLowDrvBtn = 5;
+constexpr int kShiftHighDrvBtn = 6;
 constexpr int kKillEverythingDrv1Btn = 11;
 constexpr int kKillEverythingDrv2Btn = 12;
 
@@ -71,6 +75,8 @@ constexpr int kShootCargoLowOpBtn = 7;
 constexpr int kShootCargoHighOpBtn = 8;
 constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
+constexpr int kClimberExtendOpBtn = 6;
+constexpr int kClimberRetractOpBtn = 5;
 
 
 RobotContainer::RobotContainer() {
@@ -86,6 +92,12 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
   
   // Driver Controller Button Mapping
+  frc2::JoystickButton shiftLowDrvBtn(&m_driverController, kShiftLowDrvBtn);
+  shiftLowDrvBtn.WhenPressed(ShiftLowCmd(&m_drivetrainSub));
+
+  frc2::JoystickButton shiftHighDrvBtn(&m_driverController, kShiftHighDrvBtn);
+  shiftHighDrvBtn.WhenPressed(ShiftHighCmd(&m_drivetrainSub));
+
   frc2::JoystickButton killEverythingDrv1Btn(&m_driverController, kKillEverythingDrv1Btn);
   killEverythingDrv1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
@@ -115,6 +127,11 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton killEverythingOp2Btn(&m_operatorController, kKillEverythingOp2Btn);
   killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
+  frc2::JoystickButton climberExtendOpBtn(&m_operatorController, kClimberExtendOpBtn); //raise climber
+  climberExtendOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, true));
+  
+  frc2::JoystickButton climberRetractOpBtn(&m_operatorController, kClimberRetractOpBtn); // retract climber
+  climberRetractOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, false));
 
   // Axis mappint
   m_driverController.SetXChannel(0);

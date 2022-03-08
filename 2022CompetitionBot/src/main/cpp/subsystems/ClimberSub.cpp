@@ -17,7 +17,6 @@ void ClimberSub::init() { //Reset all hardware to a safe state
 
     setClimberArmPower(0.);
     zeroClimberEncoders();
-    homeArm();
 }
 
 // This method will be called once per scheduler run
@@ -31,7 +30,14 @@ void ClimberSub::zeroClimberEncoders() {
     // TODO   
 }
 
-//Put arms in home position so that everything is in known state for beginning of game
-void ClimberSub::homeArm(){
-    //TBD 
+void ClimberSub::raiseArmSeparation() {
+  m_armSeparationSolenoid.Set(true);
+}
+
+void ClimberSub::lowerArmSeparation() {
+  m_armSeparationSolenoid.Set(false);
+}
+
+void ClimberSub::toggleArmSeparation() {
+  m_armSeparationSolenoid.Set(!m_armSeparationSolenoid.Get());
 }
