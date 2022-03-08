@@ -76,6 +76,7 @@ constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
 constexpr int kClimberExtendOpBtn = 6;
 constexpr int kClimberRetractOpBtn = 5;
+constexpr int kArmSeparationOpBtn = 9;
 
 
 RobotContainer::RobotContainer() : m_autonomousCommand() {
@@ -131,6 +132,9 @@ void RobotContainer::ConfigureButtonBindings() {
   
   frc2::JoystickButton climberRetractOpBtn(&m_operatorController, kClimberRetractOpBtn); // retract climber
   climberRetractOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, false));
+// not finished still need command
+  // frc2::JoystickButton kArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn);
+  // newCmd.WhenPressed(newCmd(&m_climberSub, ));
 
   // Axis mappint
   m_driverController.SetXChannel(0);
