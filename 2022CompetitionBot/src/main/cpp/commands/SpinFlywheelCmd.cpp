@@ -35,7 +35,9 @@ void SpinFlywheelCmd::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void SpinFlywheelCmd::End(bool interrupted) {}
+void SpinFlywheelCmd::End(bool interrupted) {
+  m_shooterSubPtr->setPower(0);
+}
 
 // Returns true when the command should end.
 bool SpinFlywheelCmd::IsFinished() {
