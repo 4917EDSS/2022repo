@@ -13,6 +13,7 @@
 #include "commands/ShootCargoCmd.h"
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
+#include "commands/ShootAndTaxiGrp.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +73,7 @@ constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
 constexpr int kKillEverythingOp2Btn = 12;
 
 
-RobotContainer::RobotContainer() : m_autonomousCommand() {
+RobotContainer::RobotContainer() {
 
   // Initialize all of your commands and subsystems here
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
@@ -155,7 +156,14 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
 }
 
+void RobotContainer::autoChooserSetup() {
+  m_autoChooser.SetDefaultOption("Do nothing", new AutoDoNothingCmd());  
+  m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub));  
+
+  frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
+}
+
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &m_autonomousCommand;
+  return m_autoChooser.GetSelected();
 }
