@@ -17,6 +17,7 @@
 #include "commands/ClimberArmCmd.h"
 #include "commands/ShiftLowCmd.h"
 #include "commands/ShiftHighCmd.h"
+#include "commands/ArmSeparationCmd.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -133,11 +134,11 @@ void RobotContainer::ConfigureButtonBindings() {
   
   frc2::JoystickButton climberRetractOpBtn(&m_operatorController, kClimberRetractOpBtn); // retract climber
   climberRetractOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, false));
-// not finished still need command
-  // frc2::JoystickButton kArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn);
-  // newCmd.WhenPressed(newCmd(&m_climberSub, ));
 
-  // Axis mappint
+  frc2::JoystickButton ArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn); // arm separation cmd
+  ArmSeparationOpBtn.WhenPressed(ArmSeparationCmd(&m_climberSub,true ));
+
+  // Axis mapping
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);
   m_driverController.SetZChannel(2);

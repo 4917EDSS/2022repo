@@ -16,9 +16,9 @@ ClimberArmCmd::ClimberArmCmd(ClimberSub* climberSub, bool climberDirection) {
 // Called when the command is initially scheduled.
 void ClimberArmCmd::Initialize() {
   if (m_climberDirection){
-    m_climberSubPtr-> setClimberArmPower(kClimberArmPower);
-  } else {
     m_climberSubPtr-> setClimberArmPower(-kClimberArmPower);
+  } else {
+    m_climberSubPtr-> setClimberArmPower(kClimberArmPower);
   }
 
 }
