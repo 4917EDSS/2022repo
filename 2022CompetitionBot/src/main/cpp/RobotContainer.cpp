@@ -158,6 +158,14 @@ void RobotContainer::initSubsystems() {
   m_intakeSub.init(); 
 }
 
+void RobotContainer::initDashboard(){
+  frc::SmartDashboard::PutNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
+  frc::SmartDashboard::PutNumber("High Speed", m_shooterSub.m_upperBinSpeed);
+  frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kP);
+  frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kD);
+  frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kI);
+}
+
 void RobotContainer::updateDashboard() {
   m_shooterSub.m_lowerBinSpeed = frc::SmartDashboard::GetNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
   m_shooterSub.m_upperBinSpeed = frc::SmartDashboard::GetNumber("High Speed", m_shooterSub.m_upperBinSpeed);

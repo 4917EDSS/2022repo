@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/ShootCargoCmd.h"
-
+#include "iostream"
 
 ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -23,7 +23,7 @@ void ShootCargoCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootCargoCmd::Execute() {
-  int targetSpeed;
+  double targetSpeed;
   if(m_isUpperGoal) {
     targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
   } else {
@@ -37,7 +37,8 @@ void ShootCargoCmd::Execute() {
   m_shooterSubPtr->setPower((difference * m_shooterSubPtr->m_kP) + (i * m_shooterSubPtr->m_kI));
   m_previousI = i;
 
-  if(fabs(targetSpeed - speed) < 100) {
+  std::cout << "Shoot " << targetSpeed << " " << speed << " " << fabs(targetSpeed - speed) << "\n";
+  if(fabs(targetSpeed - speed) < 5000) {
     m_intakeSubPtr->enableMagazineMotor(false);
   } else {
     m_intakeSubPtr->disableMagazineMotor();
