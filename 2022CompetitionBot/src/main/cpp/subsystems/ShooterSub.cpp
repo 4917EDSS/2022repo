@@ -12,13 +12,12 @@ void ShooterSub::init() { //Reset all hardware to a safe state
     m_shootMotor1.SetInverted(false);
     m_shootMotor2.SetInverted(true); 
     setPower(0.);
-
     m_shootMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-    m_shootMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_shootMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms);
     m_shootMotor1.ConfigVelocityMeasurementWindow(4);
 
     m_shootMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-    m_shootMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_shootMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms);
     m_shootMotor2.ConfigVelocityMeasurementWindow(4);
 
     m_lowerBinSpeed = ShooterConstants::kDefaultLowerBinSpeed;
@@ -26,7 +25,6 @@ void ShooterSub::init() { //Reset all hardware to a safe state
     m_kP = ShooterConstants::kDefaultP;
     m_kI = ShooterConstants::kDefaultI;
     m_kD = ShooterConstants::kDefaultD;
-
 }
 
 // This method will be called once per scheduler run
