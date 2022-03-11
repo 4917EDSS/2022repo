@@ -2,26 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/ShiftLowCmd.h"
+#include "commands/ShiftAutoCmd.h"
 
-ShiftLowCmd::ShiftLowCmd(DrivetrainSub *drivetrainSub) {
+ShiftAutoCmd::ShiftAutoCmd(DrivetrainSub *drivetrainSub) {
   AddRequirements({drivetrainSub});
   m_drivetrainSubPtr = drivetrainSub;
+  // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
-void ShiftLowCmd::Initialize() {
-  m_drivetrainSubPtr->setIsAutoShift(false);
-  m_drivetrainSubPtr->shiftDown();
+void ShiftAutoCmd::Initialize() {
+  m_drivetrainSubPtr->setIsAutoShift(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ShiftLowCmd::Execute() {}
+void ShiftAutoCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void ShiftLowCmd::End(bool interrupted) {}
+void ShiftAutoCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ShiftLowCmd::IsFinished() {
+bool ShiftAutoCmd::IsFinished() {
   return false;
 }

@@ -42,6 +42,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
 
   double getHeading();
   double getTurnRate();
+  void setIsAutoShift(bool autoShiftActive);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -64,5 +65,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
 
   AHRS m_gyro{frc::SPI::kMXP};
 
+  bool m_isAutoShift;
+  
   double getEncoderRotationsToMeterFactor();
 };

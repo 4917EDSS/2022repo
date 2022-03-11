@@ -63,6 +63,7 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
  */
 
 //Driver Buttons
+constexpr int kShiftAuto = 4;
 constexpr int kShiftLowDrvBtn = 5;
 constexpr int kShiftHighDrvBtn = 6;
 constexpr int kKillEverythingDrv1Btn = 11;

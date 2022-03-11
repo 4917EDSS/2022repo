@@ -11,6 +11,7 @@ ShiftHighCmd::ShiftHighCmd(DrivetrainSub *drivetrainSub) {
 
 // Called when the command is initially scheduled.
 void ShiftHighCmd::Initialize() {
+  m_drivetrainSubPtr->setIsAutoShift(false);
   m_drivetrainSubPtr->shiftUp();
 }
 

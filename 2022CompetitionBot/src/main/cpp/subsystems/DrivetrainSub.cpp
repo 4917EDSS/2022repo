@@ -51,6 +51,9 @@ void  DrivetrainSub::shiftDown() { // Gear shift down
 }
 
 void DrivetrainSub::autoShift() {
+    if (!m_isAutoShift){
+        return;
+    }
     //get speed from robot
     double averageWheelSpeed = (getLeftVelocity() + getRightVelocity()) / 2.;
 
@@ -105,3 +108,9 @@ double DrivetrainSub::getHeading() {
 double DrivetrainSub::getTurnRate () {
     return m_gyro.GetRate() * (kGyroReversed ? -1. : 1.);
 }
+
+void DrivetrainSub::setIsAutoShift(bool autoShiftActive) {
+    m_isAutoShift = autoShiftActive;
+    return;
+}
+
