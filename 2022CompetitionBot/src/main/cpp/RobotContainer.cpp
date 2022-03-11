@@ -165,6 +165,7 @@ void RobotContainer::updateDashboard() {
   m_shooterSub.m_kD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kD);
   m_shooterSub.m_kI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kI);
   frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
+  frc::SmartDashboard::PutNumber("Climb Arm", m_climberSub.getClimberEncoders());
   frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
   frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderRaw());

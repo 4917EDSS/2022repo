@@ -27,17 +27,21 @@ void ClimberSub::setClimberArmPower(double power) {
 }
 
 void ClimberSub::zeroClimberEncoders() {
-    // TODO   
+    m_climbArmMotor.SetSelectedSensorPosition(0);
+}
+
+double ClimberSub::getClimberEncoders() {
+    return m_climbArmMotor.GetSelectedSensorPosition();
 }
 
 void ClimberSub::raiseArmSeparation() {
-  m_armSeparationSolenoid.Set(true);
+    m_armSeparationSolenoid.Set(true);
 }
 
 void ClimberSub::lowerArmSeparation() {
-  m_armSeparationSolenoid.Set(false);
+    m_armSeparationSolenoid.Set(false);
 }
 
 void ClimberSub::toggleArmSeparation() {
-  m_armSeparationSolenoid.Set(!m_armSeparationSolenoid.Get());
+    m_armSeparationSolenoid.Set(!m_armSeparationSolenoid.Get());
 }
