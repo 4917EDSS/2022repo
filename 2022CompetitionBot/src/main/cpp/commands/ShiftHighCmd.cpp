@@ -23,5 +23,5 @@ void ShiftHighCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ShiftHighCmd::IsFinished() {
-  return false;
+  return true;
 }

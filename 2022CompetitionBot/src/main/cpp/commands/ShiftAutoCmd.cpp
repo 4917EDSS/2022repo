@@ -13,6 +13,7 @@ ShiftAutoCmd::ShiftAutoCmd(DrivetrainSub *drivetrainSub) {
 // Called when the command is initially scheduled.
 void ShiftAutoCmd::Initialize() {
   m_drivetrainSubPtr->setIsAutoShift(true);
+  m_drivetrainSubPtr->autoShift();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,5 +24,5 @@ void ShiftAutoCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ShiftAutoCmd::IsFinished() {
-  return false;
+  return true;
 }
