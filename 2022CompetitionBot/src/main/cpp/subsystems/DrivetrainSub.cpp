@@ -7,8 +7,8 @@
 constexpr double kShiftUpSpeed = 2.35; //meters per second
 constexpr double kShiftDownSpeed = 1.15; 
 
-constexpr double kEncoderRotationsToMetersLowGear = 1.; //Find these actual values
-constexpr double kEncoderRotationsToMetersHighGear = 1.;
+constexpr double kEncoderRotationsToMetersLowGear = 204.44/5.0; //Find these actual values
+constexpr double kEncoderRotationsToMetersHighGear = 129.5/5.0;
 constexpr bool kGyroReversed = true;
 
 DrivetrainSub::DrivetrainSub() {
