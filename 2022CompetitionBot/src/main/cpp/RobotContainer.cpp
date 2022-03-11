@@ -177,6 +177,8 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderRaw());
   frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderRaw());
+  frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
+  frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
 }
 
 void RobotContainer::autoChooserSetup() {
