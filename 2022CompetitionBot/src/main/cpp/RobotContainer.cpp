@@ -116,10 +116,10 @@ void RobotContainer::ConfigureButtonBindings() {
   toggleIntakeArmOpBtn.WhenPressed(ToggleIntakeArmCmd(&m_intakeSub));
 
   frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn); //Low cargo shoot
-  shootCargoLowOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
+  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, false));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
 
   frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn); //High cargo shoot
-  shootCargoHighOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
+  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, true));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
   
   frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn); //Spin flywheel
   spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));
