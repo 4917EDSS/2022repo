@@ -29,7 +29,7 @@ void SpinFlywheelCmd::Execute() {
 
 
   double currentSpeed = m_shooterSubPtr->getSpeed();
-  double difference = (targetSpeed - currentSpeed) / targetSpeed;
+  double difference = (targetSpeed*2.0 - currentSpeed) / targetSpeed;
   m_shooterSubPtr->setPower(difference * m_shooterSubPtr->m_kP);
 }
 
