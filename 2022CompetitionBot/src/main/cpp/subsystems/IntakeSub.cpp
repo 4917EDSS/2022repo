@@ -72,17 +72,17 @@ void IntakeSub::zeroIntakeEncoders() {
 
 void IntakeSub::raiseIntake() {
   m_armSolenoid1.Set(true);
-  m_armSolenoid2.Set(true);
+  // m_armSolenoid2.Set(true);
 }
 
 void IntakeSub::lowerIntake() {
   m_armSolenoid1.Set(false);
-  m_armSolenoid2.Set(false);
+  // m_armSolenoid2.Set(false);
 }
 
 void IntakeSub::toggleIntakeArm() {
   m_armSolenoid1.Set(!m_armSolenoid1.Get());
-  m_armSolenoid2.Set(!m_armSolenoid2.Get());
+  // m_armSolenoid2.Set(!m_armSolenoid2.Get());
 }
 
 bool IntakeSub::isCargoAtMagazineBack(){
