@@ -41,7 +41,6 @@ class IntakeSub : public frc2::SubsystemBase {
   rev::CANSparkMax m_magazineMotor{CanIds::kMagazineMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   frc::Solenoid m_armSolenoid1{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm1};
-  // frc::Solenoid m_armSolenoid2{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm2};
 
   frc::DigitalInput m_magazineFrontSensor;
   frc::DigitalInput m_magazineTopSensor;

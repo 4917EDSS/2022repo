@@ -9,7 +9,6 @@
 
 void Robot::RobotInit() {
   fmt::print("Robot v1.0");
-  m_container.initSmartDashboard();
 }
 
 /**
