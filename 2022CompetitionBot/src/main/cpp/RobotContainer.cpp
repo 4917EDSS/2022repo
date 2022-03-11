@@ -18,6 +18,7 @@
 #include "commands/ShiftLowCmd.h"
 #include "commands/ShiftHighCmd.h"
 #include "commands/ArmSeparationCmd.h"
+#include "commands/ShiftAutoCmd.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -101,6 +102,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton shiftHighDrvBtn(&m_driverController, kShiftHighDrvBtn);
   shiftHighDrvBtn.WhenPressed(ShiftHighCmd(&m_drivetrainSub));
 
+  frc2::JoystickButton shiftAuto(&m_driverController, kShiftAuto);
+  shiftAuto.WhenPressed(ShiftAutoCmd(&m_drivetrainSub));
+
   frc2::JoystickButton killEverythingDrv1Btn(&m_driverController, kKillEverythingDrv1Btn);
   killEverythingDrv1Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
@@ -116,10 +120,10 @@ void RobotContainer::ConfigureButtonBindings() {
   toggleIntakeArmOpBtn.WhenPressed(ToggleIntakeArmCmd(&m_intakeSub));
 
   frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn); //Low cargo shoot
-  shootCargoLowOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, false));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
+  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, false));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
 
   frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn); //High cargo shoot
-  shootCargoHighOPBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
+  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, true));  // TODO:  Change SpinFlywheelCmd to ShootCargoCmd when ready
   
   frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn); //Spin flywheel
   spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));
@@ -172,13 +176,16 @@ void RobotContainer::updateDashboard() {
   m_shooterSub.m_kP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kP);
   m_shooterSub.m_kD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kD);
   m_shooterSub.m_kI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kI);
+  frc::SmartDashboard::PutNumber("Speed", m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity() / 2);
   frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
+  frc::SmartDashboard::PutNumber("Climb Arm", m_climberSub.getClimberEncoders());
   frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
   frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderRaw());
   frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderRaw());
   frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
+  
 }
 
 void RobotContainer::autoChooserSetup() {
