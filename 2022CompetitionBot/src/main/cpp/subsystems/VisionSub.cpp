@@ -5,9 +5,9 @@
 #include "subsystems/VisionSub.h"
 
 VisionSub::VisionSub() {
-    visInit();
+    init();
 }
-void VisionSub::visInit() {
+void VisionSub::init() {
     frc::ShuffleboardTab& visTab = frc::Shuffleboard::GetTab("Vision Data");
     distEntry = visTab.Add("Distance to goal",0.).GetEntry();
 }

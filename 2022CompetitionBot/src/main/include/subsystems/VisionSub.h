@@ -20,7 +20,7 @@ namespace VisionConstants {
 class VisionSub : public frc2::SubsystemBase {
  public:
   VisionSub();
-  void visInit();
+  void init();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

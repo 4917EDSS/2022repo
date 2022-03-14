@@ -160,6 +160,7 @@ void RobotContainer::initSubsystems() {
   m_shooterSub.init();
   m_climberSub.init();
   m_intakeSub.init(); 
+  m_visionSub.init();
 }
 
 void RobotContainer::initDashboard(){
