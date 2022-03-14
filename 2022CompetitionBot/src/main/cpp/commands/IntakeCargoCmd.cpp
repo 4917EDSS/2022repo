@@ -12,10 +12,8 @@ IntakeCargoCmd::IntakeCargoCmd(IntakeSub* intakeSub) {
 
 // Called when the command is initially scheduled.
 void IntakeCargoCmd::Initialize() {
-  if(!m_intakeSubPtr->isCargoAtMagazineBack()) {
-    m_intakeSubPtr->lowerIntake();
-    m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
-  }
+  m_intakeSubPtr->lowerIntake();
+  m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -24,9 +22,6 @@ void IntakeCargoCmd::Execute() {
     m_intakeSubPtr->enableMagazineMotor(false);
   } else {
     m_intakeSubPtr->disableMagazineMotor();
-  }
-  if(m_intakeSubPtr->isCargoAtMagazineBack()) {
-    m_intakeSubPtr->disableFrontRollerIntakeMotor();
   }
 }
 
@@ -39,8 +34,5 @@ void IntakeCargoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool IntakeCargoCmd::IsFinished() {
-  if(m_intakeSubPtr->isCargoAtMagazineBack()) {
-    return true;
-  }
   return false;
 }

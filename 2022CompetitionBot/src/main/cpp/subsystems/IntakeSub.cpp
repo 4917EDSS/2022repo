@@ -83,19 +83,11 @@ void IntakeSub::toggleIntakeArm() {
 }
 
 bool IntakeSub::isCargoAtMagazineBack(){
-  if(m_magazineTopSensor.Get()) {
-    return true;
-  } else {
-    return false;
-  } 
+  return (!m_magazineTopSensor.Get());
 }
 
 bool IntakeSub::isCargoAtMagazineFront(){
-  if(m_magazineFrontSensor.Get()) {
-    return true;
-  } else {
-   return false;
-  }
+  return (!m_magazineFrontSensor.Get());
 }
 
 

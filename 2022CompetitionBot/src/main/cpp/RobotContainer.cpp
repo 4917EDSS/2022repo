@@ -179,12 +179,12 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutNumber("Speed", (m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity()) / 2);
   frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
   frc::SmartDashboard::PutNumber("Climb Arm", m_climberSub.getClimberEncoders());
-  frc::SmartDashboard::PutNumber("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
-  frc::SmartDashboard::PutNumber("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
   frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderDistanceM());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderDistanceM());
   frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
+  frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
+  frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
 
   
 }
