@@ -3,12 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/DrivetrainSub.h"
+#include <iostream>
 
-constexpr double kShiftUpSpeed = 2.35; //meters per second
-constexpr double kShiftDownSpeed = 1.15; 
+constexpr double kShiftUpSpeed = 1.6; //meters per second
+constexpr double kShiftDownSpeed = 1.4; 
 
-constexpr double kEncoderRotationsToMetersLowGear = 204.44/5.0; //Find these actual values
-constexpr double kEncoderRotationsToMetersHighGear = 129.5/5.0;
+constexpr double kEncoderRotationsToMetersLowGear = 5.0/204.44; //Find these actual values
+constexpr double kEncoderRotationsToMetersHighGear = 5.0/129.5;
 constexpr bool kGyroReversed = true;
 
 DrivetrainSub::DrivetrainSub() {
@@ -27,6 +28,7 @@ void DrivetrainSub::init() { //Reset all hardware to a safe state
     zeroDrivetrainEncoders();
     tankDrive(0., 0.);
     shiftDown();
+    setIsAutoShift(true);
 
     m_gyro.Reset();
 }
@@ -94,11 +96,11 @@ double DrivetrainSub::getEncoderRotationsToMeterFactor() {
 }
 
 double DrivetrainSub::getLeftVelocity() {
-    return m_leftMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
+    return m_leftMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() / 60.; //In meters per second
 }
 
 double DrivetrainSub::getRightVelocity() {
-    return m_rightMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() * 60.; //In meters per second
+    return m_rightMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() / 60.; //In meters per second
 }
 
 double DrivetrainSub::getHeading() {
