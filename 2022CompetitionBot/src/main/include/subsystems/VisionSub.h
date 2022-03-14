@@ -8,11 +8,19 @@
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableEntry.h"
 #include "networktables/NetworkTableInstance.h"
+#include <frc/shuffleboard/ShuffleboardTab.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+
+namespace VisionConstants {
+  constexpr double kMountAngleDegrees = 23.5; //Degrees that camera is rotated back from vertical
+  constexpr double kLensHeightInches = 32.5; //Distance from floor to center of camera in inches
+  constexpr double kGoalHeightInches = 95.0; //Will need to be changed
+}
 
 class VisionSub : public frc2::SubsystemBase {
  public:
   VisionSub();
-
+  void visInit();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -28,7 +36,11 @@ class VisionSub : public frc2::SubsystemBase {
   double getTargetArea() {return getTable()->GetNumber("ta",0.0); }
   double getTargetSkew() {return getTable()->GetNumber("ts",0.0); }
 
+  double estimateDistanceInches();
+
  private:
+  
+  nt::NetworkTableEntry distEntry;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };

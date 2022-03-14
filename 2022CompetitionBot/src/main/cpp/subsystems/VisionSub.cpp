@@ -5,8 +5,23 @@
 #include "subsystems/VisionSub.h"
 
 VisionSub::VisionSub() {
-    
+    visInit();
+}
+void VisionSub::visInit() {
+    frc::ShuffleboardTab& visTab = frc::Shuffleboard::GetTab("Vision Data");
+    distEntry = visTab.Add("Distance to goal",0.).GetEntry();
+}
+// This method will be called once per scheduler run
+void VisionSub::Periodic() {
+    distEntry.SetDouble(VisionSub::estimateDistanceInches());
 }
 
-// This method will be called once per scheduler run
-void VisionSub::Periodic() {}
+double VisionSub::estimateDistanceInches() { //estimate from camera to goal
+    double verticalOffset = VisionSub::getVerticalAngle();
+
+    double angleToGoal = VisionConstants::kMountAngleDegrees+verticalOffset;
+    double goalToRadians = angleToGoal*(3.14159/180.0);
+
+    double distToGoal = (VisionConstants::kGoalHeightInches-VisionConstants::kLensHeightInches)/tan(goalToRadians);
+    return distToGoal;
+}
