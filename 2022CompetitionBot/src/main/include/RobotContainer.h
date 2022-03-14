@@ -11,6 +11,7 @@
 #include "subsystems/IntakeSub.h"
 #include "subsystems/ClimberSub.h"
 #include "subsystems/ShooterSub.h"
+#include "subsystems/VisionSub.h"
 #include "commands/AutoDoNothingCmd.h"
 #include <frc/smartdashboard/SendableChooser.h>
 
@@ -31,6 +32,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
   void initSubsystems();
+  void initDashboard();
   void updateDashboard();
 
  private:
@@ -39,6 +41,7 @@ class RobotContainer {
   IntakeSub m_intakeSub;
   ShooterSub m_shooterSub;
   ClimberSub m_climberSub;
+  VisionSub m_visionSub;
   frc::Joystick m_driverController{kDriverControllorPort};
   frc::Joystick m_operatorController{kOperatorControllorPort};
   frc::SendableChooser<frc2::Command*> m_autoChooser;

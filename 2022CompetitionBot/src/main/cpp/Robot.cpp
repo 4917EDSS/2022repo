@@ -8,7 +8,8 @@
 #include <frc2/command/CommandScheduler.h>
 
 void Robot::RobotInit() {
-  fmt::print("Robot v1.0");
+  fmt::print("Robot v1.1");
+  m_container.initDashboard();
 }
 
 /**

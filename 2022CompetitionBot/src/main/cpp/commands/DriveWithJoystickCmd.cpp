@@ -73,7 +73,7 @@ void DriveWithJoystickCmd::Execute() {
   m_curFwdPower = fwdPower;
   m_curTurnPower = turnPower;
 
-  // m_drivetrainSubPtr->autoShift();
+  m_drivetrainSubPtr->autoShift();
 }
 
 // Called once the command ends or is interrupted.

@@ -11,8 +11,8 @@
 
 namespace ShooterConstants {
   //All values need to be updated and tested
-  constexpr int kDefaultLowerBinSpeed = 10000;
-  constexpr int kDefaultUpperBinSpeed = 20000; //Max speed
+  constexpr double kDefaultLowerBinSpeed = 10000.0;
+  constexpr double kDefaultUpperBinSpeed = 20000.0; 
   constexpr double kDefaultF = 0;
   constexpr double kDefaultP = 1;
   constexpr double kDefaultI = 0;
@@ -21,8 +21,8 @@ namespace ShooterConstants {
 
 class ShooterSub : public frc2::SubsystemBase {
  public:
-  int m_lowerBinSpeed;
-  int m_upperBinSpeed;
+  double m_lowerBinSpeed;
+  double m_upperBinSpeed;
   double m_kF; 
   double m_kP;
   double m_kI;
