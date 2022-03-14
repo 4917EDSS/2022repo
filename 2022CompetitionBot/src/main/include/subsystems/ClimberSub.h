@@ -22,7 +22,7 @@ class ClimberSub : public frc2::SubsystemBase {
 
   void setClimberArmPower(double power);
   void zeroClimberEncoders(); 
-  double getClimberEncoders();
+  double getClimberEncoder();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

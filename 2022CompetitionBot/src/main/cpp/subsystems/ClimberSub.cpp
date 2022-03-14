@@ -23,15 +23,15 @@ void ClimberSub::init() { //Reset all hardware to a safe state
 void ClimberSub::Periodic() {}
 
 void ClimberSub::setClimberArmPower(double power) {
-    m_climbArmMotor.Set(power);
+    m_climbArmMotor.Set(-power);
 }
 
 void ClimberSub::zeroClimberEncoders() {
     m_climbArmMotor.SetSelectedSensorPosition(0);
 }
 
-double ClimberSub::getClimberEncoders() {
-    return m_climbArmMotor.GetSelectedSensorPosition();
+double ClimberSub::getClimberEncoder() {
+    return -m_climbArmMotor.GetSelectedSensorPosition();
 }
 
 void ClimberSub::raiseArmSeparation() {
