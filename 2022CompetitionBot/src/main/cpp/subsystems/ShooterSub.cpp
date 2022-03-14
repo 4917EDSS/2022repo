@@ -22,9 +22,19 @@ void ShooterSub::init() { //Reset all hardware to a safe state
 
     m_lowerBinSpeed = ShooterConstants::kDefaultLowerBinSpeed;
     m_upperBinSpeed = ShooterConstants::kDefaultUpperBinSpeed;
+    m_kF = ShooterConstants::kDefaultF;
     m_kP = ShooterConstants::kDefaultP;
     m_kI = ShooterConstants::kDefaultI;
     m_kD = ShooterConstants::kDefaultD;
+
+
+    int kTimeoutMs = 30;
+    m_shootMotor2.Follow(m_shootMotor1);
+    m_shootMotor1.Config_kF(0, m_kF, kTimeoutMs);
+    m_shootMotor1.Config_kP(0, m_kP, kTimeoutMs);
+    m_shootMotor1.Config_kI(0, m_kI, kTimeoutMs);
+    m_shootMotor1.Config_kD(0, m_kD, kTimeoutMs);
+
 }
 
 // This method will be called once per scheduler run
@@ -34,6 +44,10 @@ void ShooterSub::Periodic() {}
 void ShooterSub::setPower(double power) {
     m_shootMotor1.Set(power);
     m_shootMotor2.Set(power); 
+}
+
+void ShooterSub::autoVelocity(double velocity) {
+    m_shootMotor1.Set(ControlMode::Velocity, velocity); 
 }
 
 double ShooterSub::getSpeed() {
