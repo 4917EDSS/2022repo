@@ -34,7 +34,7 @@ private:
   double m_curFwdPower;
   double m_curTurnPower;
 
-  double adjustSensitivity(double power);
+  double adjustSensitivity(double power, int kForwardSensitivityPower);
   double applyDeadband(double power);
   double capAcceleration(double targetPower, double curPower, double maxAcceleration);
 };

@@ -4,7 +4,8 @@
 
 #include "commands/DriveWithJoystickCmd.h"
 
-constexpr int kSensitivityPower = 2;
+constexpr int kTurnSensitivityPower = 3;
+constexpr int kForwardSensitivityPower = 2;
 constexpr double kDeadband = 0.03;
 constexpr double kMaxForwardAccl = 0.1;
 constexpr double kMaxTurnAccl = 0.08;
@@ -19,9 +20,9 @@ DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Jo
 
 }
 
-double DriveWithJoystickCmd::adjustSensitivity(double power) {
+double DriveWithJoystickCmd::adjustSensitivity(double power, int sensitivity) {
   double dir = (power < 0) ? -1. : 1.; 
-  power = pow(fabs(power),kSensitivityPower) * dir; 
+  power = pow(fabs(power),sensitivity) * dir; 
 
   return power;
 }
@@ -60,8 +61,8 @@ void DriveWithJoystickCmd::Execute() {
   double fwdPower = -m_joystickPtr->GetY();
   double turnPower = m_joystickPtr->GetZ();
 
-  fwdPower = adjustSensitivity(fwdPower);
-  turnPower = adjustSensitivity(turnPower);
+  fwdPower = adjustSensitivity(fwdPower, kForwardSensitivityPower);
+  turnPower = adjustSensitivity(turnPower, kTurnSensitivityPower);
 
   fwdPower = capAcceleration(fwdPower, m_curFwdPower, kMaxForwardAccl);
   turnPower = capAcceleration(turnPower, m_curTurnPower, kMaxTurnAccl);
