@@ -19,5 +19,5 @@ void KillEverythingCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool KillEverythingCmd::IsFinished() {
-  return false;
+  return true;
 }

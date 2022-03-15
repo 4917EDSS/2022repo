@@ -13,6 +13,7 @@
 #include "subsystems/ShooterSub.h"
 #include "subsystems/VisionSub.h"
 #include "commands/AutoDoNothingCmd.h"
+#include "commands/AligntoVisionCmd.h"
 #include <frc/smartdashboard/SendableChooser.h>
 
 constexpr int kDriverControllorPort = 0;

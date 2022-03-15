@@ -31,7 +31,7 @@ class VisionSub : public frc2::SubsystemBase {
 
 
   //Get raw values for stuff
-  double getHorizontalAngle() {return getTable()->GetNumber("tx",0.0); }
+  double getHorizontalAngle() {return getTable()->GetNumber("tx",0.0); }//Resolution of limelight is 320x240
   double getVerticalAngle() {return getTable()->GetNumber("ty",0.0); }
   double getTargetArea() {return getTable()->GetNumber("ta",0.0); }
   double getTargetSkew() {return getTable()->GetNumber("ts",0.0); }
@@ -41,6 +41,7 @@ class VisionSub : public frc2::SubsystemBase {
  private:
   
   nt::NetworkTableEntry distEntry;
+  nt::NetworkTableEntry angleEntry;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };
