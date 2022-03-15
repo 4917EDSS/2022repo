@@ -17,6 +17,10 @@ ClimberArmCmd::ClimberArmCmd(ClimberSub* climberSub, bool climberDirection) {
 
 // Called when the command is initially scheduled.
 void ClimberArmCmd::Initialize() {
+}
+
+// Called repeatedly when this Command is scheduled to run
+void ClimberArmCmd::Execute() {
   if (m_climberDirection && (m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight)){
     m_climberSubPtr->setClimberArmPower(kClimberArmPower);
   } else if (!m_climberDirection && (m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight)) {
@@ -26,9 +30,6 @@ void ClimberArmCmd::Initialize() {
   }
 }
 
-// Called repeatedly when this Command is scheduled to run
-void ClimberArmCmd::Execute() {}
-
 // Called once the command ends or is interrupted.
 void ClimberArmCmd::End(bool interrupted) {
   m_climberSubPtr->setClimberArmPower(0.);
@@ -36,5 +37,11 @@ void ClimberArmCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ClimberArmCmd::IsFinished() {
-  return false;
+  if (m_climberDirection && (m_climberSubPtr->getClimberEncoder() > kClimberArmMaxHeight)) {
+    return true;
+  } else if (!m_climberDirection && (m_climberSubPtr->getClimberEncoder() < kClimberArmMinHeight)) {
+    return true;
+  } else {
+    return false;
+  }
 }
