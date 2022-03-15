@@ -9,28 +9,23 @@ SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, bool isUpperGoal) {
   AddRequirements({shooterSub});
   m_shooterSubPtr = shooterSub;
   m_isUpperGoal = isUpperGoal;
+
+  if(m_isUpperGoal) {
+    m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+  } else {
+    m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
+  }
 }
 
 // Called when the command is initially scheduled.
 void SpinFlywheelCmd::Initialize() {
-  m_shooterSubPtr->setPower(0);
+  //m_shooterSubPtr->setPower(0);
+  m_shooterSubPtr->autoVelocity(m_targetSpeed);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SpinFlywheelCmd::Execute() {
-  int targetSpeed;
 
-  // Get the latest target speed (can be changed on Dashboard)
-  if(m_isUpperGoal) {
-    targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
-  } else {
-    targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
-  }
-
-
-  double currentSpeed = m_shooterSubPtr->getSpeed();
-  double difference = (targetSpeed*2.0 - currentSpeed) / targetSpeed;
-  m_shooterSubPtr->setPower(difference * m_shooterSubPtr->m_kP);
 }
 
 // Called once the command ends or is interrupted.

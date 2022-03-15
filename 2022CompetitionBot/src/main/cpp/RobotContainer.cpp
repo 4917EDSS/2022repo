@@ -21,6 +21,7 @@
 #include "commands/ShiftAutoCmd.h"
 #include "commands/TaxiGrp.h"
 #include "commands/TwoBallAutoGrp.h"
+#include "commands/AlignThenShootGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -66,6 +67,8 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
  */
 
 //Driver Buttons
+
+constexpr int kAlignThenShoot = 1;
 constexpr int kAligntoVision = 3;
 constexpr int kShiftAuto = 4;
 constexpr int kShiftLowDrvBtn = 5;
@@ -116,6 +119,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton killEverythingDrv2Btn(&m_driverController, kKillEverythingDrv2Btn);
   killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
+
+  frc2::JoystickButton AlignThenShoot(&m_driverController,kAlignThenShoot);
+  AlignThenShoot.WhenPressed(AlignThenShootGrp(&m_shooterSub,&m_visionSub,&m_drivetrainSub,&m_intakeSub));
 
   
   // Operator Controller Button Mapping

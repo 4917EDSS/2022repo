@@ -14,16 +14,18 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool 
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
 
-  if(m_isUpperGoal) {
-    m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
-  } else {
-    m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
-  }
+  
 }
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
   m_shooterSubPtr->autoVelocity(m_targetSpeed);
+
+  if(m_isUpperGoal) {
+    m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+  } else {
+    m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run

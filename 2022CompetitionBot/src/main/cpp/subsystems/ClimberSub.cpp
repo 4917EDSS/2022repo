@@ -12,7 +12,7 @@ void ClimberSub::init() { //Reset all hardware to a safe state
     m_climbArmMotor.SetInverted(false);
 
     m_climbArmMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-    m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+    m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms); //Make sure to use SensorVelocityMeasPeriod because VelocityMeasPeriod is depricated
     m_climbArmMotor.ConfigVelocityMeasurementWindow(4);
     m_climbArmMotor.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
     setClimberArmPower(0.);
