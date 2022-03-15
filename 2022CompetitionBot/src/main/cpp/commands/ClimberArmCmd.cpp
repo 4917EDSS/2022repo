@@ -5,8 +5,8 @@
 #include "commands/ClimberArmCmd.h"
 
 constexpr double kClimberArmPower = 0.3;
-constexpr int kClimberArmMaxHeight = 100000;
-constexpr int kClimberArmMinHeight = 1000;
+constexpr int kClimberArmMaxHeight = 105000;
+constexpr int kClimberArmMinHeight = 2600;
 
 ClimberArmCmd::ClimberArmCmd(ClimberSub* climberSub, bool climberDirection) {
   // Use addRequirements() here to declare subsystem dependencies.
