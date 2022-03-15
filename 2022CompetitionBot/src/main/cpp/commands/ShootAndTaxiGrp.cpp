@@ -12,5 +12,5 @@
 ShootAndTaxiGrp::ShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands(ShootCargoCmd(shooterSub, intakeSub, true), DriveStraightCmd(drivetrainSub));
+  AddCommands(ShootCargoCmd(shooterSub, intakeSub, true), DriveStraightCmd(drivetrainSub, 3));//Drives 3 meters
 }

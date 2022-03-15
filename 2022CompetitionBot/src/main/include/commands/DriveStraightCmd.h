@@ -18,7 +18,7 @@
 class DriveStraightCmd
     : public frc2::CommandHelper<frc2::CommandBase, DriveStraightCmd> {
  public:
-  DriveStraightCmd(DrivetrainSub *drivetrainSub);
+  DriveStraightCmd(DrivetrainSub *drivetrainSub, double driveStraightDistance);
 
   void Initialize() override;
 
@@ -30,5 +30,5 @@ class DriveStraightCmd
 
 private:
   DrivetrainSub *m_drivetrainSubPtr;
-
+  double m_driveStraightDistance;
 };
