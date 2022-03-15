@@ -12,7 +12,7 @@
 #include <frc/shuffleboard/Shuffleboard.h>
 
 namespace VisionConstants {
-  constexpr double kMountAngleDegrees = 23.5; //Degrees that camera is rotated back from vertical
+  constexpr double kMountAngleDegrees = 21.0; //Degrees that camera is rotated back from vertical
   constexpr double kLensHeightInches = 32.5; //Distance from floor to center of camera in inches
   constexpr double kGoalHeightInches = 95.0; //Will need to be changed
 }
