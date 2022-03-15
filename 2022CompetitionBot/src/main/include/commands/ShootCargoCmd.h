@@ -34,5 +34,5 @@ private:
   IntakeSub *m_intakeSubPtr;
 
   int m_isUpperGoal;
-  double m_previousI;
+  double m_targetSpeed;
 };
