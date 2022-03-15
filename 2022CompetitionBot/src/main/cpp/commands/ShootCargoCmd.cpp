@@ -15,17 +15,19 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool 
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
 
+  
+}
+
+// Called when the command is initially scheduled.
+void ShootCargoCmd::Initialize() {
+  m_ballLastSeenTime = frc::RobotController::GetFPGATime();
+
   if(m_isUpperGoal) {
     m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
   } else {
     m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
   }
-}
-
-// Called when the command is initially scheduled.
-void ShootCargoCmd::Initialize() {
   m_shooterSubPtr->autoVelocity(m_targetSpeed);
-  m_ballLastSeenTime = frc::RobotController::GetFPGATime();
 }
 
 // Called repeatedly when this Command is scheduled to run

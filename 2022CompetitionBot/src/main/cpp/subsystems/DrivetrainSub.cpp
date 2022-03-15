@@ -5,7 +5,7 @@
 #include "subsystems/DrivetrainSub.h"
 #include <iostream>
 
-constexpr double kShiftUpSpeed = 1.6; //meters per second
+constexpr double kShiftUpSpeed = 1.8; //meters per second
 constexpr double kShiftDownSpeed = 1.4; 
 
 constexpr double kEncoderRotationsToMetersLowGear = 5.0/204.44; //Find these actual values
@@ -41,7 +41,7 @@ void  DrivetrainSub::tankDrive(double lPower, double rPower) {
 }
 
 void DrivetrainSub::arcadeDrive(double drivePwr, double rotatePwr) {
-    m_drive.ArcadeDrive(drivePwr, rotatePwr);
+    m_drive.TankDrive(drivePwr+rotatePwr, drivePwr-rotatePwr);
 }
 
 void  DrivetrainSub::shiftUp() { //Gear shift up
