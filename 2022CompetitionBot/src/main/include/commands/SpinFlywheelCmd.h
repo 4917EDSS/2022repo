@@ -32,4 +32,5 @@ class SpinFlywheelCmd
  private:
   ShooterSub* m_shooterSubPtr;
   bool m_isUpperGoal;
+  double m_targetSpeed;
 };
