@@ -166,19 +166,16 @@ void RobotContainer::initSubsystems() {
 void RobotContainer::initDashboard(){
   frc::SmartDashboard::PutNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
   frc::SmartDashboard::PutNumber("High Speed", m_shooterSub.m_upperBinSpeed);
-  frc::SmartDashboard::PutNumber("Shoot kF", m_shooterSub.m_kNewF);
-  frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kNewP);
-  frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kNewD);
-  frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kNewI);
+    //Mess up current shooter speed
+  //frc::SmartDashboard::PutNumber("Shoot kF", m_shooterSub.m_kNewF);
+  //frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kNewP);
+  //frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kNewD);
+  //frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kNewI);
 }
 
 void RobotContainer::updateDashboard() {
   m_shooterSub.m_lowerBinSpeed = frc::SmartDashboard::GetNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
   m_shooterSub.m_upperBinSpeed = frc::SmartDashboard::GetNumber("High Speed", m_shooterSub.m_upperBinSpeed);
-  m_shooterSub.m_kNewF = frc::SmartDashboard::GetNumber("Shoot kF", m_shooterSub.m_kNewF);
-  m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
-  m_shooterSub.m_kNewD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kNewD);
-  m_shooterSub.m_kNewI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kNewI);
   frc::SmartDashboard::PutNumber("Speed", (m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity()) / 2);
   frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
   frc::SmartDashboard::PutNumber("Climb Arm", m_climberSub.getClimberEncoder());
@@ -189,6 +186,11 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
   frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
   frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
+  //Mess up current shooter speed
+  //m_shooterSub.m_kNewF = frc::SmartDashboard::GetNumber("Shoot kF", m_shooterSub.m_kNewF);
+  //m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
+  //m_shooterSub.m_kNewD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kNewD);
+  //m_shooterSub.m_kNewI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kNewI);
 }
 
 void RobotContainer::autoChooserSetup() {

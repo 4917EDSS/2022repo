@@ -14,9 +14,9 @@ namespace ShooterConstants {
   constexpr double kDefaultLowerBinSpeed = 10000.0;
   constexpr double kDefaultUpperBinSpeed = 20000.0; 
   constexpr double kShootTolerance = 5000.0;
-  constexpr double kDefaultF = 0.04;
+  constexpr double kDefaultF = 0.044;
   constexpr double kDefaultP = 0.05;
-  constexpr double kDefaultI = 0;
+  constexpr double kDefaultI = 0.001;
   constexpr double kDefaultD = 0;
 }
 
