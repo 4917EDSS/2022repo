@@ -19,6 +19,8 @@
 #include "commands/ShiftHighCmd.h"
 #include "commands/ArmSeparationCmd.h"
 #include "commands/ShiftAutoCmd.h"
+#include "commands/TaxiGrp.h"
+#include "commands/TwoBallAutoGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -196,6 +198,8 @@ void RobotContainer::updateDashboard() {
 void RobotContainer::autoChooserSetup() {
   m_autoChooser.SetDefaultOption("Do nothing", new AutoDoNothingCmd());  
   m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub));  
+  m_autoChooser.AddOption("Taxi", new TaxiGrp(&m_drivetrainSub));
+  m_autoChooser.AddOption("Two Ball Auto", new TwoBallAutoGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }

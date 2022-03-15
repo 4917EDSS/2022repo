@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+
 #include "subsystems/DrivetrainSub.h"
 
 /**
@@ -15,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class DriveStraightCmd
-    : public frc2::CommandHelper<frc2::CommandBase, DriveStraightCmd> {
+class RotateRobotCmd
+    : public frc2::CommandHelper<frc2::CommandBase, RotateRobotCmd> {
  public:
-  DriveStraightCmd(DrivetrainSub *drivetrainSub, double driveStraightDistance);
+  RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle);
 
   void Initialize() override;
 
@@ -27,8 +28,4 @@ class DriveStraightCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
-private:
-  DrivetrainSub *m_drivetrainSubPtr;
-  double m_driveStraightDistance;
 };
