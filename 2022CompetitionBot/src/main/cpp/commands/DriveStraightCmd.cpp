@@ -29,7 +29,7 @@ void DriveStraightCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool DriveStraightCmd::IsFinished() {
-  if ((m_drivetrainSubPtr->getLeftEncoderDistanceM()>m_driveStraightDistance) && (m_drivetrainSubPtr->getLeftEncoderDistanceM()>m_driveStraightDistance)) {
+  if ((m_drivetrainSubPtr->getLeftEncoderDistanceM()>m_driveStraightDistance) && (m_drivetrainSubPtr->getRightEncoderDistanceM()>m_driveStraightDistance)) {
     return true;
   }
   return false;
