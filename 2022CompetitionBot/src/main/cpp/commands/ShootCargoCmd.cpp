@@ -13,32 +13,22 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool 
   m_shooterSubPtr = shooterSub;
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
+
+  if(m_isUpperGoal) {
+    m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+  } else {
+    m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
+  }
 }
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
-  m_shooterSubPtr->setPower(0);
-  m_previousI = 0;
+  m_shooterSubPtr->autoVelocity(m_targetSpeed);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShootCargoCmd::Execute() {
-  double targetSpeed;
-  if(m_isUpperGoal) {
-    targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
-  } else {
-    targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
-  }
-  double speed = m_shooterSubPtr->getSpeed();
-  double i = m_previousI;
-  double difference = (targetSpeed - speed) / targetSpeed;
- 
-  i += difference;
-  m_shooterSubPtr->setPower((difference * m_shooterSubPtr->m_kP) + (i * m_shooterSubPtr->m_kI));
-  m_previousI = i;
-
-  std::cout << "Shoot " << targetSpeed << " " << speed << " " << fabs(targetSpeed - speed) << "\n";
-  if(fabs(targetSpeed - speed) < 5000) {
+  if(fabs(m_targetSpeed - m_shooterSubPtr->getSpeed()) < ShooterConstants::kShootTolerance) {
     m_intakeSubPtr->enableMagazineMotor(false);
   } else {
     m_intakeSubPtr->disableMagazineMotor();

@@ -5,8 +5,8 @@
 #include "commands/ClimberArmCmd.h"
 
 constexpr double kClimberArmPower = 0.3;
-constexpr int kClimberArmMaxHeight = 100000;
-constexpr int kClimberArmMinHeight = 1000;
+constexpr int kClimberArmMaxHeight = 105000;
+constexpr int kClimberArmMinHeight = 2600;
 
 ClimberArmCmd::ClimberArmCmd(ClimberSub* climberSub, bool climberDirection) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -17,6 +17,10 @@ ClimberArmCmd::ClimberArmCmd(ClimberSub* climberSub, bool climberDirection) {
 
 // Called when the command is initially scheduled.
 void ClimberArmCmd::Initialize() {
+}
+
+// Called repeatedly when this Command is scheduled to run
+void ClimberArmCmd::Execute() {
   if (m_climberDirection && (m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight)){
     m_climberSubPtr->setClimberArmPower(kClimberArmPower);
   } else if (!m_climberDirection && (m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight)) {
@@ -26,9 +30,6 @@ void ClimberArmCmd::Initialize() {
   }
 }
 
-// Called repeatedly when this Command is scheduled to run
-void ClimberArmCmd::Execute() {}
-
 // Called once the command ends or is interrupted.
 void ClimberArmCmd::End(bool interrupted) {
   m_climberSubPtr->setClimberArmPower(0.);
@@ -36,5 +37,11 @@ void ClimberArmCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ClimberArmCmd::IsFinished() {
-  return false;
+  if (m_climberDirection && (m_climberSubPtr->getClimberEncoder() > kClimberArmMaxHeight)) {
+    return true;
+  } else if (!m_climberDirection && (m_climberSubPtr->getClimberEncoder() < kClimberArmMinHeight)) {
+    return true;
+  } else {
+    return false;
+  }
 }

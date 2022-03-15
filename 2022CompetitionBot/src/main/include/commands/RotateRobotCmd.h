@@ -6,8 +6,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/ShooterSub.h"
-#include "subsystems/IntakeSub.h"
+
+#include "subsystems/DrivetrainSub.h"
 
 /**
  * An example command.
@@ -16,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootCargoCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ShootCargoCmd> {
+class RotateRobotCmd
+    : public frc2::CommandHelper<frc2::CommandBase, RotateRobotCmd> {
  public:
-  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal);
+  RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle);
 
   void Initialize() override;
 
@@ -28,11 +28,4 @@ class ShootCargoCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
-private:
-  ShooterSub *m_shooterSubPtr;
-  IntakeSub *m_intakeSubPtr;
-
-  int m_isUpperGoal;
-  double m_targetSpeed;
 };
