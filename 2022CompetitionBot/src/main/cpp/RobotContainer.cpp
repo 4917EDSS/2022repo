@@ -66,6 +66,7 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
  */
 
 //Driver Buttons
+constexpr int kAligntoVision = 3;
 constexpr int kShiftAuto = 4;
 constexpr int kShiftLowDrvBtn = 5;
 constexpr int kShiftHighDrvBtn = 6;
@@ -98,6 +99,9 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
   
   // Driver Controller Button Mapping
+  frc2::JoystickButton AligntoVision(&m_driverController, kAligntoVision);
+  AligntoVision.WhenPressed(AlignToVisionCmd(&m_drivetrainSub, &m_visionSub));
+
   frc2::JoystickButton shiftLowDrvBtn(&m_driverController, kShiftLowDrvBtn);
   shiftLowDrvBtn.WhenPressed(ShiftLowCmd(&m_drivetrainSub));
 
