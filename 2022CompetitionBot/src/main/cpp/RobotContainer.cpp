@@ -97,6 +97,8 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
+
+  initDashboard();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
