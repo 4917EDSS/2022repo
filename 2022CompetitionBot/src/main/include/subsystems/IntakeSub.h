@@ -33,6 +33,7 @@ class IntakeSub : public frc2::SubsystemBase {
 
   bool isCargoAtMagazineFront();
   bool isCargoAtMagazineBack();
+  bool isCargoAtIntakeEnd();
   
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -44,6 +45,8 @@ class IntakeSub : public frc2::SubsystemBase {
 
   frc::DigitalInput m_magazineFrontSensor;
   frc::DigitalInput m_magazineFrontSensorTwo;
+  frc::DigitalInput m_EndOfIntake;
+  frc::DigitalInput m_EndOfIntakeTwo;
   frc::DigitalInput m_magazineTopSensor;
 
   rev::SparkMaxRelativeEncoder m_frontRollerIntakeEncoder{m_frontRollerIntakeMotor.GetEncoder()};

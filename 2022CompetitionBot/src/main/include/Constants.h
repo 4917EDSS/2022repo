@@ -43,4 +43,6 @@ namespace DioIds{
     constexpr int kMagazineFrontSensor = 0;
     constexpr int kMagazineTopSensor = 1;
     constexpr int kMagazineFrontSensorTwo = 2;
+    constexpr int kEndOfIntake = 3;
+    constexpr int kEndOfIntakeTwo = 4;
 } 
