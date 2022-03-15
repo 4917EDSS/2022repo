@@ -21,9 +21,11 @@ void AlignToVisionCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void AlignToVisionCmd::Execute() {
   double currentAngle = m_visionSubPtr->getHorizontalAngle();
-  if(m_visionSubPtr->getHorizontalAngle() != 0){
-    m_drivetrainSubPtr->arcadeDrive(0, currentAngle/10);
-
+  if(fabs(currentAngle) < 5) {
+      currentAngle = 5*fabs(currentAngle)/currentAngle;
+    }
+  if(currentAngle != 0){
+    m_drivetrainSubPtr->arcadeDrive(0, currentAngle/20);
   }
 }
 
@@ -35,7 +37,7 @@ void AlignToVisionCmd::End(bool interrupted) {
 // Returns true when the command should end.
 bool AlignToVisionCmd::IsFinished() {
   double currentAngle = m_visionSubPtr->getHorizontalAngle();
-  if(fabs(currentAngle) < 1){
+  if(fabs(currentAngle) < .5 && (fabs(m_drivetrainSubPtr->getLeftVelocity()) + fabs(m_drivetrainSubPtr->getRightVelocity())) < .01){
     return true;
   }
   else{
