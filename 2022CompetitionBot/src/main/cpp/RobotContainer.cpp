@@ -94,9 +94,12 @@ RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   m_intakeSub.SetDefaultCommand(IntakeJoystickCmd(&m_intakeSub, &m_operatorController));
+  autoChooserSetup();
 
   // Configure the button bindings
   ConfigureButtonBindings();
+
+  initDashboard();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -194,6 +197,7 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutNumber("Climber Height", m_climberSub.getClimberEncoder());
   frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderDistanceM());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderDistanceM());
+  frc::SmartDashboard::PutNumber("Heading", m_drivetrainSub.getHeading());
   frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
   frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());

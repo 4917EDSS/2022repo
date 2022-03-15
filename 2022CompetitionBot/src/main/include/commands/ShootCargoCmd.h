@@ -35,4 +35,5 @@ private:
 
   int m_isUpperGoal;
   double m_targetSpeed;
+  uint64_t m_ballLastSeenTime;
 };

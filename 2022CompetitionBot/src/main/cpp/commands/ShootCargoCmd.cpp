@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc/RobotController.h>
 #include "commands/ShootCargoCmd.h"
 #include "iostream"
 
@@ -19,13 +20,14 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool 
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
-  m_shooterSubPtr->autoVelocity(m_targetSpeed);
+  m_ballLastSeenTime = frc::RobotController::GetFPGATime();
 
   if(m_isUpperGoal) {
     m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
   } else {
     m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
   }
+  m_shooterSubPtr->autoVelocity(m_targetSpeed);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -34,6 +36,9 @@ void ShootCargoCmd::Execute() {
     m_intakeSubPtr->enableMagazineMotor(false);
   } else {
     m_intakeSubPtr->disableMagazineMotor();
+  }
+  if (m_intakeSubPtr->isCargoAtMagazineBack()){
+    m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   }
 }
 
@@ -45,5 +50,8 @@ void ShootCargoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ShootCargoCmd::IsFinished() {
+  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 1000000){
+    return true;
+  }
   return false;
 }

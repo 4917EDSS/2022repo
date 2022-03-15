@@ -30,6 +30,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
   bool isShiftedInHighGear();
 
   void zeroDrivetrainEncoders();
+  void zeroHeading();
 
   double getLeftEncoderRaw();
   double getRightEncoderRaw();
