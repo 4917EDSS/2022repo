@@ -50,7 +50,7 @@ void ShootCargoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ShootCargoCmd::IsFinished() {
-  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 1000000){
+  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 3500000){
     return true;
   }
   return false;
