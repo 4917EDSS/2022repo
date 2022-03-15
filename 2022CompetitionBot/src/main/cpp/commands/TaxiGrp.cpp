@@ -4,6 +4,7 @@
 
 #include "commands/TaxiGrp.h"
 #include "commands/DriveStraightCmd.h"
+#include "commands/RotateRobotCmd.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
@@ -11,5 +12,13 @@
 TaxiGrp::TaxiGrp(DrivetrainSub* drivetrainSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands(DriveStraightCmd(drivetrainSub, 1)); //drive 1 m
+
+  //drive 1 m then rotate 90 deg from current angle
+  AddCommands(
+    DriveStraightCmd(drivetrainSub, 1), 
+    DriveStraightCmd(drivetrainSub, -1),
+    RotateRobotCmd(drivetrainSub, 90), 
+    RotateRobotCmd(drivetrainSub, -90),
+    RotateRobotCmd(drivetrainSub, 180)
+  ); 
 }
