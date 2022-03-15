@@ -10,7 +10,7 @@ constexpr double kShiftDownSpeed = 1.4;
 
 constexpr double kEncoderRotationsToMetersLowGear = 5.0/204.44; //Find these actual values
 constexpr double kEncoderRotationsToMetersHighGear = 5.0/129.5;
-constexpr bool kGyroReversed = true;
+constexpr bool kGyroReversed = false;
 
 DrivetrainSub::DrivetrainSub() {
   init(); 
@@ -76,8 +76,12 @@ void DrivetrainSub::zeroDrivetrainEncoders() {
     m_rightMotorEncoder.SetPosition(0.);
 }
 
+void DrivetrainSub::zeroHeading() {
+    m_gyro.Reset();
+}
+
 double DrivetrainSub::getLeftEncoderRaw() { //Returns rotations (1 full motor rotation = 1.)
-    return -m_leftMotorEncoder.GetPosition(); //verify which encoder is reversed
+    return m_leftMotorEncoder.GetPosition();
 }
 
 double DrivetrainSub::getRightEncoderRaw() { 
@@ -88,7 +92,7 @@ double DrivetrainSub::getLeftEncoderDistanceM() {
     return getLeftEncoderRaw() * getEncoderRotationsToMeterFactor();
 }
 double DrivetrainSub::getRightEncoderDistanceM() {
-    return getLeftEncoderRaw() * getEncoderRotationsToMeterFactor();
+    return getRightEncoderRaw() * getEncoderRotationsToMeterFactor();
 }
 
 double DrivetrainSub::getEncoderRotationsToMeterFactor() {
@@ -104,7 +108,7 @@ double DrivetrainSub::getRightVelocity() {
 }
 
 double DrivetrainSub::getHeading() {
-    return std::remainder(m_gyro.GetAngle(),360.) * (kGyroReversed ? -1. : 1.);
+    return m_gyro.GetAngle() * (kGyroReversed ? -1. : 1.);
 }
 
 double DrivetrainSub::getTurnRate () {

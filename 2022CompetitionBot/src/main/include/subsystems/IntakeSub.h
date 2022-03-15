@@ -43,6 +43,7 @@ class IntakeSub : public frc2::SubsystemBase {
   frc::Solenoid m_armSolenoid1{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArm1};
 
   frc::DigitalInput m_magazineFrontSensor;
+  frc::DigitalInput m_magazineFrontSensorTwo;
   frc::DigitalInput m_magazineTopSensor;
 
   rev::SparkMaxRelativeEncoder m_frontRollerIntakeEncoder{m_frontRollerIntakeMotor.GetEncoder()};

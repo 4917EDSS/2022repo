@@ -11,6 +11,7 @@ constexpr double kMagazineMotorPower = 0.5;
 
 IntakeSub::IntakeSub() :
   m_magazineFrontSensor{DioIds::kMagazineFrontSensor},
+  m_magazineFrontSensorTwo{DioIds::kMagazineFrontSensorTwo},
   m_magazineTopSensor{DioIds::kMagazineTopSensor} {
   init(); 
 }
@@ -87,7 +88,7 @@ bool IntakeSub::isCargoAtMagazineBack(){
 }
 
 bool IntakeSub::isCargoAtMagazineFront(){
-  return (!m_magazineFrontSensor.Get());
+  return (!m_magazineFrontSensor.Get())||(!m_magazineFrontSensorTwo.Get());
 }
 
 

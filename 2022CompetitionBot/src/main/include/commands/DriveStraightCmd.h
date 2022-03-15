@@ -31,4 +31,5 @@ class DriveStraightCmd
 private:
   DrivetrainSub *m_drivetrainSubPtr;
   double m_driveStraightDistance;
+  double power;
 };

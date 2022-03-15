@@ -17,13 +17,13 @@ TwoBallAutoGrp::TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSu
 
   AddCommands(
     //Retrieve and shoot first ball
-    DriveStraightCmd(drivetrainSub, 0.75),
+    DriveStraightCmd(drivetrainSub, 2),
     IntakeCargoCmd(intakeSub), 
-    RotateRobotCmd(drivetrainSub, 180), 
-    DriveStraightCmd(drivetrainSub, 0.5),
+    RotateRobotCmd(drivetrainSub, -180), 
+    DriveStraightCmd(drivetrainSub, 1.5),
     ShootCargoCmd(shooterSub, intakeSub, true),
     //Drive to center line
     RotateRobotCmd(drivetrainSub, -45),
-    DriveStraightCmd(drivetrainSub, 0.5)
+    DriveStraightCmd(drivetrainSub, 1)
   );
 }
