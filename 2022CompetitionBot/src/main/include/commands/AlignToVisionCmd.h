@@ -34,4 +34,5 @@ private:
   DrivetrainSub *m_drivetrainSubPtr;
   VisionSub *m_visionSubPtr;
   DriveWithJoystickCmd *m_driveWithJoystickCmd;
+  uint64_t m_startTime;
 };
