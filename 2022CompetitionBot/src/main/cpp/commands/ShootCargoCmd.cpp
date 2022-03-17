@@ -49,7 +49,7 @@ void ShootCargoCmd::Execute() {
     m_isUpToSpeed=true;
   }
   if (m_isUpToSpeed) {
-    m_intakeSubPtr->setMagazineMotor(1);
+    m_intakeSubPtr->setMagazineMotor(0.6);
   }
   else {
     m_intakeSubPtr->disableMagazineMotor();
