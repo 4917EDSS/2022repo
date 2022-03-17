@@ -22,6 +22,7 @@
 #include "commands/TaxiGrp.h"
 #include "commands/TwoBallAutoGrp.h"
 #include "commands/AlignThenShootGrp.h"
+#include "commands/FourBallAutoGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -215,6 +216,7 @@ void RobotContainer::autoChooserSetup() {
   m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
   m_autoChooser.AddOption("Taxi", new TaxiGrp(&m_drivetrainSub));
   m_autoChooser.AddOption("Two Ball Auto", new TwoBallAutoGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+  m_autoChooser.AddOption("Four Ball Auto", new FourBallAutoGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));
 
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
