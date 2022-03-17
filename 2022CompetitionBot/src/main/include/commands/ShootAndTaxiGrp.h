@@ -10,10 +10,10 @@
 #include "subsystems/ShooterSub.h"
 #include "subsystems/IntakeSub.h"
 #include "subsystems/DrivetrainSub.h"
-
+#include "subsystems/VisionSub.h"
 class ShootAndTaxiGrp
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  ShootAndTaxiGrp> {
  public:
-  ShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub);
+  ShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub, VisionSub* visionSub);
 };
