@@ -36,7 +36,7 @@ class VisionSub : public frc2::SubsystemBase {
   double getTargetArea() {return getTable()->GetNumber("ta",0.0); }
   double getTargetSkew() {return getTable()->GetNumber("ts",0.0); }
 
-  double estimateDistanceInches();
+  double estimateDistanceMeters();
 
  private:
   

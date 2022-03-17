@@ -14,16 +14,16 @@ void VisionSub::init() {
 }
 // This method will be called once per scheduler run
 void VisionSub::Periodic() {
-    distEntry.SetDouble(VisionSub::estimateDistanceInches());
+    distEntry.SetDouble(VisionSub::estimateDistanceMeters());
     angleEntry.SetDouble(VisionSub::getHorizontalAngle());
 }
 
-double VisionSub::estimateDistanceInches() { //estimate from camera to goal
+double VisionSub::estimateDistanceMeters() { //estimate from camera to goal
     double verticalOffset = VisionSub::getVerticalAngle();
 
     double angleToGoal = VisionConstants::kMountAngleDegrees+verticalOffset;
     double goalToRadians = angleToGoal*(3.14159/180.0);
 
     double distToGoal = (VisionConstants::kGoalHeightInches-VisionConstants::kLensHeightInches)/tan(goalToRadians);
-    return distToGoal;
+    return distToGoal/39.37;
 }

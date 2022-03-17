@@ -6,15 +6,23 @@
 #include "commands/ShootCargoCmd.h"
 #include "iostream"
 
-ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal) {
+ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
   AddRequirements({intakeSub});
+  AddRequirements({visionSub});
 
   m_shooterSubPtr = shooterSub;
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
 
+    // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
+    /*
+    double currentDistance = m_visionSubPtr->estimateDistanceMeters();
+    m = (yTwo - yOne)/(xTwo - xOne)
+    b = yOne/(m*xOne)
+    y = (m*currentDistance)+b
+    */
 }
 
 

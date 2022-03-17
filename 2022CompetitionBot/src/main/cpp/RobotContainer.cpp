@@ -135,10 +135,10 @@ void RobotContainer::ConfigureButtonBindings() {
   toggleIntakeArmOpBtn.WhenPressed(ToggleIntakeArmCmd(&m_intakeSub));
 
   frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn); //Low cargo shoot
-  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, false));  
+  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, &m_visionSub, false));  
 
   frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn); //High cargo shoot
-  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, true)); 
+  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, &m_visionSub, true)); 
   
   frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn); //Spin flywheel
   spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));
@@ -214,7 +214,7 @@ void RobotContainer::autoChooserSetup() {
   m_autoChooser.SetDefaultOption("Do nothing", new AutoDoNothingCmd());  
   m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
   m_autoChooser.AddOption("Taxi", new TaxiGrp(&m_drivetrainSub));
-  m_autoChooser.AddOption("Two Ball Auto", new TwoBallAutoGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub));
+  m_autoChooser.AddOption("Two Ball Auto", new TwoBallAutoGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }

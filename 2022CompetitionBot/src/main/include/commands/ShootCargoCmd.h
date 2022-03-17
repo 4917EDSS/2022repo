@@ -8,6 +8,7 @@
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSub.h"
 #include "subsystems/IntakeSub.h"
+#include "subsystems/VisionSub.h"
 
 /**
  * An example command.
@@ -19,7 +20,7 @@
 class ShootCargoCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCargoCmd> {
  public:
-  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isUpperGoal);
+  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal);
 
   void Initialize() override;
 
@@ -32,6 +33,7 @@ class ShootCargoCmd
 private:
   ShooterSub *m_shooterSubPtr;
   IntakeSub *m_intakeSubPtr;
+  VisionSub *m_visionSubPtr;
 
   int m_isUpperGoal;
   double m_targetSpeed;
