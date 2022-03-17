@@ -4,7 +4,7 @@
 
 #include "commands/IntakeJoystickCmd.h"
 
-constexpr double kDeadband = 0.03;
+constexpr double kDeadband = 0.1;
 
 IntakeJoystickCmd::IntakeJoystickCmd(IntakeSub* intakeSub, frc::Joystick *joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
