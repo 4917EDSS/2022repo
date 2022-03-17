@@ -19,7 +19,7 @@ void DriveStraightCmd::Initialize() {
   m_drivetrainSubPtr->zeroHeading();
   m_drivetrainSubPtr->zeroDrivetrainEncoders();
   m_drivetrainSubPtr->shiftDown();
-  power = 0.5;
+  power = 1;
   if (m_driveStraightDistance < 0) {
     power *= -1;
   }
@@ -28,6 +28,10 @@ void DriveStraightCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void DriveStraightCmd::Execute() {
   double rotatePwr = m_drivetrainSubPtr->getHeading()*kRotateAdjustment;
+  double distanceRemaining = m_driveStraightDistance-m_drivetrainSubPtr->getLeftEncoderDistanceM();
+
+  if (fabs(distanceRemaining) <= 1) { power = distanceRemaining; }
+
   m_drivetrainSubPtr->arcadeDrive(power, -rotatePwr);
 }
 
