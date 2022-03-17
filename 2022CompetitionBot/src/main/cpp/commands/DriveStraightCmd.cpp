@@ -6,7 +6,8 @@
 #include "subsystems/DrivetrainSub.h"
 
 constexpr double kRotateAdjustment = 0.05;
-constexpr double kMinPower = 0.25;
+constexpr double kMinPower = 0.15;
+constexpr double kTolerance = 0.03;
 
 DriveStraightCmd::DriveStraightCmd(DrivetrainSub *drivetrainSub, double driveStraightDistance) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -20,22 +21,19 @@ void DriveStraightCmd::Initialize() {
   m_drivetrainSubPtr->zeroHeading();
   m_drivetrainSubPtr->zeroDrivetrainEncoders();
   m_drivetrainSubPtr->shiftDown();
-
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveStraightCmd::Execute() {
   double rotatePwr = m_drivetrainSubPtr->getHeading()*kRotateAdjustment;
   double power = 1;
-  distanceRemaining = m_driveStraightDistance-m_drivetrainSubPtr->getLeftEncoderDistanceM();
+  distanceRemaining = m_driveStraightDistance-m_drivetrainSubPtr->getEncoderDistanceM();
   double dir = (distanceRemaining < 0) ? -1 : 1;
   distanceRemaining = fabs(distanceRemaining);
 
   if (distanceRemaining <= 0.4) { power = distanceRemaining*2.5; }
-  
-  if (power <= kMinPower) { 
-    power = kMinPower; 
-  }
+  if (power <= kMinPower) { power = kMinPower; }
+  if (distanceRemaining <= kTolerance) { power = 0; }
 
   m_drivetrainSubPtr->arcadeDrive(power*dir, -rotatePwr);
 }
@@ -44,9 +42,9 @@ void DriveStraightCmd::Execute() {
 void DriveStraightCmd::End(bool interrupted) {
   m_drivetrainSubPtr->arcadeDrive(0,0);
 }
-
+ 
 // Returns true when the command should end.
 bool DriveStraightCmd::IsFinished() {
-  if (distanceRemaining <= 0.03) { return true; }
+  if ((distanceRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getVelocity())<=0.1)) { return true; }
   return false;
 }

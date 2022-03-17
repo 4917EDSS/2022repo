@@ -95,6 +95,10 @@ double DrivetrainSub::getRightEncoderDistanceM() {
     return getRightEncoderRaw() * getEncoderRotationsToMeterFactor();
 }
 
+double DrivetrainSub::getEncoderDistanceM() {
+    return (getLeftEncoderDistanceM()+getRightEncoderDistanceM())/2;
+}
+
 double DrivetrainSub::getEncoderRotationsToMeterFactor() {
     return (isShiftedInHighGear()) ? kEncoderRotationsToMetersHighGear : kEncoderRotationsToMetersLowGear;
 }
@@ -105,6 +109,10 @@ double DrivetrainSub::getLeftVelocity() {
 
 double DrivetrainSub::getRightVelocity() {
     return m_rightMotorEncoder.GetVelocity() * getEncoderRotationsToMeterFactor() / 60.; //In meters per second
+}
+
+double DrivetrainSub::getVelocity() {
+    return (getLeftVelocity()+getRightVelocity())/2;
 }
 
 double DrivetrainSub::getHeading() {

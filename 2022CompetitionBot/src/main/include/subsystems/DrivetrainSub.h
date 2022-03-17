@@ -37,9 +37,11 @@ class DrivetrainSub : public frc2::SubsystemBase {
 
   double getLeftEncoderDistanceM(); //meters
   double getRightEncoderDistanceM(); 
+  double getEncoderDistanceM(); //returns average of left and right
 
   double getLeftVelocity();
   double getRightVelocity();
+  double getVelocity(); // returns average of left and right
 
   double getHeading();
   double getTurnRate();
