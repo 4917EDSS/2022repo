@@ -12,8 +12,10 @@ IntakeCargoCmd::IntakeCargoCmd(IntakeSub* intakeSub) {
 
 // Called when the command is initially scheduled.
 void IntakeCargoCmd::Initialize() {
+  if (!m_intakeSubPtr->isCargoAtMagazineBack()) {
   m_intakeSubPtr->lowerIntake();
   m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
