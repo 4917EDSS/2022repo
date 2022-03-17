@@ -13,12 +13,7 @@ TaxiGrp::TaxiGrp(DrivetrainSub* drivetrainSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
 
-  //drive 1 m then rotate 90 deg from current angle
   AddCommands(
-    DriveStraightCmd(drivetrainSub, 1), 
-    DriveStraightCmd(drivetrainSub, -1),
-    RotateRobotCmd(drivetrainSub, 90), 
-    RotateRobotCmd(drivetrainSub, -90),
-    RotateRobotCmd(drivetrainSub, 180)
+    DriveStraightCmd(drivetrainSub, 3) 
   ); 
 }
