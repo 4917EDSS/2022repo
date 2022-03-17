@@ -26,6 +26,7 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, Visio
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
+  m_isUpToSpeed=false;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -45,8 +46,12 @@ void ShootCargoCmd::Execute() {
   }
   m_shooterSubPtr->autoVelocity(m_targetSpeed);
   if(fabs(m_targetSpeed - m_shooterSubPtr->getSpeed()) < ShooterConstants::kShootTolerance) {
+    m_isUpToSpeed=true;
+  }
+  if (m_isUpToSpeed) {
     m_intakeSubPtr->setMagazineMotor(1);
-  } else {
+  }
+  else {
     m_intakeSubPtr->disableMagazineMotor();
   }
   if (m_intakeSubPtr->isCargoAtMagazineBack()){
