@@ -14,6 +14,6 @@ TaxiGrp::TaxiGrp(DrivetrainSub* drivetrainSub) {
   // AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
-    DriveStraightCmd(drivetrainSub, -2) 
+    RotateRobotCmd(drivetrainSub, 180) 
   ); 
 }

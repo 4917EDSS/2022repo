@@ -42,13 +42,13 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+  m_container.initSubsystems();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
 
-  m_container.initSubsystems();
   m_isInitialized = true; //don't want to initialize again
 }
 
