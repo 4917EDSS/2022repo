@@ -22,10 +22,10 @@ void AlignToVisionCmd::Initialize() {
 void AlignToVisionCmd::Execute() {
   double currentAngle = m_visionSubPtr->getHorizontalAngle();
   double rotationSpeed = currentAngle/20;
-  if(rotationSpeed < 0.25 && rotationSpeed > 0){
-    rotationSpeed = 0.25;
-  } else if(rotationSpeed > -0.25 && rotationSpeed < 0){
-    rotationSpeed = -0.25;
+  if(rotationSpeed < 0.2 && rotationSpeed > 0){
+    rotationSpeed = 0.2;
+  } else if(rotationSpeed > -0.2 && rotationSpeed < 0){
+    rotationSpeed = -0.2;
   }
   if(fabs(currentAngle) < .5){
     m_drivetrainSubPtr->arcadeDrive(0, 0);
@@ -48,7 +48,7 @@ bool AlignToVisionCmd::IsFinished() {
   if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {
     return true;
   }
-  if(fabs(currentAngle) < .5 && (fabs(m_drivetrainSubPtr->getLeftVelocity()) + fabs(m_drivetrainSubPtr->getRightVelocity())) < .01){
+  if(fabs(currentAngle) < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
     return true;
   }
   else{

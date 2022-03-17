@@ -27,29 +27,31 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, Visio
 void ShootCargoCmd::Initialize() {
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   m_isUpToSpeed=false;
-}
-
-// Called repeatedly when this Command is scheduled to run
-void ShootCargoCmd::Execute() {
   if(m_isUpperGoal) {
     // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
     double currentDistance = m_visionSubPtr->estimateDistanceMeters();
-    if (currentDistance == 0.0) {
-      m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
-    }
     double slope=(kSpeedMax-kSpeedMin)/(kDistanceMax-kDistanceMin);
     double intercept=kSpeedMin-(slope*kDistanceMin);
-    m_targetSpeed=(slope*currentDistance)+intercept;
+    if (currentDistance == 0.0) {
+      m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+    } else {
+      m_targetSpeed=(slope*currentDistance)+intercept;
+    }
   }
   else {
     m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
   }
+  
   m_shooterSubPtr->autoVelocity(m_targetSpeed);
+}
+
+// Called repeatedly when this Command is scheduled to run
+void ShootCargoCmd::Execute() {
   if(fabs(m_targetSpeed - m_shooterSubPtr->getSpeed()) < ShooterConstants::kShootTolerance) {
     m_isUpToSpeed=true;
   }
   if (m_isUpToSpeed) {
-    m_intakeSubPtr->setMagazineMotor(0.6);
+    m_intakeSubPtr->setMagazineMotor(0.4);
   }
   else {
     m_intakeSubPtr->disableMagazineMotor();

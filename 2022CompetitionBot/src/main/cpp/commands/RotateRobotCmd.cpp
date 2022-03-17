@@ -5,7 +5,7 @@
 #include "commands/RotateRobotCmd.h"
 #include "subsystems/DrivetrainSub.h"
 
-constexpr double kMinPower = 0.25;
+constexpr double kMinPower = 0.2;
 constexpr double kTolerance = 1;//degrees
 
 RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
@@ -42,7 +42,7 @@ void RotateRobotCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool RotateRobotCmd::IsFinished() {
-  if ((rotationRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getTurnRate())<=3)){
+  if ((rotationRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getTurnRate())<=5)){
     return true;
   }
   return false;

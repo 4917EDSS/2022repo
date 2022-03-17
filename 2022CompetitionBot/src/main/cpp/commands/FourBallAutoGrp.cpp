@@ -8,6 +8,7 @@
 #include "commands/AlignThenShootGrp.h"
 #include "commands/IntakeCargoCmd.h" 
 #include "commands/RotateRobotCmd.h"
+#include <frc2/command/ParallelCommandGroup.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
