@@ -5,6 +5,9 @@
 #include "commands/RotateRobotCmd.h"
 #include "subsystems/DrivetrainSub.h"
 
+constexpr double kMinPower = 0.15;
+constexpr double kTolerance = 0.15;
+
 RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({drivetrainSub});
@@ -15,15 +18,18 @@ RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
 // Called when the command is initially scheduled.
 void RotateRobotCmd::Initialize() {
   m_drivetrainSubPtr->zeroHeading();
-  power = 0.5;
-  if (m_angle < m_drivetrainSubPtr->getHeading()) {
-    power *= -1;
-  }
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RotateRobotCmd::Execute() {
-  m_drivetrainSubPtr->arcadeDrive(0, power);
+  double power = 1;
+  rotationRemaning = m_angle-m_drivetrainSubPtr->getHeading();
+  double dir = (rotationRemaning < 0) ? -1: 1;
+  rotationRemaning = fabs(rotationRemaning);
+  if (rotationRemaning <= 15){ power = rotationRemaning/15; }
+  if (power <= kMinPower){ power = kMinPower; }
+
+  m_drivetrainSubPtr->arcadeDrive(0, power*dir);
 }
 
 // Called once the command ends or is interrupted.
@@ -33,14 +39,8 @@ void RotateRobotCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool RotateRobotCmd::IsFinished() {
-  if (power >= 0) {
-    if (m_drivetrainSubPtr->getHeading()>m_angle) {
-      return true;
-    }
-  } else {
-    if (m_drivetrainSubPtr->getHeading()<m_angle) {
-      return true;
-    }
+  if ((rotationRemaning <= kTolerance) && (fabs(m_drivetrainSubPtr->getVelocity())<=0.1)){
+    return true;
   }
   return false;
 }

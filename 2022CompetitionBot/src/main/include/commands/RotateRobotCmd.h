@@ -32,4 +32,5 @@ class RotateRobotCmd
   DrivetrainSub *m_drivetrainSubPtr;
   double m_angle;
   double power;
+  double rotationRemaning;
 };
