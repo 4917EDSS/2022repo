@@ -5,7 +5,8 @@
 #include "commands/DriveStraightCmd.h"
 #include "subsystems/DrivetrainSub.h"
 
-constexpr double kRotateAdjustment = 0.03;
+constexpr double kRotateAdjustment = 0.05;
+constexpr double kMinPower = 0.25;
 
 DriveStraightCmd::DriveStraightCmd(DrivetrainSub *drivetrainSub, double driveStraightDistance) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -19,20 +20,24 @@ void DriveStraightCmd::Initialize() {
   m_drivetrainSubPtr->zeroHeading();
   m_drivetrainSubPtr->zeroDrivetrainEncoders();
   m_drivetrainSubPtr->shiftDown();
-  power = 1;
-  if (m_driveStraightDistance < 0) {
-    power *= -1;
-  }
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveStraightCmd::Execute() {
   double rotatePwr = m_drivetrainSubPtr->getHeading()*kRotateAdjustment;
-  double distanceRemaining = m_driveStraightDistance-m_drivetrainSubPtr->getLeftEncoderDistanceM();
+  double power = 1;
+  distanceRemaining = m_driveStraightDistance-m_drivetrainSubPtr->getLeftEncoderDistanceM();
+  double dir = (distanceRemaining < 0) ? -1 : 1;
+  distanceRemaining = fabs(distanceRemaining);
 
-  if (fabs(distanceRemaining) <= 1) { power = distanceRemaining; }
+  if (distanceRemaining <= 0.4) { power = distanceRemaining*2.5; }
+  
+  if (power <= kMinPower) { 
+    power = kMinPower; 
+  }
 
-  m_drivetrainSubPtr->arcadeDrive(power, -rotatePwr);
+  m_drivetrainSubPtr->arcadeDrive(power*dir, -rotatePwr);
 }
 
 // Called once the command ends or is interrupted.
@@ -42,14 +47,6 @@ void DriveStraightCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool DriveStraightCmd::IsFinished() {
-  if (power >= 0) {
-    if ((m_drivetrainSubPtr->getLeftEncoderDistanceM()>m_driveStraightDistance) && (m_drivetrainSubPtr->getRightEncoderDistanceM()>m_driveStraightDistance)) {
-      return true;
-    }
-  } else {
-     if ((m_drivetrainSubPtr->getLeftEncoderDistanceM()<m_driveStraightDistance) && (m_drivetrainSubPtr->getRightEncoderDistanceM()<m_driveStraightDistance)) {
-      return true;
-    }
-  }
+  if (distanceRemaining <= 0.03) { return true; }
   return false;
 }
