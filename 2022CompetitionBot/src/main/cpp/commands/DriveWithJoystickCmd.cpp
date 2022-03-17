@@ -6,7 +6,7 @@
 
 constexpr int kTurnSensitivityPower = 3;
 constexpr int kForwardSensitivityPower = 2;
-constexpr double kDeadband = 0.1;
+constexpr double kDeadband = 0.03;
 constexpr double kMaxForwardAccl = 0.1;
 constexpr double kMaxTurnAccl = 0.2;
 
