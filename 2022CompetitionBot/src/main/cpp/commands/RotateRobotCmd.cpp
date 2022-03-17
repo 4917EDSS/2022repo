@@ -6,7 +6,7 @@
 #include "subsystems/DrivetrainSub.h"
 
 constexpr double kMinPower = 0.15;
-constexpr double kTolerance = 0.25;//degrees
+constexpr double kTolerance = 0.5;//degrees
 
 RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -26,7 +26,7 @@ void RotateRobotCmd::Execute() {
   rotationRemaning = m_angle-m_drivetrainSubPtr->getHeading();
   double dir = (rotationRemaning < 0) ? -1: 1;
   rotationRemaning = fabs(rotationRemaning);
-  if (rotationRemaning <= 15){ power = rotationRemaning/15; }
+  if (rotationRemaning <= 45){ power = rotationRemaning/45; }
   if (power <= kMinPower){ power = kMinPower; }
 
   m_drivetrainSubPtr->arcadeDrive(0, power*dir);

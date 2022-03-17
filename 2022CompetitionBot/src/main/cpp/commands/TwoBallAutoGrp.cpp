@@ -18,12 +18,11 @@ TwoBallAutoGrp::TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSu
 
   AddCommands(
     //Retrieve and shoot first ball
-    frc2::ParallelCommandGroup{DriveStraightCmd ( drivetrainSub, 2), IntakeCargoCmd(intakeSub)
-    },
-    RotateRobotCmd(drivetrainSub, -180), 
-    ShootCargoCmd(shooterSub, intakeSub, visionSub, true),
+    frc2::ParallelCommandGroup{DriveStraightCmd ( drivetrainSub, 2), IntakeCargoCmd(intakeSub)},
+    RotateRobotCmd(drivetrainSub, -180) 
+    // ShootCargoCmd(shooterSub, intakeSub, visionSub, true)
     //Drive to center line
-    RotateRobotCmd(drivetrainSub, -45),
-    DriveStraightCmd(drivetrainSub, 1)
+    //RotateRobotCmd(drivetrainSub, -45),
+    //DriveStraightCmd(drivetrainSub, 1)
   );
 }
