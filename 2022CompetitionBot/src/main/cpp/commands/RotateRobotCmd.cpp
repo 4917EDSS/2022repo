@@ -17,6 +17,7 @@ RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
 
 // Called when the command is initially scheduled.
 void RotateRobotCmd::Initialize() {
+  m_drivetrainSubPtr->shiftDown();
   m_drivetrainSubPtr->zeroHeading();
 }
 
