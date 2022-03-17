@@ -27,7 +27,7 @@ void RotateRobotCmd::Execute() {
   rotationRemaining = m_angle-m_drivetrainSubPtr->getHeading();
   double dir = (rotationRemaining < 0) ? -1: 1;
   rotationRemaining = fabs(rotationRemaining);
-  if (rotationRemaining <= 45){ power = rotationRemaining/45; }
+  if (rotationRemaining <= 60){ power = rotationRemaining/60.0; }
   if (power <= kMinPower){ power = kMinPower; }
 
   if (rotationRemaining <= kTolerance) { power = 0; }
