@@ -15,8 +15,8 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool 
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
 
-  
 }
+
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
@@ -33,12 +33,14 @@ void ShootCargoCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ShootCargoCmd::Execute() {
   if(fabs(m_targetSpeed - m_shooterSubPtr->getSpeed()) < ShooterConstants::kShootTolerance) {
-    m_intakeSubPtr->enableMagazineMotor(false);
+    m_intakeSubPtr->setMagazineMotor(1);
   } else {
     m_intakeSubPtr->disableMagazineMotor();
   }
   if (m_intakeSubPtr->isCargoAtMagazineBack()){
     m_ballLastSeenTime = frc::RobotController::GetFPGATime();
+   
+   
   }
 }
 
