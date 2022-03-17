@@ -7,6 +7,7 @@
 #include "commands/IntakeCargoCmd.h"
 #include "commands/RotateRobotCmd.h"
 #include "commands/ShootCargoCmd.h"
+#include <frc2/command/ParallelCommandGroup.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
@@ -17,10 +18,9 @@ TwoBallAutoGrp::TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSu
 
   AddCommands(
     //Retrieve and shoot first ball
-    DriveStraightCmd(drivetrainSub, 2),
-    IntakeCargoCmd(intakeSub), 
+    frc2::ParallelCommandGroup{DriveStraightCmd ( drivetrainSub, 2), IntakeCargoCmd(intakeSub)
+    },
     RotateRobotCmd(drivetrainSub, -180), 
-    DriveStraightCmd(drivetrainSub, 1.5),
     ShootCargoCmd(shooterSub, intakeSub, visionSub, true),
     //Drive to center line
     RotateRobotCmd(drivetrainSub, -45),
