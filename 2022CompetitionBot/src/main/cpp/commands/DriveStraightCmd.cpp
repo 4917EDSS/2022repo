@@ -5,6 +5,8 @@
 #include "commands/DriveStraightCmd.h"
 #include "subsystems/DrivetrainSub.h"
 
+constexpr double kRotateAdjustment = 0.03;
+
 DriveStraightCmd::DriveStraightCmd(DrivetrainSub *drivetrainSub, double driveStraightDistance) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({drivetrainSub});
@@ -14,6 +16,7 @@ DriveStraightCmd::DriveStraightCmd(DrivetrainSub *drivetrainSub, double driveStr
 
 // Called when the command is initially scheduled.
 void DriveStraightCmd::Initialize() {
+  m_drivetrainSubPtr->zeroHeading();
   m_drivetrainSubPtr->zeroDrivetrainEncoders();
   m_drivetrainSubPtr->shiftDown();
   power = 0.5;
@@ -24,7 +27,8 @@ void DriveStraightCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveStraightCmd::Execute() {
-  m_drivetrainSubPtr->arcadeDrive(power, 0);//temporarily testing with 50% power
+  double rotatePwr = m_drivetrainSubPtr->getHeading()*kRotateAdjustment;
+  m_drivetrainSubPtr->arcadeDrive(power, -rotatePwr);
 }
 
 // Called once the command ends or is interrupted.
