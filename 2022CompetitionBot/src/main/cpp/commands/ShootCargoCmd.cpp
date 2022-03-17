@@ -6,6 +6,11 @@
 #include "commands/ShootCargoCmd.h"
 #include "iostream"
 
+constexpr double kDistanceMin=1.0;
+constexpr double kDistanceMax=7.0;
+constexpr double kSpeedMin=11000.0;
+constexpr double kSpeedMax=20000.0;
+
 ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
@@ -15,31 +20,30 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, Visio
   m_shooterSubPtr = shooterSub;
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
-
-    // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
-    /*
-    double currentDistance = m_visionSubPtr->estimateDistanceMeters();
-    m = (yTwo - yOne)/(xTwo - xOne)
-    b = yOne/(m*xOne)
-    y = (m*currentDistance)+b
-    */
 }
 
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
-
-  if(m_isUpperGoal) {
-    m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
-  } else {
-    m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
-  }
-  m_shooterSubPtr->autoVelocity(m_targetSpeed);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShootCargoCmd::Execute() {
+  if(m_isUpperGoal) {
+    // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
+    double currentDistance = m_visionSubPtr->estimateDistanceMeters();
+    if (currentDistance == 0.0) {
+      m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
+    }
+    double slope=(kSpeedMax-kSpeedMin)/(kDistanceMax-kDistanceMin);
+    double intercept=kSpeedMin-(slope*kDistanceMin);
+    m_targetSpeed=(slope*currentDistance)+intercept;
+  }
+  else {
+    m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
+  }
+  m_shooterSubPtr->autoVelocity(m_targetSpeed);
   if(fabs(m_targetSpeed - m_shooterSubPtr->getSpeed()) < ShooterConstants::kShootTolerance) {
     m_intakeSubPtr->setMagazineMotor(1);
   } else {

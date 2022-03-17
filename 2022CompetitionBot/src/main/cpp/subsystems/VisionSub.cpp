@@ -19,6 +19,9 @@ void VisionSub::Periodic() {
 }
 
 double VisionSub::estimateDistanceMeters() { //estimate from camera to goal
+    if (VisionSub::getTargetArea() == 0.0) {
+      return 0.0;
+    }
     double verticalOffset = VisionSub::getVerticalAngle();
 
     double angleToGoal = VisionConstants::kMountAngleDegrees+verticalOffset;
