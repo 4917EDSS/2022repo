@@ -9,7 +9,7 @@
 constexpr double kDistanceMin=1.5;
 constexpr double kDistanceMax=6.5;
 constexpr double kSpeedMin=12000.0;
-constexpr double kSpeedMax=24000.0;
+constexpr double kSpeedMax=26400.0;
 
 ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal) {
   // Use addRequirements() here to declare subsystem dependencies.
