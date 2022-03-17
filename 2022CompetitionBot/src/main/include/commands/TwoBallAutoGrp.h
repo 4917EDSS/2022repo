@@ -10,8 +10,9 @@
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/IntakeSub.h"
 #include "subsystems/ShooterSub.h"
+#include "subsystems/VisionSub.h"
 
 class TwoBallAutoGrp: public frc2::CommandHelper<frc2::SequentialCommandGroup, TwoBallAutoGrp> {
  public:
-  TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, ShooterSub *shooterSub);
+  TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, ShooterSub *shooterSub, VisionSub *visionSub);
 };

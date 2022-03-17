@@ -11,7 +11,7 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-TwoBallAutoGrp::TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, ShooterSub *shooterSub) {
+TwoBallAutoGrp::TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, ShooterSub *shooterSub, VisionSub *visionSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
 
@@ -21,7 +21,7 @@ TwoBallAutoGrp::TwoBallAutoGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSu
     IntakeCargoCmd(intakeSub), 
     RotateRobotCmd(drivetrainSub, -180), 
     DriveStraightCmd(drivetrainSub, 1.5),
-    ShootCargoCmd(shooterSub, intakeSub, true),
+    ShootCargoCmd(shooterSub, intakeSub, visionSub, true),
     //Drive to center line
     RotateRobotCmd(drivetrainSub, -45),
     DriveStraightCmd(drivetrainSub, 1)
