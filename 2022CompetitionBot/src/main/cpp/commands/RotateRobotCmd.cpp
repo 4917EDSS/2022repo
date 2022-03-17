@@ -6,7 +6,7 @@
 #include "subsystems/DrivetrainSub.h"
 
 constexpr double kMinPower = 0.15;
-constexpr double kTolerance = 0.15;
+constexpr double kTolerance = 0.25;//degrees
 
 RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
   // Use addRequirements() here to declare subsystem dependencies.
