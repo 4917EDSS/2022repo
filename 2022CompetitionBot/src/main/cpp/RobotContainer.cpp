@@ -202,6 +202,7 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
   frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
   frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
+  frc::SmartDashboard::PutBoolean("Intake End", m_intakeSub.isCargoAtIntakeEnd());
   //Mess up current shooter speed
   //m_shooterSub.m_kNewF = frc::SmartDashboard::GetNumber("Shoot kF", m_shooterSub.m_kNewF);
   //m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
