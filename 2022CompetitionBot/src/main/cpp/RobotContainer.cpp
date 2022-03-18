@@ -202,6 +202,7 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderDistanceM());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderDistanceM());
   frc::SmartDashboard::PutNumber("Heading", m_drivetrainSub.getHeading());
+  frc::SmartDashboard::PutNumber("Horizontal Angle", m_visionSub.getHorizontalAngle());
   frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
   frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
