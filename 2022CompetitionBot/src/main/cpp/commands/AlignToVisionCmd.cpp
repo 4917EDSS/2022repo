@@ -22,7 +22,7 @@ void AlignToVisionCmd::Initialize() {
 void AlignToVisionCmd::Execute() {
   double angleRemaining = m_visionSubPtr->getHorizontalAngle();
   double rotationSpeed = angleRemaining/20;
-  int dir = (rotationSpeed < 0) ? -1: 1;
+  double dir = (rotationSpeed < 0) ? -1: 1;
   rotationSpeed = fabs(rotationSpeed);
   angleRemaining = fabs(angleRemaining);
   if(rotationSpeed < kMinPower && rotationSpeed > 0){ rotationSpeed = kMinPower; }
