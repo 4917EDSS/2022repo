@@ -11,6 +11,7 @@
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 
+
 namespace VisionConstants {
   constexpr double kMountAngleDegrees = 21.0; //Degrees that camera is rotated back from vertical
   constexpr double kLensHeightInches = 32.5; //Distance from floor to center of camera in inches
@@ -37,7 +38,9 @@ class VisionSub : public frc2::SubsystemBase {
   double getTargetSkew() {return getTable()->GetNumber("ts",0.0); }
 
   double estimateDistanceMeters();
-
+  
+  void  targetVisionPipeline();
+  void  targetNeutralVisionPipeline();
  private:
   
   nt::NetworkTableEntry distEntry;
