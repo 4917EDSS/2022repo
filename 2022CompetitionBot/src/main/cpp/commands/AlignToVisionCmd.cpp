@@ -6,8 +6,6 @@
 #include "commands/RotateRobotCmd.h"
 #include <frc/RobotController.h>
 
-constexpr double kMinPower = 0.4;
-
 AlignToVisionCmd::AlignToVisionCmd(DrivetrainSub *drivetrainSub, VisionSub *visionSub) {
   AddRequirements({drivetrainSub,visionSub});
   m_drivetrainSubPtr = drivetrainSub;
