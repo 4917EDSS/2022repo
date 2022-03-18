@@ -23,7 +23,7 @@ void ClimberSub::init() { //Reset all hardware to a safe state
 void ClimberSub::Periodic() {}
 
 void ClimberSub::setClimberArmPower(double power) {
-    m_climbArmMotor.Set(-power);
+    m_climbArmMotor.Set(power);
 }
 
 void ClimberSub::zeroClimberEncoders() {
