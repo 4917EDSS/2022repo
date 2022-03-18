@@ -21,9 +21,9 @@ void ClimberArmCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ClimberArmCmd::Execute() {
-  if (m_climberDirection ){
+  if (m_climberDirection) { //&& (m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight))
     m_climberSubPtr->setClimberArmPower(kClimberArmPower);
-  } else if (!m_climberDirection)  {
+  } else if (!m_climberDirection) { // && (m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight))
     m_climberSubPtr->setClimberArmPower(-kClimberArmPower);
   } else {
     m_climberSubPtr->setClimberArmPower(0);
