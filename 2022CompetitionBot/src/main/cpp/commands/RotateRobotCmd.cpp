@@ -6,6 +6,7 @@
 #include "subsystems/DrivetrainSub.h"
 
 constexpr double kMinPower = 0.2;
+constexpr double kMaxPower = 1;
 constexpr double kTolerance = 1;//degrees
 
 RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
@@ -27,9 +28,7 @@ void RotateRobotCmd::Execute() {
   rotationRemaining = m_angle-m_drivetrainSubPtr->getHeading();
   double dir = (rotationRemaining < 0) ? -1: 1;
   rotationRemaining = fabs(rotationRemaining);
-  if (rotationRemaining <= 60){ power = rotationRemaining/60.0; }
-  if (power <= kMinPower){ power = kMinPower; }
-
+  if (rotationRemaining <= 60){ power = ((rotationRemaining/60.0)*(kMaxPower-kMinPower))+kMinPower; }
   if (rotationRemaining <= kTolerance) { power = 0; }
 
   m_drivetrainSubPtr->arcadeDrive(0, power*dir);
