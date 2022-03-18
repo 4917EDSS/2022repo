@@ -20,12 +20,12 @@ FourBallAutoGrp::FourBallAutoGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, D
     //Retrieve and shoot first ball
     frc2::ParallelCommandGroup{DriveStraightCmd(drivetrainSub, 2), IntakeCargoCmd(intakeSub)},
     RotateRobotCmd(drivetrainSub, -180), 
-    AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub),
+    AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, true),
     RotateRobotCmd(drivetrainSub, -150),
     frc2::ParallelCommandGroup{DriveStraightCmd(drivetrainSub, 2.5), IntakeCargoCmd(intakeSub)},
     RotateRobotCmd(drivetrainSub, 150),
     DriveStraightCmd(drivetrainSub, 2.5),
-    AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub)
+    AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, true)
   );
 }
 

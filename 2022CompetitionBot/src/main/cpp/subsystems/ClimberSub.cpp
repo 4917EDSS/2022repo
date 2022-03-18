@@ -9,12 +9,12 @@ ClimberSub::ClimberSub() {
 }
 
 void ClimberSub::init() { //Reset all hardware to a safe state
-    m_climbArmMotor.SetInverted(false);
+    // m_climbArmMotor.SetInverted(false);
 
-    m_climbArmMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-    m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms); //Make sure to use SensorVelocityMeasPeriod because VelocityMeasPeriod is depricated
-    m_climbArmMotor.ConfigVelocityMeasurementWindow(4);
-    m_climbArmMotor.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+    // m_climbArmMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+    // m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms); //Make sure to use SensorVelocityMeasPeriod because VelocityMeasPeriod is depricated
+    // m_climbArmMotor.ConfigVelocityMeasurementWindow(4);
+    // m_climbArmMotor.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
     setClimberArmPower(0.);
     zeroClimberEncoders();
 }
@@ -23,15 +23,16 @@ void ClimberSub::init() { //Reset all hardware to a safe state
 void ClimberSub::Periodic() {}
 
 void ClimberSub::setClimberArmPower(double power) {
-    m_climbArmMotor.Set(-power);
+    //m_climbArmMotor.Set(-power);
 }
 
 void ClimberSub::zeroClimberEncoders() {
-    m_climbArmMotor.SetSelectedSensorPosition(0);
+    //m_climbArmMotor.SetSelectedSensorPosition(0);
 }
 
 double ClimberSub::getClimberEncoder() {
-    return -m_climbArmMotor.GetSelectedSensorPosition();
+    //return -m_climbArmMotor.GetSelectedSensorPosition();
+    return 0;
 }
 
 void ClimberSub::raiseArmSeparation() {

@@ -5,7 +5,7 @@
 #include "commands/AlignToVisionCmd.h"
 #include <frc/RobotController.h>
 
-
+constexpr double kMinPower = 0.4;
 
 AlignToVisionCmd::AlignToVisionCmd(DrivetrainSub *drivetrainSub, VisionSub *visionSub) {
   AddRequirements({drivetrainSub,visionSub});
@@ -20,17 +20,15 @@ void AlignToVisionCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void AlignToVisionCmd::Execute() {
-  double currentAngle = m_visionSubPtr->getHorizontalAngle();
-  double rotationSpeed = currentAngle/20;
-  if(rotationSpeed < 0.2 && rotationSpeed > 0){
-    rotationSpeed = 0.2;
-  } else if(rotationSpeed > -0.2 && rotationSpeed < 0){
-    rotationSpeed = -0.2;
-  }
-  if(fabs(currentAngle) < .5){
+  double angleRemaining = fabs(m_visionSubPtr->getHorizontalAngle());
+  double rotationSpeed = angleRemaining/20;
+  double dir = (rotationSpeed < 0) ? -1: 1;
+  rotationSpeed = fabs(rotationSpeed);
+  if(rotationSpeed < kMinPower && rotationSpeed > 0){ rotationSpeed = kMinPower; }
+  if(angleRemaining < .5){
     m_drivetrainSubPtr->arcadeDrive(0, 0);
   } else {
-    m_drivetrainSubPtr->arcadeDrive(0, rotationSpeed);
+    m_drivetrainSubPtr->arcadeDrive(0, rotationSpeed*dir);
   }
 }
 
@@ -41,14 +39,14 @@ void AlignToVisionCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AlignToVisionCmd::IsFinished() {
-  double currentAngle = m_visionSubPtr->getHorizontalAngle();
+  double angleRemaining = fabs(m_visionSubPtr->getHorizontalAngle());
   if (m_visionSubPtr->getTargetArea() == 0){
     return true;
   }
   if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {
     return true;
   }
-  if(fabs(currentAngle) < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
+  if(angleRemaining < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
     return true;
   }
   else{

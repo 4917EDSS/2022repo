@@ -27,7 +27,7 @@ class ClimberSub : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  ctre::phoenix::motorcontrol::can::WPI_TalonFX m_climbArmMotor{CanIds::kClimberArmbMotor};
+  //ctre::phoenix::motorcontrol::can::WPI_TalonFX m_climbArmMotor{CanIds::kClimberArmbMotor};
 
   frc::Solenoid m_armSeparationSolenoid{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kArmSeparation};
 };
