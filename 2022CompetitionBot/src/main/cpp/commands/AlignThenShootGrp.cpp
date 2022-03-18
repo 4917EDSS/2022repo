@@ -11,9 +11,9 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-AlignThenShootGrp::AlignThenShootGrp(ShooterSub *shooterSub,VisionSub *visionSub, DrivetrainSub *drivetrainSub,IntakeSub *intakeSub) { //Only for Upper Goal
+AlignThenShootGrp::AlignThenShootGrp(ShooterSub *shooterSub,VisionSub *visionSub, DrivetrainSub *drivetrainSub,IntakeSub *intakeSub, bool isAuto) { //Only for Upper Goal
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands(frc2::ParallelDeadlineGroup{AlignToVisionCmd(drivetrainSub,visionSub),SpinFlywheelCmd(shooterSub,true)},ShootCargoCmd(shooterSub,intakeSub,visionSub,true));
+  AddCommands(frc2::ParallelDeadlineGroup{AlignToVisionCmd(drivetrainSub,visionSub),SpinFlywheelCmd(shooterSub,true)},ShootCargoCmd(shooterSub,intakeSub,visionSub,true,isAuto));
 
 }

@@ -7,11 +7,14 @@
 VisionSub::VisionSub() {
     init();
 }
+
 void VisionSub::init() {
     frc::ShuffleboardTab& visTab = frc::Shuffleboard::GetTab("Vision Data");
     distEntry = visTab.Add("Distance to goal",0.).GetEntry();
     angleEntry = visTab.Add("Angle to goal",0.).GetEntry();
+    targetNeutralVisionPipeline();
 }
+
 // This method will be called once per scheduler run
 void VisionSub::Periodic() {
     distEntry.SetDouble(VisionSub::estimateDistanceMeters());
@@ -29,4 +32,12 @@ double VisionSub::estimateDistanceMeters() { //estimate from camera to goal
 
     double distToGoal = (VisionConstants::kGoalHeightInches-VisionConstants::kLensHeightInches)/tan(goalToRadians);
     return distToGoal/39.37;
+}
+
+void VisionSub:: targetVisionPipeline() {
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1.0);
+}
+
+void VisionSub::targetNeutralVisionPipeline() {
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0.0);
 }

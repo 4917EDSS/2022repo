@@ -11,7 +11,7 @@ constexpr double kDistanceMax=6.5;
 constexpr double kSpeedMin=12000.0;
 constexpr double kSpeedMax=26400.0;
 
-ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal) {
+ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal, bool isAuto) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
   AddRequirements({intakeSub});
@@ -20,11 +20,13 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, Visio
   m_shooterSubPtr = shooterSub;
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
+  m_isAuto = isAuto;
 }
 
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
+  m_visionSubPtr->targetVisionPipeline();
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   m_isUpToSpeed=false;
   if(m_isUpperGoal) {
@@ -42,6 +44,11 @@ void ShootCargoCmd::Initialize() {
     m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
   }
   
+  if (m_isAuto == true) { 
+    m_intakeSubPtr->lowerIntake();
+    m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
+  }
+
   m_shooterSubPtr->autoVelocity(m_targetSpeed);
 }
 
@@ -58,14 +65,15 @@ void ShootCargoCmd::Execute() {
   }
   if (m_intakeSubPtr->isCargoAtMagazineBack()){
     m_ballLastSeenTime = frc::RobotController::GetFPGATime();
-   
-   
   }
 }
 
 // Called once the command ends or is interrupted.
 void ShootCargoCmd::End(bool interrupted) {
+  m_visionSubPtr->targetNeutralVisionPipeline();
   m_shooterSubPtr->setPower(0);
+  m_intakeSubPtr->disableFrontRollerIntakeMotor();
+  m_intakeSubPtr->raiseIntake();
   m_intakeSubPtr->disableMagazineMotor();
 }
 

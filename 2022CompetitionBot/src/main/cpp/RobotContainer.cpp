@@ -25,6 +25,8 @@
 #include "commands/FourBallAutoGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
 // Test that we can create all of our hardware objects.
 // DO NOT leave this enabled.  Testing only.
 #if 0 // Set to 1 to test, 0 for robot deployment
@@ -45,6 +47,7 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
 #endif
 //
 ////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -125,7 +128,7 @@ void RobotContainer::ConfigureButtonBindings() {
   killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton AlignThenShoot(&m_driverController,kAlignThenShoot);
-  AlignThenShoot.WhenPressed(AlignThenShootGrp(&m_shooterSub,&m_visionSub,&m_drivetrainSub,&m_intakeSub));
+  AlignThenShoot.WhenPressed(AlignThenShootGrp(&m_shooterSub,&m_visionSub,&m_drivetrainSub,&m_intakeSub, false));
 
   
   // Operator Controller Button Mapping
@@ -136,10 +139,10 @@ void RobotContainer::ConfigureButtonBindings() {
   toggleIntakeArmOpBtn.WhenPressed(ToggleIntakeArmCmd(&m_intakeSub));
 
   frc2::JoystickButton shootCargoLowOPBtn(&m_operatorController, kShootCargoLowOpBtn); //Low cargo shoot
-  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, &m_visionSub, false));  
+  shootCargoLowOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, &m_visionSub, false, false));  
 
   frc2::JoystickButton shootCargoHighOPBtn(&m_operatorController, kShootCargoHighOpBtn); //High cargo shoot
-  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, &m_visionSub, true)); 
+  shootCargoHighOPBtn.WhileHeld(ShootCargoCmd(&m_shooterSub, &m_intakeSub, &m_visionSub, true, false)); 
   
   frc2::JoystickButton spinFlywheelOpBtn(&m_operatorController, kSpinFlywheelOpBtn); //Spin flywheel
   spinFlywheelOpBtn.WhileHeld(SpinFlywheelCmd(&m_shooterSub, true));
@@ -199,6 +202,7 @@ void RobotContainer::updateDashboard() {
   frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderDistanceM());
   frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderDistanceM());
   frc::SmartDashboard::PutNumber("Heading", m_drivetrainSub.getHeading());
+  frc::SmartDashboard::PutNumber("Horizontal Angle", m_visionSub.getHorizontalAngle());
   frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
   frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
   frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
