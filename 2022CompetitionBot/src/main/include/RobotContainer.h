@@ -47,6 +47,16 @@ class RobotContainer {
   frc::Joystick m_operatorController{kOperatorControllorPort};
   frc::SendableChooser<frc2::Command*> m_autoChooser;
 
+  nt::NetworkTableEntry m_lowShootSpeedNte;
+  nt::NetworkTableEntry m_highShootSpeedNte;
+  nt::NetworkTableEntry m_flywheelNte;
+  nt::NetworkTableEntry m_climbHeightNte;
+  nt::NetworkTableEntry m_driveLeftNte;
+  nt::NetworkTableEntry m_driveRightNte;
+  nt::NetworkTableEntry m_headingNte;
+  nt::NetworkTableEntry m_isHighGearNte;
+
+
   void ConfigureButtonBindings();
   void autoChooserSetup();
 };

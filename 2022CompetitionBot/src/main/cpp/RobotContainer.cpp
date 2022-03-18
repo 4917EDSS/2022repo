@@ -25,8 +25,6 @@
 #include "commands/FourBallAutoGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
-
 // Test that we can create all of our hardware objects.
 // DO NOT leave this enabled.  Testing only.
 #if 0 // Set to 1 to test, 0 for robot deployment
@@ -47,7 +45,6 @@ AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference Syste
 #endif
 //
 ////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -185,26 +182,26 @@ void RobotContainer::initSubsystems() {
 void RobotContainer::initDashboard(){
   frc::SmartDashboard::PutNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
   frc::SmartDashboard::PutNumber("High Speed", m_shooterSub.m_upperBinSpeed);
+  frc::ShuffleboardTab& diagTab = frc::Shuffleboard::GetTab("Diagnostic Data");
+  m_lowShootSpeedNte = (diagTab.Add("Low Shoot Speed", 0).GetEntry());
+  m_highShootSpeedNte = (diagTab.Add("High Shoot Speed", 0).GetEntry());
+  m_flywheelNte = (diagTab.Add("FlyWheel Speed", 0).GetEntry());
+  m_climbHeightNte = (diagTab.Add("Climber Height", 0).GetEntry());
+  m_driveLeftNte = (diagTab.Add("Drive Left", 0).GetEntry());
+  m_driveRightNte = (diagTab.Add("Drive Right", 0).GetEntry());
+  m_headingNte = (diagTab.Add("Heading", 0).GetEntry());
+  m_isHighGearNte = (diagTab.Add("is High Gear", 0).GetEntry());
     //Mess up current shooter speed
   //frc::SmartDashboard::PutNumber("Shoot kF", m_shooterSub.m_kNewF);
   //frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kNewP);
   //frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kNewD);
   //frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kNewI);
+
 }
 
 void RobotContainer::updateDashboard() {
-  m_shooterSub.m_lowerBinSpeed = frc::SmartDashboard::GetNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
-  m_shooterSub.m_upperBinSpeed = frc::SmartDashboard::GetNumber("High Speed", m_shooterSub.m_upperBinSpeed);
   frc::SmartDashboard::PutNumber("Speed", (m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity()) / 2);
-  frc::SmartDashboard::PutNumber("Flywheel Speed", m_shooterSub.getSpeed());
-  frc::SmartDashboard::PutNumber("Climb Arm", m_climberSub.getClimberEncoder());
-  frc::SmartDashboard::PutNumber("Climber Height", m_climberSub.getClimberEncoder());
-  frc::SmartDashboard::PutNumber("Drive Left", m_drivetrainSub.getLeftEncoderDistanceM());
-  frc::SmartDashboard::PutNumber("Drive Right", m_drivetrainSub.getRightEncoderDistanceM());
-  frc::SmartDashboard::PutNumber("Heading", m_drivetrainSub.getHeading());
-  frc::SmartDashboard::PutNumber("Horizontal Angle", m_visionSub.getHorizontalAngle());
   frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
-  frc::SmartDashboard::PutBoolean("is High Gear", m_drivetrainSub.isShiftedInHighGear());
   frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
   frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
   frc::SmartDashboard::PutBoolean("Intake End", m_intakeSub.isCargoAtIntakeEnd());
@@ -213,6 +210,14 @@ void RobotContainer::updateDashboard() {
   //m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
   //m_shooterSub.m_kNewD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kNewD);
   //m_shooterSub.m_kNewI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kNewI);
+   m_lowShootSpeedNte.SetDouble(m_shooterSub.m_lowerBinSpeed);
+   m_highShootSpeedNte.SetDouble(m_shooterSub.m_upperBinSpeed);
+   m_flywheelNte.SetDouble(m_shooterSub.getSpeed());
+   m_climbHeightNte.SetDouble( m_climberSub.getClimberEncoder());
+   m_driveLeftNte.SetDouble(m_drivetrainSub.getLeftEncoderDistanceM());
+   m_driveRightNte.SetDouble(m_drivetrainSub.getRightEncoderDistanceM());
+   m_headingNte.SetDouble(m_drivetrainSub.getHeading());
+   m_isHighGearNte.SetDouble( m_drivetrainSub.isShiftedInHighGear());
 }
 
 void RobotContainer::autoChooserSetup() {
