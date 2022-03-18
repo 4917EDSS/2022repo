@@ -22,10 +22,10 @@ void AlignToVisionCmd::Initialize() {
 void AlignToVisionCmd::Execute() {
   double currentAngle = m_visionSubPtr->getHorizontalAngle();
   double rotationSpeed = currentAngle/20;
-  if(rotationSpeed < 0.2 && rotationSpeed > 0){
-    rotationSpeed = 0.2;
-  } else if(rotationSpeed > -0.2 && rotationSpeed < 0){
-    rotationSpeed = -0.2;
+  if(rotationSpeed < 0.4 && rotationSpeed > 0){
+    rotationSpeed = 0.4;
+  } else if(rotationSpeed > -0.4 && rotationSpeed < 0){
+    rotationSpeed = -0.4;
   }
   if(fabs(currentAngle) < .5){
     m_drivetrainSubPtr->arcadeDrive(0, 0);

@@ -20,7 +20,7 @@
 class ShootCargoCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCargoCmd> {
  public:
-  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal);
+  ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal, bool isAuto);
 
   void Initialize() override;
 
@@ -38,5 +38,6 @@ private:
   int m_isUpperGoal;
   double m_targetSpeed;
   bool m_isUpToSpeed;
+  bool m_isAuto;
   uint64_t m_ballLastSeenTime;
 };
