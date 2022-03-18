@@ -34,7 +34,7 @@ void AlignToVisionCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AlignToVisionCmd::IsFinished() {
-  if (m_visionSubPtr->getTargetArea() == 0){
+  if (m_visionSubPtr->isValidTarget() == 0){
     return true;
   }
   if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {

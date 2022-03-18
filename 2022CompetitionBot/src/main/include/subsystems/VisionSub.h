@@ -36,6 +36,7 @@ class VisionSub : public frc2::SubsystemBase {
   double getVerticalAngle() {return getTable()->GetNumber("ty",0.0); }
   double getTargetArea() {return getTable()->GetNumber("ta",0.0); }
   double getTargetSkew() {return getTable()->GetNumber("ts",0.0); }
+  bool isValidTarget() {return getTable()->GetNumber("tv",0.0); } //(1) if any valid targets (0) If none
 
   double estimateDistanceMeters();
   

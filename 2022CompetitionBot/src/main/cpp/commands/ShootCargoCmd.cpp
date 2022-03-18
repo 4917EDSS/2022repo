@@ -18,6 +18,7 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, Visio
   AddRequirements({visionSub});
 
   m_shooterSubPtr = shooterSub;
+  m_visionSubPtr = visionSub;
   m_intakeSubPtr = intakeSub;
   m_isUpperGoal = isUpperGoal;
   m_isAuto = isAuto;
@@ -30,6 +31,10 @@ void ShootCargoCmd::Initialize() {
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   m_isUpToSpeed=false;
   if(m_isUpperGoal) {
+    if (m_isAuto == true) { 
+    m_intakeSubPtr->lowerIntake();
+    m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
+    }
     // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
     double currentDistance = m_visionSubPtr->estimateDistanceMeters();
     double slope=(kSpeedMax-kSpeedMin)/(kDistanceMax-kDistanceMin);
@@ -42,11 +47,6 @@ void ShootCargoCmd::Initialize() {
   }
   else {
     m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;
-  }
-  
-  if (m_isAuto == true) { 
-    m_intakeSubPtr->lowerIntake();
-    m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
   }
 
   m_shooterSubPtr->autoVelocity(m_targetSpeed);
