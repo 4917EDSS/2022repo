@@ -21,15 +21,15 @@ void AlignToVisionCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void AlignToVisionCmd::Execute() {
   double angleRemaining = m_visionSubPtr->getHorizontalAngle();
-  double rotationSpeed = angleRemaining/20;
+  double rotationPower = angleRemaining/20;
   double dir = (angleRemaining < 0) ? -1: 1;
-  rotationSpeed = fabs(rotationSpeed);
+  rotationPower = fabs(rotationPower);
   angleRemaining = fabs(angleRemaining);
-  if(rotationSpeed < kMinPower && rotationSpeed > 0){ rotationSpeed = kMinPower; }
+  if(rotationPower < kMinPower && rotationPower > 0){ rotationPower = kMinPower; }
   if(angleRemaining < .5){
     m_drivetrainSubPtr->arcadeDrive(0, 0);
   } else {
-    m_drivetrainSubPtr->arcadeDrive(0, rotationSpeed*dir);
+    m_drivetrainSubPtr->arcadeDrive(0, rotationPower*dir);
   }
 }
 
