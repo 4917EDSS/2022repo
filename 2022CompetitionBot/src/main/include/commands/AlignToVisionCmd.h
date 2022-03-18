@@ -20,8 +20,9 @@
 class AlignToVisionCmd
     : public frc2::CommandHelper<frc2::CommandBase, AlignToVisionCmd> {
  public:
-  AlignToVisionCmd(DrivetrainSub *drivetrainSub, VisionSub *visionSub);
 
+  AlignToVisionCmd(DrivetrainSub *drivetrainSub, VisionSub *visionSub);
+  void setTargetVisionPipeline();
 
   void Initialize() override;
 
@@ -30,6 +31,8 @@ class AlignToVisionCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  void setNeutralVisionPipeline();
 private:
   DrivetrainSub *m_drivetrainSubPtr;
   VisionSub *m_visionSubPtr;
