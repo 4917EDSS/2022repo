@@ -125,7 +125,7 @@ void RobotContainer::ConfigureButtonBindings() {
   killEverythingDrv2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton AlignThenShoot(&m_driverController,kAlignThenShoot);
-  AlignThenShoot.WhenPressed(AlignThenShootGrp(&m_shooterSub,&m_visionSub,&m_drivetrainSub,&m_intakeSub));
+  AlignThenShoot.WhenPressed(AlignThenShootGrp(&m_shooterSub,&m_visionSub,&m_drivetrainSub,&m_intakeSub, false));
 
   
   // Operator Controller Button Mapping

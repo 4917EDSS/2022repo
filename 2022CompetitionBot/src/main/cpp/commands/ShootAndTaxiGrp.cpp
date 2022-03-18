@@ -13,5 +13,5 @@
 ShootAndTaxiGrp::ShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub,VisionSub* visionSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands( DriveStraightCmd(drivetrainSub, -2), AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub));
+  AddCommands( DriveStraightCmd(drivetrainSub, -2), AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, false));
 }
