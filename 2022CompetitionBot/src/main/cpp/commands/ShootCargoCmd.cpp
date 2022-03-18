@@ -26,6 +26,7 @@ ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, Visio
 
 // Called when the command is initially scheduled.
 void ShootCargoCmd::Initialize() {
+  m_visionSubPtr->targetVisionPipeline();
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   m_isUpToSpeed=false;
   if(m_isUpperGoal) {
@@ -69,6 +70,7 @@ void ShootCargoCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void ShootCargoCmd::End(bool interrupted) {
+  m_visionSubPtr->targetNeutralVisionPipeline();
   m_shooterSubPtr->setPower(0);
   m_intakeSubPtr->disableFrontRollerIntakeMotor();
   m_intakeSubPtr->raiseIntake();

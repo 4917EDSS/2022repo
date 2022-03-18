@@ -16,6 +16,7 @@ AlignToVisionCmd::AlignToVisionCmd(DrivetrainSub *drivetrainSub, VisionSub *visi
 
 // Called when the command is initially scheduled.
 void AlignToVisionCmd::Initialize() {
+  m_visionSubPtr->targetVisionPipeline();
   m_startTime = frc::RobotController::GetFPGATime();
 }
 
@@ -27,6 +28,7 @@ void AlignToVisionCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void AlignToVisionCmd::End(bool interrupted) {
+  m_visionSubPtr->targetNeutralVisionPipeline();
   m_drivetrainSubPtr->arcadeDrive(0, 0);
 }
 

@@ -32,7 +32,6 @@ class AlignToVisionCmd
 
   bool IsFinished() override;
 
-  void setNeutralVisionPipeline();
 private:
   DrivetrainSub *m_drivetrainSubPtr;
   VisionSub *m_visionSubPtr;
