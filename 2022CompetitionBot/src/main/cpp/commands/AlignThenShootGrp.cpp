@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/AlignThenShootGrp.h"
-#include "commands/AlignToVisionCmd.h"
+#include "commands/AlignToVisionGyroCmd.h"
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/ShootCargoCmd.h"
 #include <frc2/command/ParallelDeadlineGroup.h>
@@ -14,6 +14,6 @@
 AlignThenShootGrp::AlignThenShootGrp(ShooterSub *shooterSub,VisionSub *visionSub, DrivetrainSub *drivetrainSub,IntakeSub *intakeSub, bool isAuto) { //Only for Upper Goal
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands(frc2::ParallelDeadlineGroup{AlignToVisionCmd(drivetrainSub,visionSub),SpinFlywheelCmd(shooterSub,true)},ShootCargoCmd(shooterSub,intakeSub,visionSub,true,isAuto));
+  AddCommands(frc2::ParallelDeadlineGroup{AlignToVisionGyroCmd(drivetrainSub,visionSub),SpinFlywheelCmd(shooterSub,true)},ShootCargoCmd(shooterSub,intakeSub,visionSub,true,isAuto));
 
 }
