@@ -13,11 +13,13 @@ ArmSeparationCmd::ArmSeparationCmd(ClimberSub * armSepartion, bool armSeparation
 
 // Called when the command is initially scheduled.
 void ArmSeparationCmd::Initialize() {
+  m_armSeparationPtr->toggleArmSeparation();
+  /*
   if (m_armSeparationDirection)
     m_armSeparationPtr->raiseArmSeparation();
   else
     m_armSeparationPtr->lowerArmSeparation();
-
+  */
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -30,5 +32,5 @@ void ArmSeparationCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ArmSeparationCmd::IsFinished() {
-  return false;
+  return true;
 }
