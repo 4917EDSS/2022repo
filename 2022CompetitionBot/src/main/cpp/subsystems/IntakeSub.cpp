@@ -97,3 +97,6 @@ bool IntakeSub::isCargoAtIntakeEnd(){
   return (!m_EndOfIntake.Get())||(!m_EndOfIntakeTwo.Get());
 }
  
+ bool IntakeSub::isIntakeArmUp() {
+   return !m_armSolenoid1.Get();
+ }

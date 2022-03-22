@@ -34,6 +34,7 @@ class IntakeSub : public frc2::SubsystemBase {
   bool isCargoAtMagazineFront();
   bool isCargoAtMagazineBack();
   bool isCargoAtIntakeEnd();
+  bool isIntakeArmUp();
   
  private:
   // Components (e.g. motor controllers and sensors) should generally be

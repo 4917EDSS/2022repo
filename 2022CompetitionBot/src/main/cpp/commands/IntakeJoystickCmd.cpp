@@ -22,13 +22,16 @@ void IntakeJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void IntakeJoystickCmd::Execute() {
-  m_intakeSubPtr->setFrontRollerIntakeMotor(applyDeadband(-m_joystickPtr->GetY())); //Set power of front roller
+  if(!m_intakeSubPtr->isIntakeArmUp()) {
+    m_intakeSubPtr->setFrontRollerIntakeMotor(applyDeadband(-m_joystickPtr->GetY())); //Set power of front roller
+  }
   m_intakeSubPtr->setMagazineMotor(applyDeadband(-m_joystickPtr->GetThrottle())); //Also set power of magazine 
 }
 
 // Called once the command ends or is interrupted.
 void IntakeJoystickCmd::End(bool interrupted) {
   m_intakeSubPtr->disableFrontRollerIntakeMotor();
+  m_intakeSubPtr->disableMagazineMotor();
 }
 
 // Returns true when the command should end.
