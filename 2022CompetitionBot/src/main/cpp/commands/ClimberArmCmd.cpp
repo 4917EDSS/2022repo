@@ -4,7 +4,7 @@
 
 #include "commands/ClimberArmCmd.h"
 
-constexpr double kClimberArmPower = 0.5;
+constexpr double kClimberArmPower = 0.75;
 constexpr int kClimberArmMaxHeight = 305000;
 constexpr int kClimberArmMinHeight = 00;
 

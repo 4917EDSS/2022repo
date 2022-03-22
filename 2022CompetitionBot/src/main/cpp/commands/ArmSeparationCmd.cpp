@@ -27,7 +27,6 @@ void ArmSeparationCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
 void ArmSeparationCmd::End(bool interrupted) {
-  m_armSeparationPtr->lowerArmSeparation();
 }
 
 // Returns true when the command should end.
