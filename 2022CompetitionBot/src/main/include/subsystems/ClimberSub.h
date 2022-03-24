@@ -16,8 +16,9 @@ class ClimberSub : public frc2::SubsystemBase {
   void init(); // Resets all of the subsystem's hardware 
   void Periodic() override;
   
-  void raiseArmSeparation();
-  void lowerArmSeparation();
+  void unfoldArms();
+  bool getArmStatus();
+  void foldArms();
   void toggleArmSeparation();
 
   void setClimberArmPower(double power);
