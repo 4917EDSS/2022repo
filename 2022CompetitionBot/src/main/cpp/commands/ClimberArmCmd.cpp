@@ -6,7 +6,7 @@
 
 constexpr double kClimberArmPower = 0.75;
 constexpr int kClimberArmMaxHeight = 305000;
-constexpr int kClimberArmMinHeight = 00;
+constexpr int kClimberArmMinHeight = 0;
 
 ClimberArmCmd::ClimberArmCmd(ClimberSub* climberSub, bool climberDirection) {
   // Use addRequirements() here to declare subsystem dependencies.

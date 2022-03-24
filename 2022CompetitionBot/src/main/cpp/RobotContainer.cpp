@@ -23,6 +23,7 @@
 #include "commands/TwoBallAutoGrp.h"
 #include "commands/AlignThenShootGrp.h"
 #include "commands/FourBallAutoGrp.h"
+#include "commands/StageOneClimbGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Test that we can create all of our hardware objects.
@@ -88,6 +89,7 @@ constexpr int kKillEverythingOp2Btn = 12;
 constexpr int kClimberExtendOpBtn = 6;
 constexpr int kClimberRetractOpBtn = 5;
 constexpr int kArmSeparationOpBtn = 9;
+constexpr int kAutoClimbOpBtn = 10;
 
 
 RobotContainer::RobotContainer() {
@@ -158,6 +160,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton ArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn); // arm separation cmd
   ArmSeparationOpBtn.WhenPressed(ArmSeparationCmd(&m_climberSub,true ));
+
+  frc2::JoystickButton AutoClimbOpBtn(&m_operatorController, kAutoClimbOpBtn);
+  AutoClimbOpBtn.WhenPressed(StageOneClimbGrp(&m_climberSub));
 
   // Axis mapping
   m_driverController.SetXChannel(0);

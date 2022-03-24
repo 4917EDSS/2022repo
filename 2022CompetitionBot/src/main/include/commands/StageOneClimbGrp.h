@@ -6,7 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/SequentialCommandGroup.h>
+
 #include "subsystems/ClimberSub.h"
+
 /**
  * An example command.
  *
@@ -14,20 +17,8 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ArmSeparationCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ArmSeparationCmd> {
+class StageOneClimbGrp
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, StageOneClimbGrp> {
  public:
-  ArmSeparationCmd(ClimberSub * armSepartion, bool armSeparationDirection ); //bool is useless but is set in different files now
-
-  void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
-
-  private:
-  ClimberSub * m_armSeparationPtr;
-  bool m_armSeparationDirection;
+  StageOneClimbGrp(ClimberSub *climberSub);
 };
