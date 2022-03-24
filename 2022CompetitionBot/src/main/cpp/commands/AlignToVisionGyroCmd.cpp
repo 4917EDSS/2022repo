@@ -52,9 +52,22 @@ void AlignToVisionGyroCmd::Execute() { //Basically copied from RotateRobotCmd
 // Called once the command ends or is interrupted.
 void AlignToVisionGyroCmd::End(bool interrupted) {
   m_visionSubPtr->targetNeutralVisionPipeline(); //Turn off camera
+  m_drivetrainSubPtr->arcadeDrive(0, 0);
 }
 
 // Returns true when the command should end.
 bool AlignToVisionGyroCmd::IsFinished() {
-  return false;
+  double angleRemaining = m_angle-m_drivetrainSubPtr->getHeading();
+  if (m_visionSubPtr->getTargetArea() == 0){
+    return true;
+  }
+  if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {
+    return true;
+  }
+  if(fabs(angleRemaining) < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
+    return true;
+  }
+  else{
+    return false;
+  }
 }
