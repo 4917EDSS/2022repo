@@ -15,6 +15,7 @@ void ClimberSub::init() { //Reset all hardware to a safe state
     m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms); //Make sure to use SensorVelocityMeasPeriod because VelocityMeasPeriod is depricated
     m_climbArmMotor.ConfigVelocityMeasurementWindow(4);
     m_climbArmMotor.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+    foldArms();
     setClimberArmPower(0.);
     zeroClimberEncoders();
 }
@@ -34,11 +35,15 @@ double ClimberSub::getClimberEncoder() {
     return -m_climbArmMotor.GetSelectedSensorPosition();
 }
 
-void ClimberSub::raiseArmSeparation() {
+void ClimberSub::unfoldArms() {
     m_armSeparationSolenoid.Set(true);
 }
 
-void ClimberSub::lowerArmSeparation() {
+bool ClimberSub::getArmStatus() {
+    return m_armSeparationSolenoid.Get();
+}
+
+void ClimberSub::foldArms() {
     m_armSeparationSolenoid.Set(false);
 }
 
