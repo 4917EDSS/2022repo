@@ -234,3 +234,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   return m_autoChooser.GetSelected();
 }
+
+
+void RobotContainer::disabled() {
+  m_visionSub.targetNeutralVisionPipeline();
+}

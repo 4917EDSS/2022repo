@@ -35,6 +35,7 @@ class RobotContainer {
   void initSubsystems();
   void initDashboard();
   void updateDashboard();
+  void disabled();
 
  private:
   // The robot's subsystems and commands are defined here...

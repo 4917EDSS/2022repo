@@ -33,6 +33,7 @@ void Robot::RobotPeriodic() {
  */
 void Robot::DisabledInit() {
   m_isInitialized = false; //allow it to initialize again
+  m_container.disabled();
 }
 
 void Robot::DisabledPeriodic() {}

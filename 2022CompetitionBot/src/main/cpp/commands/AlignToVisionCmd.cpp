@@ -36,7 +36,7 @@ void AlignToVisionCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void AlignToVisionCmd::End(bool interrupted) {
-  m_visionSubPtr->targetNeutralVisionPipeline();
+  // m_visionSubPtr->targetNeutralVisionPipeline();
   m_drivetrainSubPtr->arcadeDrive(0, 0);
 }
 

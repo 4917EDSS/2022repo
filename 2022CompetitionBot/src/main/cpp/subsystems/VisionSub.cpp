@@ -12,7 +12,7 @@ void VisionSub::init() {
     frc::ShuffleboardTab& visTab = frc::Shuffleboard::GetTab("Vision Data");
     distEntry = visTab.Add("Distance to goal",0.).GetEntry();
     angleEntry = visTab.Add("Angle to goal",0.).GetEntry();
-    targetNeutralVisionPipeline();
+    targetVisionPipeline();
 }
 
 // This method will be called once per scheduler run

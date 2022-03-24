@@ -70,7 +70,7 @@ void ShootCargoCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void ShootCargoCmd::End(bool interrupted) {
-  m_visionSubPtr->targetNeutralVisionPipeline();
+ // m_visionSubPtr->targetNeutralVisionPipeline();
   m_shooterSubPtr->setPower(0);
   m_intakeSubPtr->disableFrontRollerIntakeMotor();
   m_intakeSubPtr->raiseIntake();
