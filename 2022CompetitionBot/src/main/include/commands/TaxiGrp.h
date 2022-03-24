@@ -6,10 +6,12 @@
 
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>
-
+#include "subsystems/ShooterSub.h"
+#include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
+#include "subsystems/IntakeSub.h"
 
 class TaxiGrp: public frc2::CommandHelper<frc2::SequentialCommandGroup, TaxiGrp> {
  public:
-  TaxiGrp(DrivetrainSub* drivetrainSub);
+  TaxiGrp(DrivetrainSub *drivetrainSub, ShooterSub *shooterSub, VisionSub *visionSub, IntakeSub *intakeSub);
 };

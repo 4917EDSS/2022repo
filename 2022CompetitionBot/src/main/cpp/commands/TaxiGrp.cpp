@@ -5,16 +5,15 @@
 #include "commands/TaxiGrp.h"
 #include "commands/DriveStraightCmd.h"
 #include "commands/RotateRobotCmd.h"
+#include "commands/ShootCargoCmd.h"
+#include "commands/AlignThenShootGrp.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-TaxiGrp::TaxiGrp(DrivetrainSub* drivetrainSub) {
+TaxiGrp::TaxiGrp(DrivetrainSub *drivetrainSub, ShooterSub *shooterSub, VisionSub *visionSub, IntakeSub *intakeSub) {
   // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
+   //AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
-    DriveStraightCmd(drivetrainSub, 2),
-    RotateRobotCmd(drivetrainSub, 180)
+    DriveStraightCmd(drivetrainSub, -2),
+     AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, true)
   ); 
 }
