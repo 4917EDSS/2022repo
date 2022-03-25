@@ -5,7 +5,7 @@
 #include "commands/RaiseClimberArmCmd.h"
 
 constexpr double kClimberArmPower = 1.0;
-constexpr int kClimberArmMaxHeight = 305000;
+constexpr int kClimberArmMaxHeight = 180000;
 
 RaiseClimberArmCmd::RaiseClimberArmCmd(ClimberSub* climberSub) {
   AddRequirements({climberSub});
