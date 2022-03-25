@@ -21,7 +21,6 @@ void AlignToVisionGyroCmd::Initialize() {
   
   m_angle = m_visionSubPtr->getHorizontalAngle()*1.2; //lime light degree reads slightly off 
   m_drivetrainSubPtr->zeroHeading(); 
-  fmt::print ("start angle {}\n", m_angle);
 }
 //-12 deg   -- 0 deg
 // -12-0 = -12
@@ -57,15 +56,12 @@ void AlignToVisionGyroCmd::End(bool interrupted) {
 bool AlignToVisionGyroCmd::IsFinished() {
   double angleRemaining = m_angle-m_drivetrainSubPtr->getHeading();
   if (m_visionSubPtr->getTargetArea() == 0 && (frc::RobotController::GetFPGATime() - m_startTime) > 300000){
-    fmt::print ("end angle {}\n", angleRemaining);
     return true;
   }
   if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {
-    fmt::print ("end angle {}\n", angleRemaining);
     return true;
   }
   if(fabs(angleRemaining) < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
-    fmt::print ("end angle {}\n", angleRemaining);
     return true;
   }
   else{

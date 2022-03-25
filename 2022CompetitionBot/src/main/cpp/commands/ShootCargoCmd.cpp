@@ -8,7 +8,7 @@
 
 constexpr double kDistanceMin=1.5;
 constexpr double kDistanceMax=6.5;
-constexpr double kSpeedMin=12000.0;
+constexpr double kSpeedMin=13000.0;
 constexpr double kSpeedMax=26400.0;
 
 ShootCargoCmd::ShootCargoCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, VisionSub *visionSub, bool isUpperGoal, bool isAuto) {
