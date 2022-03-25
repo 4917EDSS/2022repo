@@ -32,7 +32,7 @@ void ClimberSub::zeroClimberEncoders() {
 }
 
 double ClimberSub::getClimberEncoder() {
-    return -m_climbArmMotor.GetSelectedSensorPosition();
+    return m_climbArmMotor.GetSelectedSensorPosition();
 }
 
 void ClimberSub::unfoldArms() {
