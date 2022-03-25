@@ -5,7 +5,7 @@
 #include "commands/LowerClimberArmCmd.h"
 
 constexpr double kClimberArmPower = 1.0;
-constexpr int kClimberArmMinHeight = 0;
+constexpr int kClimberArmMinHeight = 5000;
 
 LowerClimberArmCmd::LowerClimberArmCmd(ClimberSub* climberSub) {
   AddRequirements({climberSub});
