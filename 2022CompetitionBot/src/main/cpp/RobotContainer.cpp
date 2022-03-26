@@ -161,8 +161,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton ArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn); // arm separation cmd
   ArmSeparationOpBtn.WhenPressed(ArmSeparationCmd(&m_climberSub,true ));
 
-  frc2::JoystickButton AutoClimbOpBtn(&m_operatorController, kAutoClimbOpBtn);
-  AutoClimbOpBtn.WhenPressed(StageOneClimbGrp(&m_climberSub));
+  /*frc2::JoystickButton AutoClimbOpBtn(&m_operatorController, kAutoClimbOpBtn);
+  AutoClimbOpBtn.WhenPressed(StageOneClimbGrp(&m_climberSub));*/
 
   // Axis mapping
   m_driverController.SetXChannel(0);

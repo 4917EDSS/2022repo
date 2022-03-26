@@ -40,9 +40,9 @@ namespace PneumaticIds {
 }
 
 namespace DioIds{
-    constexpr int kMagazineTopSensor = 0;
-    constexpr int kMagazineFrontSensor = 1;
-    constexpr int kMagazineFrontSensorTwo = 2;
-    constexpr int kEndOfIntake = 5;
+    constexpr int kMagazineTopSensor = 1;
+    constexpr int kMagazineFrontSensor = 0;
+    constexpr int kMagazineFrontSensorTwo = 5;
+    constexpr int kEndOfIntake = 2;
     constexpr int kEndOfIntakeTwo = 4;
 } 

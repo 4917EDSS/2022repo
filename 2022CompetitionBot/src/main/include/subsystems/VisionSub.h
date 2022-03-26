@@ -15,7 +15,7 @@
 namespace VisionConstants {
   constexpr double kMountAngleDegrees = 21.0; //Degrees that camera is rotated back from vertical
   constexpr double kLensHeightInches = 32.5; //Distance from floor to center of camera in inches
-  constexpr double kGoalHeightInches = 95.0; //Will need to be changed
+  constexpr double kGoalHeightInches = 95.0; //Will need to be changed (104.0)
 }
 
 class VisionSub : public frc2::SubsystemBase {
