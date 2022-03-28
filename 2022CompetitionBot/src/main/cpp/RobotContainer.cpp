@@ -228,8 +228,8 @@ void RobotContainer::updateDashboard() {
 
 void RobotContainer::autoChooserSetup() {
   m_autoChooser.SetDefaultOption("Do nothing", new AutoDoNothingCmd());  
-  m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
-  m_autoChooser.AddOption("Taxi", new TaxiGrp(&m_drivetrainSub, &m_shooterSub, &m_visionSub, &m_intakeSub));
+  //m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
+  m_autoChooser.AddOption("Taxi 2m, Vis Shoot", new TaxiGrp(&m_drivetrainSub, &m_shooterSub, &m_visionSub, &m_intakeSub));
   m_autoChooser.AddOption("Two Ball Auto", new TwoBallAutoGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
   m_autoChooser.AddOption("Four Ball Auto", new FourBallAutoGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));
 
