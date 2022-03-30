@@ -13,13 +13,13 @@
 #include "commands/ShootCargoCmd.h"
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
-#include "commands/AutoShootAndTaxiGrp.h"
+#include "commands/AutoShortTaxiAndShootGrp.h"
 #include "commands/ClimberArmRaiseLowerCmd.h"
 #include "commands/ShiftLowCmd.h"
 #include "commands/ShiftHighCmd.h"
 #include "commands/ClimberArmsToggleSeparationCmd.h"
 #include "commands/ShiftAutoCmd.h"
-#include "commands/AutoTaxiGrp.h"
+#include "commands/AutoLongTaxiAndShootGrp.h"
 #include "commands/AutoTwoBallAutoGrp.h"
 #include "commands/AlignThenShootGrp.h"
 #include "commands/AutoFourBallGrp.h"
@@ -164,8 +164,6 @@ void RobotContainer::initSubsystems() {
 }
 
 void RobotContainer::initDashboard(){
-  frc::SmartDashboard::PutNumber("Low Speed", m_shooterSub.m_lowerBinSpeed);
-  frc::SmartDashboard::PutNumber("High Speed", m_shooterSub.m_upperBinSpeed);
   frc::ShuffleboardTab& diagTab = frc::Shuffleboard::GetTab("Diagnostic Data");
   m_lowShootSpeedNte = (diagTab.Add("Low Shoot Speed", 0).GetEntry());
   m_highShootSpeedNte = (diagTab.Add("High Shoot Speed", 0).GetEntry());
@@ -184,31 +182,42 @@ void RobotContainer::initDashboard(){
 }
 
 void RobotContainer::updateDashboard() {
-  frc::SmartDashboard::PutNumber("Speed", (m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity()) / 2);
-  frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
-  frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
-  frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
-  frc::SmartDashboard::PutBoolean("Intake End", m_intakeSub.isCargoAtIntakeEnd());
-  frc::SmartDashboard::PutBoolean("Climb Arms In", !m_climberSub.getArmStatus());
+  static int i = 0; 
+
+  i++;
+
+  if (i == 5) {
+    frc::SmartDashboard::PutBoolean("Auto Shift", m_drivetrainSub.m_isAutoShift);
+    frc::SmartDashboard::PutBoolean("Front Magazine", m_intakeSub.isCargoAtMagazineFront());
+    frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
+    frc::SmartDashboard::PutBoolean("Intake End", m_intakeSub.isCargoAtIntakeEnd());
+    frc::SmartDashboard::PutBoolean("Climb Arms In", !m_climberSub.getArmStatus());
+  } 
+  if (i == 10) {
+    m_lowShootSpeedNte.SetDouble(m_shooterSub.m_lowerBinSpeed);
+    m_highShootSpeedNte.SetDouble(m_shooterSub.m_upperBinSpeed);
+    m_flywheelNte.SetDouble(m_shooterSub.getSpeed());
+    m_climbHeightNte.SetDouble(m_climberSub.getClimberEncoder());
+    m_driveLeftNte.SetDouble(m_drivetrainSub.getLeftEncoderDistanceM());
+    m_driveRightNte.SetDouble(m_drivetrainSub.getRightEncoderDistanceM());
+    m_headingNte.SetDouble(m_drivetrainSub.getHeading());
+    m_isHighGearNte.SetDouble( m_drivetrainSub.isShiftedInHighGear());
+
+    i = 0;
+  }
+
+  //frc::SmartDashboard::PutNumber("Speed", (m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity()) / 2);
   //Mess up current shooter speed
   //m_shooterSub.m_kNewF = frc::SmartDashboard::GetNumber("Shoot kF", m_shooterSub.m_kNewF);
   //m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
   //m_shooterSub.m_kNewD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kNewD);
   //m_shooterSub.m_kNewI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kNewI);
-   m_lowShootSpeedNte.SetDouble(m_shooterSub.m_lowerBinSpeed);
-   m_highShootSpeedNte.SetDouble(m_shooterSub.m_upperBinSpeed);
-   m_flywheelNte.SetDouble(m_shooterSub.getSpeed());
-   m_climbHeightNte.SetDouble( m_climberSub.getClimberEncoder());
-   m_driveLeftNte.SetDouble(m_drivetrainSub.getLeftEncoderDistanceM());
-   m_driveRightNte.SetDouble(m_drivetrainSub.getRightEncoderDistanceM());
-   m_headingNte.SetDouble(m_drivetrainSub.getHeading());
-   m_isHighGearNte.SetDouble( m_drivetrainSub.isShiftedInHighGear());
 }
 
 void RobotContainer::autoChooserSetup() {
   m_autoChooser.SetDefaultOption("Do nothing", new AutoDoNothingCmd());  
-  m_autoChooser.AddOption("Shoot and Taxi", new AutoShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
-  m_autoChooser.AddOption("Taxi 2m, Vis Shoot", new AutoTaxiGrp(&m_drivetrainSub, &m_shooterSub, &m_visionSub, &m_intakeSub));
+  m_autoChooser.AddOption("Taxi -1m, Vis Shoot", new AutoShortTaxiAndShootGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
+  m_autoChooser.AddOption("Taxi -2m, Vis Shoot", new AutoLongTaxiAndShootGrp(&m_drivetrainSub, &m_shooterSub, &m_visionSub, &m_intakeSub));
   m_autoChooser.AddOption("Two Ball Auto", new AutoTwoBallGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
   m_autoChooser.AddOption("Four Ball Auto", new AutoFourBallGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));
 
