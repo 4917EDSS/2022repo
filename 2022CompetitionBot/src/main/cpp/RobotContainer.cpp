@@ -13,16 +13,16 @@
 #include "commands/ShootCargoCmd.h"
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
-#include "commands/ShootAndTaxiGrp.h"
+#include "commands/AutoShootAndTaxiGrp.h"
 #include "commands/ClimberArmCmd.h"
 #include "commands/ShiftLowCmd.h"
 #include "commands/ShiftHighCmd.h"
 #include "commands/ArmSeparationCmd.h"
 #include "commands/ShiftAutoCmd.h"
-#include "commands/TaxiGrp.h"
-#include "commands/TwoBallAutoGrp.h"
+#include "commands/AutoTaxiGrp.h"
+#include "commands/AutoTwoBallAutoGrp.h"
 #include "commands/AlignThenShootGrp.h"
-#include "commands/FourBallAutoGrp.h"
+#include "commands/AutoFourBallGrp.h"
 #include "commands/StageOneClimbGrp.h"
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -228,10 +228,10 @@ void RobotContainer::updateDashboard() {
 
 void RobotContainer::autoChooserSetup() {
   m_autoChooser.SetDefaultOption("Do nothing", new AutoDoNothingCmd());  
-  //m_autoChooser.AddOption("Shoot and Taxi", new ShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
-  m_autoChooser.AddOption("Taxi 2m, Vis Shoot", new TaxiGrp(&m_drivetrainSub, &m_shooterSub, &m_visionSub, &m_intakeSub));
-  m_autoChooser.AddOption("Two Ball Auto", new TwoBallAutoGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
-  m_autoChooser.AddOption("Four Ball Auto", new FourBallAutoGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));
+  m_autoChooser.AddOption("Shoot and Taxi", new AutoShootAndTaxiGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));  
+  m_autoChooser.AddOption("Taxi 2m, Vis Shoot", new AutoTaxiGrp(&m_drivetrainSub, &m_shooterSub, &m_visionSub, &m_intakeSub));
+  m_autoChooser.AddOption("Two Ball Auto", new AutoTwoBallGrp(&m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+  m_autoChooser.AddOption("Four Ball Auto", new AutoFourBallGrp(&m_shooterSub, &m_intakeSub, &m_drivetrainSub, &m_visionSub));
 
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }

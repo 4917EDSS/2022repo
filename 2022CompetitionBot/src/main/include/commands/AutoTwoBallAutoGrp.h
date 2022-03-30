@@ -7,13 +7,12 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-#include "subsystems/ShooterSub.h"
-#include "subsystems/IntakeSub.h"
 #include "subsystems/DrivetrainSub.h"
+#include "subsystems/IntakeSub.h"
+#include "subsystems/ShooterSub.h"
 #include "subsystems/VisionSub.h"
-class ShootAndTaxiGrp
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 ShootAndTaxiGrp> {
+
+class AutoTwoBallGrp: public frc2::CommandHelper<frc2::SequentialCommandGroup, AutoTwoBallGrp> {
  public:
-  ShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub, VisionSub* visionSub);
+  AutoTwoBallGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, ShooterSub *shooterSub, VisionSub *visionSub);
 };
