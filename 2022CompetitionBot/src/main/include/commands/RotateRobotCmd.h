@@ -28,6 +28,7 @@ class RotateRobotCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+  
  private:
   DrivetrainSub *m_drivetrainSubPtr;
   double m_angle;

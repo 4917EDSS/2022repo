@@ -6,8 +6,6 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
-
 #include "subsystems/ClimberSub.h"
 
 /**
@@ -17,8 +15,21 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class StageOneClimbGrp
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup, StageOneClimbGrp> {
+class ClimberArmsLatchReleaseCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ClimberArmsLatchReleaseCmd> {
  public:
-  StageOneClimbGrp(ClimberSub *climberSub);
+  ClimberArmsLatchReleaseCmd(ClimberSub * climberSub, bool armSeparationDirection);
+
+  void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
+
+ private:
+  ClimberSub * m_climberSubPtr;
+  bool m_armDirection;
+  uint64_t m_startTime;
 };

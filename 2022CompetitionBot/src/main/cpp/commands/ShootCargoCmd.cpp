@@ -31,18 +31,18 @@ void ShootCargoCmd::Initialize() {
   m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   m_isUpToSpeed=false;
   if(m_isUpperGoal) {
-    if (m_isAuto == true) { 
-    m_intakeSubPtr->lowerIntake();
-    m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
+    if(m_isAuto == true) { 
+      m_intakeSubPtr->lowerIntake();
+      m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
     }
     // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
     double currentDistance = m_visionSubPtr->estimateDistanceMeters();
-    double slope=(kSpeedMax-kSpeedMin)/(kDistanceMax-kDistanceMin);
-    double intercept=kSpeedMin-(slope*kDistanceMin);
-    if (currentDistance == 0.0) {
+    double slope = (kSpeedMax - kSpeedMin) / (kDistanceMax - kDistanceMin);
+    double intercept = kSpeedMin - (slope * kDistanceMin);
+    if(currentDistance == 0.0) {
       m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
     } else {
-      m_targetSpeed=(slope*currentDistance)+intercept;
+      m_targetSpeed = (slope * currentDistance) + intercept;
     }
   }
   else {
@@ -57,13 +57,15 @@ void ShootCargoCmd::Execute() {
   if(fabs(m_targetSpeed - m_shooterSubPtr->getSpeed()) < ShooterConstants::kShootTolerance) {
     m_isUpToSpeed=true;
   }
-  if (m_isUpToSpeed) {
+
+  if(m_isUpToSpeed) {
     m_intakeSubPtr->setMagazineMotor(0.4);
   }
   else {
     m_intakeSubPtr->disableMagazineMotor();
   }
-  if (m_intakeSubPtr->isCargoAtMagazineBack()){
+
+  if(m_intakeSubPtr->isCargoAtMagazineBack()) {
     m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   }
 }
@@ -79,7 +81,7 @@ void ShootCargoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ShootCargoCmd::IsFinished() {
-  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 3000000){
+  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 3000000) {
     return true;
   }
   return false;

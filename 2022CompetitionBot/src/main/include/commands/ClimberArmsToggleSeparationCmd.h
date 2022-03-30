@@ -7,7 +7,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ClimberSub.h"
-
 /**
  * An example command.
  *
@@ -15,10 +14,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class RaiseClimberArmCmd
-    : public frc2::CommandHelper<frc2::CommandBase, RaiseClimberArmCmd> {
+class CimberArmsToggleSeparationCmd
+    : public frc2::CommandHelper<frc2::CommandBase, CimberArmsToggleSeparationCmd> {
  public:
-  RaiseClimberArmCmd(ClimberSub* climberSub);
+  CimberArmsToggleSeparationCmd(ClimberSub *climberSub); //bool is useless but is set in different files now
 
   void Initialize() override;
 
@@ -27,6 +26,7 @@ class RaiseClimberArmCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
  private:
-  ClimberSub *m_climberSubPtr;
+  ClimberSub * m_climberSubPtr;
 };

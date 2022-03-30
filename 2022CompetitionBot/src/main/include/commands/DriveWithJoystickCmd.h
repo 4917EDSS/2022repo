@@ -28,6 +28,7 @@ class DriveWithJoystickCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+  
 private:
   DrivetrainSub *m_drivetrainSubPtr;
   frc::Joystick *m_joystickPtr;

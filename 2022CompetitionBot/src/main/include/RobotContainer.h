@@ -57,7 +57,6 @@ class RobotContainer {
   nt::NetworkTableEntry m_headingNte;
   nt::NetworkTableEntry m_isHighGearNte;
 
-
   void ConfigureButtonBindings();
   void autoChooserSetup();
 };

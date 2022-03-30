@@ -30,7 +30,7 @@ class AlignToVisionGyroCmd
 
   bool IsFinished() override;
 
-  private:
+ private:
   DrivetrainSub *m_drivetrainSubPtr;
   VisionSub *m_visionSubPtr;
   DriveWithJoystickCmd *m_driveWithJoystickCmd;

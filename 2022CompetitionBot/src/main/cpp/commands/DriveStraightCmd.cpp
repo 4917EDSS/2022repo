@@ -31,10 +31,15 @@ void DriveStraightCmd::Execute() {
   double dir = (distanceRemaining < 0) ? -1 : 1;
   distanceRemaining = fabs(distanceRemaining);
 
-  if (distanceRemaining <= 0.4) { power = (distanceRemaining/0.4)*(1-kMinPower)+kMinPower; }
-  if (distanceRemaining <= kTolerance) { power = 0; }
+  if(distanceRemaining <= 0.4) { 
+    power = (distanceRemaining / 0.4) * (1 - kMinPower) + kMinPower;
+  }
+  if(distanceRemaining <= kTolerance)
+  {
+    power = 0;
+  }
 
-  m_drivetrainSubPtr->arcadeDrive(power*dir, -rotatePwr);
+  m_drivetrainSubPtr->arcadeDrive(power * dir, -rotatePwr);
 }
 
 // Called once the command ends or is interrupted.
@@ -44,6 +49,8 @@ void DriveStraightCmd::End(bool interrupted) {
  
 // Returns true when the command should end.
 bool DriveStraightCmd::IsFinished() {
-  if ((distanceRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getVelocity())<=0.1)) { return true; }
+  if((distanceRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getVelocity()) <= 0.1)) {
+     return true; 
+  }
   return false;
 }

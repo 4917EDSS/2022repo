@@ -15,5 +15,5 @@
 class AlignThenShootGrp
     : public frc2::CommandHelper<frc2::SequentialCommandGroup, AlignThenShootGrp> {
  public:
-  AlignThenShootGrp(ShooterSub *shooterSub,VisionSub *visionSub, DrivetrainSub *drivetrainSub,IntakeSub *intakeSub, bool isAuto);
+  AlignThenShootGrp(ShooterSub *shooterSub,VisionSub *visionSub, DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, bool isAuto);
 };

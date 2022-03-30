@@ -90,11 +90,11 @@ bool IntakeSub::isCargoAtMagazineBack(){
 }
 
 bool IntakeSub::isCargoAtMagazineFront(){
-  return (!m_magazineFrontSensor.Get())||(!m_magazineFrontSensorTwo.Get());
+  return (!m_magazineFrontSensor.Get()) || (!m_magazineFrontSensorTwo.Get());
 }
 
 bool IntakeSub::isCargoAtIntakeEnd(){
-  return (!m_EndOfIntake.Get())||(!m_EndOfIntakeTwo.Get());
+  return (!m_EndOfIntake.Get()) || (!m_EndOfIntakeTwo.Get());
 }
  
  bool IntakeSub::isIntakeArmUp() {

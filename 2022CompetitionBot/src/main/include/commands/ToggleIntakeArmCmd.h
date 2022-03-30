@@ -28,7 +28,6 @@ class ToggleIntakeArmCmd
 
   bool IsFinished() override;
 
-private:
+ private:
   IntakeSub *m_intakeSubPtr;
-
 };

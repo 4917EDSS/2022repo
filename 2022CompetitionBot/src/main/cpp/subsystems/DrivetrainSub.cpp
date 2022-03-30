@@ -53,7 +53,7 @@ void  DrivetrainSub::shiftDown() { // Gear shift down
 }
 
 void DrivetrainSub::autoShift() {
-    if (!m_isAutoShift){
+    if (!m_isAutoShift) {
         return;
     }
     //get speed from robot
@@ -112,7 +112,7 @@ double DrivetrainSub::getRightVelocity() {
 }
 
 double DrivetrainSub::getVelocity() {
-    return (getLeftVelocity()+getRightVelocity())/2;
+    return (getLeftVelocity() + getRightVelocity()) / 2;
 }
 
 double DrivetrainSub::getHeading() {

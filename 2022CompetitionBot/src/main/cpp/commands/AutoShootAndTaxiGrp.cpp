@@ -13,5 +13,8 @@
 AutoShootAndTaxiGrp::AutoShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub,VisionSub* visionSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands( DriveStraightCmd(drivetrainSub, -2), AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, false));
+  AddCommands(
+    DriveStraightCmd(drivetrainSub, -2), 
+    AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, false) ////////////////// This last parameter should be "true" for an AUTO.  This group duplicates "AutoTaxiGrp".
+  );
 }

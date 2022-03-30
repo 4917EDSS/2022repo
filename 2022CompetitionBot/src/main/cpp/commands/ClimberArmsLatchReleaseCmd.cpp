@@ -2,34 +2,36 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/SetClimberArmCmd.h"
+#include "commands/ClimberArmsLatchReleaseCmd.h"
 #include <frc/RobotController.h>
 
-SetClimberArmCmd::SetClimberArmCmd(ClimberSub * armStatus, bool armDirection) { //true = latch, false = release
+ClimberArmsLatchReleaseCmd::ClimberArmsLatchReleaseCmd(ClimberSub *climberSub, bool armDirection) { //true = latch, false = release
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({armStatus});
-  m_armStatusPtr = armStatus;
+  AddRequirements({climberSub});
+  m_climberSubPtr = climberSub;
   m_armDirection = armDirection;
 }
 
 // Called when the command is initially scheduled.
-void SetClimberArmCmd::Initialize() {
+void ClimberArmsLatchReleaseCmd::Initialize() {
   m_startTime = frc::RobotController::GetFPGATime();
-  if (m_armDirection)
-    m_armStatusPtr->foldArms();
-  else
-    m_armStatusPtr->unfoldArms();
+  if(m_armDirection) {
+    m_climberSubPtr->foldArms();
+  } else {
+    m_climberSubPtr->unfoldArms();
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetClimberArmCmd::Execute() {}
+void ClimberArmsLatchReleaseCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void SetClimberArmCmd::End(bool interrupted) {}
+void ClimberArmsLatchReleaseCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool SetClimberArmCmd::IsFinished() {
+bool ClimberArmsLatchReleaseCmd::IsFinished() {
   if((frc::RobotController::GetFPGATime() - m_startTime) > 1500000) {
     return true;
   }
+  return false;
 }

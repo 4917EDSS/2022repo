@@ -27,6 +27,7 @@ class ShiftHighCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-  private:
+
+ private:
   DrivetrainSub *m_drivetrainSubPtr;
 };

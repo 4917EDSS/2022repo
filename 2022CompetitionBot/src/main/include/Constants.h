@@ -18,11 +18,11 @@ namespace CanIds {
     constexpr int kLeftMotor1 = 1;
     constexpr int kLeftMotor2 = 2;
     constexpr int kLeftMotor3 = 3;
-    constexpr int kLeftMotor4 = 4;
+    //constexpr int kLeftMotor4 = 4;
     constexpr int kRightMotor1 = 5;
     constexpr int kRightMotor2 = 6;
     constexpr int kRightMotor3 = 7;
-    constexpr int kRightMotor4 = 8;
+    //constexpr int kRightMotor4 = 8;
     constexpr int kFrontRollerIntakeMotor = 10;
     constexpr int kMagazineMotor = 11;
     constexpr int kShootMotor1 = 12;
@@ -34,15 +34,17 @@ namespace CanIds {
 
 namespace PneumaticIds {
     constexpr int kShifter = 1;
+    // constexpr int k = 2;
     constexpr int kArm1 = 3;
-    // constexpr int kArm2 = 3;
     constexpr int kArmSeparation = 4;
 }
 
 namespace DioIds{
-    constexpr int kMagazineTopSensor = 1;
     constexpr int kMagazineFrontSensor = 0;
-    constexpr int kMagazineFrontSensorTwo = 5;
+    constexpr int kMagazineTopSensor = 1;
     constexpr int kEndOfIntake = 2;
+    // constexpr int k = 3;
     constexpr int kEndOfIntakeTwo = 4;
+    constexpr int kMagazineFrontSensorTwo = 5;
+    
 } 

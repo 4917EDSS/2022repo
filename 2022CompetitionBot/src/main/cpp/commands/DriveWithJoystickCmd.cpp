@@ -32,7 +32,6 @@ double DriveWithJoystickCmd::applyDeadband(double power) {
 }
 
 double DriveWithJoystickCmd::capAcceleration(double targetPower, double curPower, double maxAcceleration) {
-  // double accelerationDirection = (curPower - targetPower) / fabs(curPower - targetPower);
   bool positiveAcceleration;
   double newPower = targetPower; // start by assuming that we don't need to step
   if(curPower - targetPower < 0) {
@@ -52,6 +51,7 @@ double DriveWithJoystickCmd::capAcceleration(double targetPower, double curPower
 
   return newPower;
 }
+
 // Called when the command is initially scheduled.
 void DriveWithJoystickCmd::Initialize() {
 }

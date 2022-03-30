@@ -68,8 +68,6 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::Solenoid m_shifter{frc::PneumaticsModuleType::CTREPCM, PneumaticIds::kShifter};
 
   AHRS m_gyro{frc::SPI::kMXP};
-
-  
   
   double getEncoderRotationsToMeterFactor();
 };

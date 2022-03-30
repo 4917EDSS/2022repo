@@ -22,14 +22,10 @@ class VisionSub : public frc2::SubsystemBase {
  public:
   VisionSub();
   void init();
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
   //Get camera code
   std::shared_ptr<nt::NetworkTable> getTable() {return nt::NetworkTableInstance::GetDefault().GetTable("limelight"); }
 
   void Periodic() override;
-
 
   //Get raw values for stuff
   double getHorizontalAngle() {return getTable()->GetNumber("tx",0.0); }//Resolution of limelight is 320x240
@@ -42,10 +38,8 @@ class VisionSub : public frc2::SubsystemBase {
   
   void  targetVisionPipeline();
   void  targetNeutralVisionPipeline();
+
  private:
-  
   nt::NetworkTableEntry distEntry;
   nt::NetworkTableEntry angleEntry;
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
 };

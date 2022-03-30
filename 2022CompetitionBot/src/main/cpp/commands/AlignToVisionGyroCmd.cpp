@@ -32,17 +32,19 @@ void AlignToVisionGyroCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void AlignToVisionGyroCmd::Execute() { //Basically copied from RotateRobotCmd
 
-  double angleRemaining = m_angle-m_drivetrainSubPtr->getHeading();
-  double rotationPower = (angleRemaining/20.);
-  double dir = (angleRemaining < 0.0) ? -1.0: 1.0;
+  double angleRemaining = m_angle - m_drivetrainSubPtr->getHeading();
+  double rotationPower = (angleRemaining / 20.);
+  double dir = (angleRemaining < 0.0) ? -1.0 : 1.0;
   rotationPower = fabs(rotationPower);
   angleRemaining = fabs(angleRemaining);
-  if(rotationPower < kMinPower && rotationPower > 0){ rotationPower = kMinPower; }
+  if(rotationPower < kMinPower && rotationPower > 0) { 
+    rotationPower = kMinPower; 
+  }
 
-  if(angleRemaining < .5){ //.5 degrees
+  if(angleRemaining < .5) { //.5 degrees
     m_drivetrainSubPtr->arcadeDrive(0, 0);
   } else {
-    m_drivetrainSubPtr->arcadeDrive(0, rotationPower*dir);
+    m_drivetrainSubPtr->arcadeDrive(0, rotationPower * dir);
   }
 }
 
@@ -55,7 +57,7 @@ void AlignToVisionGyroCmd::End(bool interrupted) {
 // Returns true when the command should end.
 bool AlignToVisionGyroCmd::IsFinished() {
   double angleRemaining = m_angle-m_drivetrainSubPtr->getHeading();
-  if (m_visionSubPtr->getTargetArea() == 0 && (frc::RobotController::GetFPGATime() - m_startTime) > 300000){
+  if(m_visionSubPtr->getTargetArea() == 0 && (frc::RobotController::GetFPGATime() - m_startTime) > 300000) {
     return true;
   }
   if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {

@@ -14,38 +14,17 @@
 #include "commands/SpinFlywheelCmd.h"
 #include "commands/IntakeJoystickCmd.h"
 #include "commands/AutoShootAndTaxiGrp.h"
-#include "commands/ClimberArmCmd.h"
+#include "commands/ClimberArmRaiseLowerCmd.h"
 #include "commands/ShiftLowCmd.h"
 #include "commands/ShiftHighCmd.h"
-#include "commands/ArmSeparationCmd.h"
+#include "commands/ClimberArmsToggleSeparationCmd.h"
 #include "commands/ShiftAutoCmd.h"
 #include "commands/AutoTaxiGrp.h"
 #include "commands/AutoTwoBallAutoGrp.h"
 #include "commands/AlignThenShootGrp.h"
 #include "commands/AutoFourBallGrp.h"
-#include "commands/StageOneClimbGrp.h"
+#include "commands/ClimbStageOneGrp.h"
 
-////////////////////////////////////////////////////////////////////////////////////
-// Test that we can create all of our hardware objects.
-// DO NOT leave this enabled.  Testing only.
-#if 0 // Set to 1 to test, 0 for robot deployment
-#include <ctre/Phoenix.h>
-ctre::phoenix::motorcontrol::can::WPI_TalonSRX myCanTalonSrxMotorController(30);    // TalonSRX via CAN (ID 30)
-ctre::phoenix::motorcontrol::can::WPI_VictorSPX myCanVictorSpxMotorController(29);  // VictorSPX via CAN (ID 29)
-ctre::phoenix::motorcontrol::can::WPI_TalonFX myCanTalonFXMotorController(28);      // TalonFX via CAN (ID 28)
-
-#include <rev/CANSparkMax.h>
-#include <rev/CANSparkMaxLowLevel.h>
-rev::CANSparkMax myCanSparkMaxMotorController(27, rev::CANSparkMaxLowLevel::MotorType::kBrushless); // SparkMax via CAN (ID 27) for brushless motor (e.g. Neo)
-
-#include <rev/ColorSensorV3.h>
-rev::ColorSensorV3 myColorSensor(frc::I2C::kOnboard); // Colour sensor connected via Rio's I2C port
-
-#include <AHRS.h>
-AHRS myNavX2(frc::SPI::kMXP); // NavX/NavX2 Attitude and Heading Reference System (i.e. gyroscope) connected via Rio's MXP port
-#endif
-//
-////////////////////////////////////////////////////////////////////////////////////
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -82,14 +61,14 @@ constexpr int kKillEverythingDrv2Btn = 12;
 constexpr int kSpinFlywheelOpBtn = 1;
 constexpr int kIntakeCargoOpBtn = 2;
 constexpr int kToggleIntakeArmOpCmd = 4;
+constexpr int kClimberRetractOpBtn = 5;
+constexpr int kClimberExtendOpBtn = 6;
 constexpr int kShootCargoLowOpBtn = 7;
 constexpr int kShootCargoHighOpBtn = 8;
-constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
-constexpr int kKillEverythingOp2Btn = 12;
-constexpr int kClimberExtendOpBtn = 6;
-constexpr int kClimberRetractOpBtn = 5;
 constexpr int kArmSeparationOpBtn = 9;
 constexpr int kAutoClimbOpBtn = 10;
+constexpr int kKillEverythingOp1Btn = 11;  // Same as driver
+constexpr int kKillEverythingOp2Btn = 12;
 
 
 RobotContainer::RobotContainer() {
@@ -153,16 +132,16 @@ void RobotContainer::ConfigureButtonBindings() {
   killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton climberExtendOpBtn(&m_operatorController, kClimberExtendOpBtn); //raise climber
-  climberExtendOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, true));
+  climberExtendOpBtn.WhileHeld(ClimberArmRaiseLowerCmd(&m_climberSub, true));
   
   frc2::JoystickButton climberRetractOpBtn(&m_operatorController, kClimberRetractOpBtn); // retract climber
-  climberRetractOpBtn.WhileHeld(ClimberArmCmd(&m_climberSub, false));
+  climberRetractOpBtn.WhileHeld(ClimberArmRaiseLowerCmd(&m_climberSub, false));
 
   frc2::JoystickButton ArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn); // arm separation cmd
-  ArmSeparationOpBtn.WhenPressed(ArmSeparationCmd(&m_climberSub,true ));
+  ArmSeparationOpBtn.WhenPressed(CimberArmsToggleSeparationCmd(&m_climberSub));
 
   /*frc2::JoystickButton AutoClimbOpBtn(&m_operatorController, kAutoClimbOpBtn);
-  AutoClimbOpBtn.WhenPressed(StageOneClimbGrp(&m_climberSub));*/
+  AutoClimbOpBtn.WhenPressed(ClimbStageOneGrp(&m_climberSub));*/
 
   // Axis mapping
   m_driverController.SetXChannel(0);
@@ -240,7 +219,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   return m_autoChooser.GetSelected();
 }
-
 
 void RobotContainer::disabled() {
   m_visionSub.targetNeutralVisionPipeline();

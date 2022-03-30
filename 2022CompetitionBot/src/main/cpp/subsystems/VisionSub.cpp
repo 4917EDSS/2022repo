@@ -31,7 +31,7 @@ double VisionSub::estimateDistanceMeters() { //estimate from camera to goal
     double goalToRadians = angleToGoal*(3.14159/180.0);
 
     double distToGoal = (VisionConstants::kGoalHeightInches-VisionConstants::kLensHeightInches)/tan(goalToRadians);
-    return distToGoal/39.37;
+    return distToGoal / 39.37;
 }
 
 void VisionSub:: targetVisionPipeline() {

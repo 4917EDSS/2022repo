@@ -4,8 +4,8 @@
 
 #include "commands/KillEverythingCmd.h"
 
-KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub) {
-   AddRequirements({climberSub, driveTrainSub, intakeSub, shooterSub});
+KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* drivetrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub) {
+   AddRequirements({climberSub, drivetrainSub, intakeSub, shooterSub});
 }
 
 // Called when the command is initially scheduled.

@@ -21,7 +21,7 @@
 class KillEverythingCmd
     : public frc2::CommandHelper<frc2::CommandBase, KillEverythingCmd> {
  public:
-  KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub);
+  KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* drivetrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub);
 
   void Initialize() override;
 
