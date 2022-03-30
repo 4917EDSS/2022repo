@@ -11,9 +11,9 @@
 #include "subsystems/IntakeSub.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/VisionSub.h"
-class AutoShootAndTaxiGrp
+class AutoShortTaxiAndShootGrp
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 AutoShootAndTaxiGrp> {
+                                 AutoShortTaxiAndShootGrp> {
  public:
-  AutoShootAndTaxiGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub, VisionSub* visionSub);
+  AutoShortTaxiAndShootGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub, VisionSub* visionSub);
 };
