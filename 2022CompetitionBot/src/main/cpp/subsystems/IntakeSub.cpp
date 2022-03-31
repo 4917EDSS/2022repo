@@ -6,7 +6,7 @@
 
 //Constants
 constexpr double kFrontRollerIntakeMotorPower = 1.0;
-constexpr double kMagazineMotorPower = 0.5;
+constexpr double kMagazineMotorPower = 1.0;
 
 
 IntakeSub::IntakeSub() :

@@ -16,13 +16,31 @@ void IntakeCargoCmd::Initialize() {
     m_intakeSubPtr->lowerIntake();
     m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
   }
+  atCargoMagazineFront = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
+
 void IntakeCargoCmd::Execute() {
-  if((m_intakeSubPtr->isCargoAtIntakeEnd() || m_intakeSubPtr->isCargoAtMagazineFront()) && !m_intakeSubPtr->isCargoAtMagazineBack()) {
+  // We want to start the rollers the second there is a ball at intake end.
+  // We want to continue the rollers unconditionally, until we see a ball at either the magazine front or back.
+  // If we see a ball at the magazine back, we're done. Turn off the motors.
+  // If we see a ball at the magazine front, we are going to continue magazine until we can't see it.
+
+  if(m_intakeSubPtr->isCargoAtIntakeEnd() && !m_intakeSubPtr->isCargoAtMagazineBack()) {
     m_intakeSubPtr->enableMagazineMotor(false);
-  } else {
+  }
+  if(m_intakeSubPtr->isCargoAtMagazineFront() && !m_intakeSubPtr->isCargoAtMagazineBack()) {
+    m_intakeSubPtr->enableMagazineMotor(false);
+    atCargoMagazineFront = true;
+  }
+  if(atCargoMagazineFront){
+    if(!m_intakeSubPtr->isCargoAtMagazineFront()) {
+      m_intakeSubPtr->disableMagazineMotor();
+      atCargoMagazineFront = false;
+    }
+  }
+  if(m_intakeSubPtr->isCargoAtMagazineBack()){
     m_intakeSubPtr->disableMagazineMotor();
   }
 }

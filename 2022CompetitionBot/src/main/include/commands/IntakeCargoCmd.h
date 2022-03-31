@@ -30,4 +30,5 @@ class IntakeCargoCmd
 
 private:
   IntakeSub *m_intakeSubPtr;
+  bool atCargoMagazineFront;
 };
