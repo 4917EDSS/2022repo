@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/AutoTaxiGrp.h"
+#include "commands/AutoLongTaxiAndShootGrp.h"
 #include "commands/DriveStraightCmd.h"
 #include "commands/RotateRobotCmd.h"
 #include "commands/ShootCargoCmd.h"
 #include "commands/AlignThenShootGrp.h"
 
-AutoTaxiGrp::AutoTaxiGrp(DrivetrainSub *drivetrainSub, ShooterSub *shooterSub, VisionSub *visionSub, IntakeSub *intakeSub) {
+AutoLongTaxiAndShootGrp::AutoLongTaxiAndShootGrp(DrivetrainSub *drivetrainSub, ShooterSub *shooterSub, VisionSub *visionSub, IntakeSub *intakeSub) {
   // Add your commands here, e.g.
    //AddCommands(FooCommand(), BarCommand());
 
