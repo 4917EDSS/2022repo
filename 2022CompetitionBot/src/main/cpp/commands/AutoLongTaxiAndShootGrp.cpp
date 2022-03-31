@@ -8,6 +8,11 @@
 #include "commands/ShootCargoCmd.h"
 #include "commands/AlignThenShootGrp.h"
 
+// Required Initial Start State:
+// - Location:  Any tarmac location where cargo and guardrails won't be in the way while backing up 2m.  
+//              Same action as "ShortTaxiAndShootGrp" except with 2m reverse instead of 1.2m reverse.
+// - Orientation:  Facing the hub
+// - Cargo:  One cargo preloaded from the top, pressed up against the front of the magazine
 AutoLongTaxiAndShootGrp::AutoLongTaxiAndShootGrp(DrivetrainSub *drivetrainSub, ShooterSub *shooterSub, VisionSub *visionSub, IntakeSub *intakeSub) {
   // Add your commands here, e.g.
    //AddCommands(FooCommand(), BarCommand());

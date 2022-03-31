@@ -7,9 +7,12 @@
 #include "commands/ShootCargoCmd.h"
 #include "commands/AlignThenShootGrp.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+// Required Initial Start State:
+// - Location:  Any tarmac location where cargo and guardrails could be in the way or where backing up the longer 2m would be too far from the hub.
+//              Same action as "LongTaxiAndShootGrp" except with 2m reverse instead of 1.2m reverse.
+// - Orientation:  Facing the hub
+// - Cargo:  One cargo preloaded from the top, pressed up against the front of the magazine
+
 AutoShortTaxiAndShootGrp::AutoShortTaxiAndShootGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub,VisionSub* visionSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());

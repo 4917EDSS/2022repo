@@ -48,7 +48,7 @@ void ClimberArmsLatchReleaseCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ClimberArmsLatchReleaseCmd::IsFinished() {
-  int delayTime = 1500000;
+  uint64_t delayTime = 1500000;
   if (m_isDelayAtEnd){
     delayTime *= 2; //Delay it by 2 times as much
   }

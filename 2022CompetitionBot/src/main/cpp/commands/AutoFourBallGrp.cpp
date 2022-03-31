@@ -10,9 +10,11 @@
 #include "commands/RotateRobotCmd.h"
 #include <frc2/command/ParallelCommandGroup.h>
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+// Required Initial Start State:
+// - Location:  ?
+// - Orientation:  Facing aways from the hub and lined up with the cargo
+// - Cargo:  One cargo preloaded from the top, pressed up against the front of the magazine
+
 AutoFourBallGrp::AutoFourBallGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, DrivetrainSub* drivetrainSub, VisionSub* visionSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());

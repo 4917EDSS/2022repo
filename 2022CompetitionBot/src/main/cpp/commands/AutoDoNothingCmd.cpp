@@ -4,6 +4,8 @@
 
 #include "commands/AutoDoNothingCmd.h"
 
+// Required Initial Start State:  Nothing.  This command doesn't do anything.  The robot will just sit there.
+
 AutoDoNothingCmd::AutoDoNothingCmd() {
   // Use addRequirements() here to declare subsystem dependencies.
 }

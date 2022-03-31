@@ -10,9 +10,12 @@
 #include "commands/AlignThenShootGrp.h"
 #include <frc2/command/ParallelCommandGroup.h>
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+// Required Initial Start State:
+// - Location:  Left-tarmac (facing our hanger) lined up with our cargo, or
+//              Right-tarmac (facing our terminal) lined up with cargoa
+// - Orientation:  Facing our cargo and facing away from the hub
+// - Cargo:  One cargo preloaded from the top, pressed up against the front of the magazine
+
 AutoTwoBallGrp::AutoTwoBallGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSub, ShooterSub *shooterSub, VisionSub *visionSub) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
