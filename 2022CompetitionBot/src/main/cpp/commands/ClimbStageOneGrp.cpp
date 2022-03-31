@@ -7,13 +7,18 @@
 #include "commands/ClimberArmLowerCmd.h"
 #include "commands/ClimberArmsLatchReleaseCmd.h"
 
-ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
+ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {   
   //Release arm, lower wench, latch arm, raise wench
   AddCommands(
-    ClimberArmsLatchReleaseCmd(climberSub,false),
+    ClimberArmsLatchReleaseCmd(climberSub, false, false, false),
     ClimberArmLowerCmd(climberSub),
-    ClimberArmsLatchReleaseCmd(climberSub, true),
-    ClimberArmRaiseCmd(climberSub)
+    ClimberArmsLatchReleaseCmd(climberSub, true, false, false),
+    ClimberArmRaiseCmd(climberSub, true),     
+    ClimberArmsLatchReleaseCmd(climberSub, true, false, true),
+    ClimberArmRaiseCmd(climberSub, false), 
+    ClimberArmsLatchReleaseCmd(climberSub, false, true, false),
+    ClimberArmLowerCmd(climberSub),
+    ClimberArmsLatchReleaseCmd(climberSub, true, false, false)
   );
 }
 

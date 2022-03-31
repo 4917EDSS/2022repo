@@ -5,11 +5,12 @@
 #include "commands/ClimberArmRaiseCmd.h"
 
 constexpr double kClimberArmPower = 1.0;
-constexpr int kClimberArmMaxHeight = 180000;
+constexpr int kClimberArmMaxHeight = 203000;
 
-ClimberArmRaiseCmd::ClimberArmRaiseCmd(ClimberSub* climberSub) {
+ClimberArmRaiseCmd::ClimberArmRaiseCmd(ClimberSub* climberSub, bool isPartial) {
   AddRequirements({climberSub});
   m_climberSubPtr = climberSub;
+  m_isPartial = isPartial;
 }
 
 // Called when the command is initially scheduled.
@@ -27,7 +28,11 @@ void ClimberArmRaiseCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ClimberArmRaiseCmd::IsFinished() {
-  if (m_climberSubPtr->getClimberEncoder() > kClimberArmMaxHeight) {
+   int climberArmMaxHeight = kClimberArmMaxHeight;
+  if(m_isPartial){
+    climberArmMaxHeight /= 3; 
+  }
+  if (m_climberSubPtr->getClimberEncoder() > climberArmMaxHeight) {
     return true;
   }
   else {
