@@ -18,7 +18,7 @@
 class ClimberArmRaiseLowerCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimberArmRaiseLowerCmd> {
  public:
-  ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection);
+  ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection,bool isShifted);
 
   void Initialize() override;
 
@@ -31,4 +31,5 @@ class ClimberArmRaiseLowerCmd
  private:
   ClimberSub *m_climberSubPtr;
   bool m_climberDirection;
+  bool m_shifted;
 };

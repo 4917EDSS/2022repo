@@ -132,10 +132,10 @@ void RobotContainer::ConfigureButtonBindings() {
   killEverythingOp2Btn.WhenPressed(KillEverythingCmd(&m_climberSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton climberExtendOpBtn(&m_operatorController, kClimberExtendOpBtn); //raise climber
-  climberExtendOpBtn.WhileHeld(ClimberArmRaiseLowerCmd(&m_climberSub, true));
+  climberExtendOpBtn.WhileHeld(ClimberArmRaiseLowerCmd(&m_climberSub, true,(m_operatorController.GetPOV(0) == 0) ? true : false));
   
   frc2::JoystickButton climberRetractOpBtn(&m_operatorController, kClimberRetractOpBtn); // retract climber
-  climberRetractOpBtn.WhileHeld(ClimberArmRaiseLowerCmd(&m_climberSub, false));
+  climberRetractOpBtn.WhileHeld(ClimberArmRaiseLowerCmd(&m_climberSub, false,(m_operatorController.GetPOV(0) == 0) ? true : false));
 
   frc2::JoystickButton ArmSeparationOpBtn(&m_operatorController, kArmSeparationOpBtn); // arm separation cmd
   ArmSeparationOpBtn.WhenPressed(CimberArmsToggleSeparationCmd(&m_climberSub));

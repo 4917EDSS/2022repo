@@ -50,4 +50,3 @@ void ClimberSub::foldArms() {
 void ClimberSub::toggleArmSeparation() {
     m_armSeparationSolenoid.Set(!m_armSeparationSolenoid.Get());
 }
-

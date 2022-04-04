@@ -4,15 +4,17 @@
 
 #include "commands/ClimberArmRaiseLowerCmd.h"
 
+
 constexpr double kClimberArmPower = 0.75;
 constexpr int kClimberArmMaxHeight = 195000;
 constexpr int kClimberArmMinHeight = 0;
 
-ClimberArmRaiseLowerCmd::ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection) {
+ClimberArmRaiseLowerCmd::ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection,bool isShifted) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climberSub});
   m_climberSubPtr = climberSub;
   m_climberDirection = climberDirection;
+  m_shifted = isShifted;
 }
 
 // Called when the command is initially scheduled.
@@ -21,9 +23,9 @@ void ClimberArmRaiseLowerCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ClimberArmRaiseLowerCmd::Execute() {
-  if (m_climberDirection && (m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight)) {
+  if (m_climberDirection && ((m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight) || m_shifted)) {
     m_climberSubPtr->setClimberArmPower(kClimberArmPower);
-  } else if (!m_climberDirection && (m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight)) {
+  } else if (!m_climberDirection && ((m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight) || m_shifted)) {
     m_climberSubPtr->setClimberArmPower(-kClimberArmPower);
   } else {
     m_climberSubPtr->setClimberArmPower(0);
