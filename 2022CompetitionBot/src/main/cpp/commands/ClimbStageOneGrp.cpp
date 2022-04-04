@@ -15,12 +15,22 @@ ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
 
   // NOTES: 1. To fully lower mast arm pulling robot up from lowest to highest position
   //           takes roughly 1.4 seconds.
-  //        2. To fully unfold (extend) hook arms from completely folded in (retracted)
+  //        2. Mast arm travel distance from its lowest (starting retracted) position to
+  //           highest (extended) position is xxx cm.
+  //        3. Mast arm travel distance from highest position down to securely grabbing the
+  //           medium rung, but not really lifting the robot is xxx cm.
+  //        4. Mast arm travel distance from highest position down to securely grabbing the
+  //           high rung, and just barely lifting the hook arm hooks off the high rung
+  //           taking all presure off the hook arms is xxx cm.
+  //        5. To fully unfold (extend) hook arms from completely folded in (retracted)
   //           position takes roughly 1 second.
-  //        3. To fully fold in (retract) hook arms from completely unfolded (extended)
-  //           position while hanging and swining on hook arms takes roughly 1 second when
+  //        6. To fully fold in (retract) hook arms from completely unfolded (extended)
+  //           position while hanging and swinging on hook arms takes roughly 1 second when
   //           unhooking from medium rung to hang and swing from high rung - the hook arms
-  //           retract in 2 phases pausing momentarily between phases as they fight the swing.
+  //           retract in 2 waves pausing momentarily between waves as they fight the swing.
+
+  // TODO: Before making code changes, we need to know the mast arm travel distances above.
+  //       Measure these and record above.
 
   // TODO: We need more granularity with delays (more tweaking options) and should move all
   //       delays out of the raise/lower and latch/release commands to make this easier to
