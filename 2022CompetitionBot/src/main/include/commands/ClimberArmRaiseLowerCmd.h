@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ClimberSub.h"
+#include <frc/Joystick.h>
 
 /**
  * An example command.
@@ -18,7 +19,7 @@
 class ClimberArmRaiseLowerCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimberArmRaiseLowerCmd> {
  public:
-  ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection,bool isShifted);
+  ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection, frc::Joystick *joystick);
 
   void Initialize() override;
 
@@ -30,6 +31,7 @@ class ClimberArmRaiseLowerCmd
 
  private:
   ClimberSub *m_climberSubPtr;
+  frc::Joystick *m_joystickPtr;
   bool m_climberDirection;
-  bool m_shifted;
+  
 };

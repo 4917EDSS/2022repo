@@ -9,12 +9,12 @@ constexpr double kClimberArmPower = 0.75;
 constexpr int kClimberArmMaxHeight = 195000;
 constexpr int kClimberArmMinHeight = 0;
 
-ClimberArmRaiseLowerCmd::ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection,bool isShifted) {
+ClimberArmRaiseLowerCmd::ClimberArmRaiseLowerCmd(ClimberSub* climberSub, bool climberDirection,frc::Joystick* joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climberSub});
   m_climberSubPtr = climberSub;
   m_climberDirection = climberDirection;
-  m_shifted = isShifted;
+  m_joystickPtr = joystick;
 }
 
 // Called when the command is initially scheduled.
@@ -23,12 +23,23 @@ void ClimberArmRaiseLowerCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ClimberArmRaiseLowerCmd::Execute() {
-  if (m_climberDirection && ((m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight) || m_shifted)) {
-    m_climberSubPtr->setClimberArmPower(kClimberArmPower);
-  } else if (!m_climberDirection && ((m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight) || m_shifted)) {
-    m_climberSubPtr->setClimberArmPower(-kClimberArmPower);
-  } else {
-    m_climberSubPtr->setClimberArmPower(0);
+  if(m_joystickPtr->GetPOV(0) != 0) {
+    if (m_climberDirection && (m_climberSubPtr->getClimberEncoder() < kClimberArmMaxHeight)) {
+      m_climberSubPtr->setClimberArmPower(kClimberArmPower);
+    } else if (!m_climberDirection && (m_climberSubPtr->getClimberEncoder() > kClimberArmMinHeight)) {
+      m_climberSubPtr->setClimberArmPower(-kClimberArmPower);
+    } else {
+      m_climberSubPtr->setClimberArmPower(0);
+    }
+  }
+  else {
+    if (m_climberDirection) {
+      m_climberSubPtr->setClimberArmPower(kClimberArmPower);
+    } else if (!m_climberDirection) {
+      m_climberSubPtr->setClimberArmPower(-kClimberArmPower);
+    } else {
+      m_climberSubPtr->setClimberArmPower(0);
+    }
   }
 }
 
