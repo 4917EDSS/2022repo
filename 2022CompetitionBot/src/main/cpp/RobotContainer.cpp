@@ -165,20 +165,21 @@ void RobotContainer::initSubsystems() {
 
 void RobotContainer::initDashboard(){
   frc::ShuffleboardTab& diagTab = frc::Shuffleboard::GetTab("Diagnostic Data");
-  m_lowShootSpeedNte = (diagTab.Add("Low Shoot Speed", 0).GetEntry());
-  m_highShootSpeedNte = (diagTab.Add("High Shoot Speed", 0).GetEntry());
+  // m_lowShootSpeedNte = (diagTab.Add("Low Shoot Speed", 0).GetEntry());
+  // m_highShootSpeedNte = (diagTab.Add("High Shoot Speed", 0).GetEntry());
   m_flywheelNte = (diagTab.Add("FlyWheel Speed", 0).GetEntry());
   m_climbHeightNte = (diagTab.Add("Climber Height", 0).GetEntry());
   m_driveLeftNte = (diagTab.Add("Drive Left", 0).GetEntry());
   m_driveRightNte = (diagTab.Add("Drive Right", 0).GetEntry());
   m_headingNte = (diagTab.Add("Heading", 0).GetEntry());
   m_isHighGearNte = (diagTab.Add("is High Gear", 0).GetEntry());
-    //Mess up current shooter speed
-  //frc::SmartDashboard::PutNumber("Shoot kF", m_shooterSub.m_kNewF);
-  //frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kNewP);
-  //frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kNewD);
-  //frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kNewI);
-
+// Mess up current shooter speed
+  // frc::SmartDashboard::PutNumber("Shoot kF", m_shooterSub.m_kNewF);
+  // frc::SmartDashboard::PutNumber("Shoot kP", m_shooterSub.m_kNewP);
+  // frc::SmartDashboard::PutNumber("Shoot kD", m_shooterSub.m_kNewD);
+  // frc::SmartDashboard::PutNumber("Shoot kI", m_shooterSub.m_kNewI);
+  frc::SmartDashboard::PutNumber("Lower Bin Speed", m_shooterSub.m_lowerBinSpeed);
+  frc::SmartDashboard::PutNumber("Upper Bin Speed", m_shooterSub.m_upperBinSpeed);
 }
 
 void RobotContainer::updateDashboard() {
@@ -194,8 +195,8 @@ void RobotContainer::updateDashboard() {
     frc::SmartDashboard::PutBoolean("Climb Arms In", !m_climberSub.getArmStatus());
   } 
   if (i == 10) {
-    m_lowShootSpeedNte.SetDouble(m_shooterSub.m_lowerBinSpeed);
-    m_highShootSpeedNte.SetDouble(m_shooterSub.m_upperBinSpeed);
+    // m_lowShootSpeedNte.SetDouble(m_shooterSub.m_lowerBinSpeed);
+    // m_highShootSpeedNte.SetDouble(m_shooterSub.m_upperBinSpeed);
     m_flywheelNte.SetDouble(m_shooterSub.getSpeed());
     m_climbHeightNte.SetDouble(m_climberSub.getClimberEncoder());
     m_driveLeftNte.SetDouble(m_drivetrainSub.getLeftEncoderDistanceM());
@@ -206,12 +207,16 @@ void RobotContainer::updateDashboard() {
     i = 0;
   }
 
+  m_shooterSub.m_lowerBinSpeed = frc::SmartDashboard::GetNumber("Lower Bin Speed", m_shooterSub.m_lowerBinSpeed);
+  m_shooterSub.m_upperBinSpeed = frc::SmartDashboard::GetNumber("Upper Bin Speed", m_shooterSub.m_upperBinSpeed);
+  
   //frc::SmartDashboard::PutNumber("Speed", (m_drivetrainSub.getLeftVelocity()+ m_drivetrainSub.getRightVelocity()) / 2);
   //Mess up current shooter speed
-  //m_shooterSub.m_kNewF = frc::SmartDashboard::GetNumber("Shoot kF", m_shooterSub.m_kNewF);
-  //m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
-  //m_shooterSub.m_kNewD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kNewD);
-  //m_shooterSub.m_kNewI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kNewI);
+  // m_shooterSub.m_kNewF = frc::SmartDashboard::GetNumber("Shoot kF", m_shooterSub.m_kNewF);
+  // m_shooterSub.m_kNewP = frc::SmartDashboard::GetNumber("Shoot kP", m_shooterSub.m_kNewP);
+  // m_shooterSub.m_kNewD = frc::SmartDashboard::GetNumber("Shoot kD", m_shooterSub.m_kNewD);
+  // m_shooterSub.m_kNewI = frc::SmartDashboard::GetNumber("Shoot kI", m_shooterSub.m_kNewI);
+
 }
 
 void RobotContainer::autoChooserSetup() {
