@@ -5,7 +5,6 @@
 #include "commands/ClimberArmRaiseCmd.h"
 
 constexpr double kClimberArmPower = 1.0;
-constexpr int kClimberArmMinHeight = 5000;
 constexpr int kClimberArmMaxHeight = 203000;
 
 ClimberArmRaiseCmd::ClimberArmRaiseCmd(ClimberSub* climberSub, double targetHeightPercentage) {
@@ -24,13 +23,14 @@ void ClimberArmRaiseCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void ClimberArmRaiseCmd::End(bool interrupted) {
-  m_climberSubPtr->setClimberArmPower(0.);
+  m_climberSubPtr->setClimberArmPower(0.0);
 }
 
 // Returns true when the command should end.
 bool ClimberArmRaiseCmd::IsFinished() {
-  double targetClimbHeight =  (m_targetHeightPercentage/100) * (double) kClimberArmMaxHeight;
-  if (m_climberSubPtr->getClimberEncoder() > targetClimbHeight) {
+  double targetHeight =  (m_targetHeightPercentage / 100) * (double)kClimberArmMaxHeight;
+
+  if (m_climberSubPtr->getClimberEncoder() > targetHeight) {
     return true;
   }
   else {

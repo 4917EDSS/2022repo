@@ -24,13 +24,19 @@ void ClimberArmLowerCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
 void ClimberArmLowerCmd::End(bool interrupted) {
-  m_climberSubPtr->setClimberArmPower(0.);
+  m_climberSubPtr->setClimberArmPower(0.0);
 }
 
 // Returns true when the command should end.
 bool ClimberArmLowerCmd::IsFinished() {
-  double targetClimbHeight =  (m_targetHeightPercentage/100) * (double) kClimberArmMaxHeight;
-  if (m_climberSubPtr->getClimberEncoder() < targetClimbHeight) {
+  double targetHeight =  (m_targetHeightPercentage / 100) * (double)kClimberArmMaxHeight;
+
+  // Don't let target height be lower than minimum allowed.
+  if (targetHeight > kClimberArmMinHeight) {
+    targetHeight = kClimberArmMinHeight;
+  }
+
+  if (m_climberSubPtr->getClimberEncoder() < targetHeight) {
     return true;
   }
   else {
