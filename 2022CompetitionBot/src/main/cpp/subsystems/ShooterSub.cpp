@@ -17,10 +17,14 @@ void ShooterSub::init() { //Reset all hardware to a safe state
     m_shootMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
     m_shootMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms);
     m_shootMotor1.ConfigVelocityMeasurementWindow(4);
+    m_shootMotor1.ConfigVoltageCompSaturation(12);
+    m_shootMotor1.EnableVoltageCompensation(true);
 
     m_shootMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
     m_shootMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms);
     m_shootMotor2.ConfigVelocityMeasurementWindow(4);
+    m_shootMotor2.ConfigVoltageCompSaturation(12);
+    m_shootMotor2.EnableVoltageCompensation(true);
 
     m_lowerBinSpeed = ShooterConstants::kDefaultLowerBinSpeed;
     m_upperBinSpeed = ShooterConstants::kDefaultUpperBinSpeed;
@@ -29,34 +33,43 @@ void ShooterSub::init() { //Reset all hardware to a safe state
     m_kNewI = m_kI = ShooterConstants::kDefaultI;
     m_kNewD = m_kD = ShooterConstants::kDefaultD;
 
-    m_shootMotor2.Follow(m_shootMotor1);
+    // m_shootMotor2.Follow(m_shootMotor1);
     m_shootMotor1.Config_kF(0, m_kF, kTimeoutMs);
     m_shootMotor1.Config_kP(0, m_kP, kTimeoutMs);
     m_shootMotor1.Config_kI(0, m_kI, kTimeoutMs);
     m_shootMotor1.Config_kD(0, m_kD, kTimeoutMs);
+
+    m_shootMotor2.Config_kF(0, m_kF, kTimeoutMs);
+    m_shootMotor2.Config_kP(0, m_kP, kTimeoutMs);
+    m_shootMotor2.Config_kI(0, m_kI, kTimeoutMs);
+    m_shootMotor2.Config_kD(0, m_kD, kTimeoutMs);
 }
 
 // This method will be called once per scheduler run
 void ShooterSub::Periodic() {
-    if (m_kNewF != m_kF) {
-        m_kF = m_kNewF;
-        m_shootMotor1.Config_kF(0, m_kF, kTimeoutMs);
-    }
+    // if (m_kNewF != m_kF) {
+    //     m_kF = m_kNewF;
+    //     m_shootMotor1.Config_kF(0, m_kF, kTimeoutMs);
+    //     m_shootMotor2.Config_kF(0, m_kF, kTimeoutMs);
+    // }
 
-    if (m_kNewP != m_kP) {
-        m_kP = m_kNewP;
-        m_shootMotor1.Config_kP(0, m_kP, kTimeoutMs);
-    }
+    // if (m_kNewP != m_kP) {
+    //     m_kP = m_kNewP;
+    //     m_shootMotor1.Config_kP(0, m_kP, kTimeoutMs);
+    //     m_shootMotor2.Config_kP(0, m_kP, kTimeoutMs);
+    // }
 
-    if (m_kNewI != m_kI) {
-        m_kI = m_kNewI;
-        m_shootMotor1.Config_kI(0, m_kI, kTimeoutMs);
-    }
+    // if (m_kNewI != m_kI) {
+    //     m_kI = m_kNewI;
+    //     m_shootMotor1.Config_kI(0, m_kI, kTimeoutMs);
+    //     m_shootMotor2.Config_kI(0, m_kI, kTimeoutMs);
+    // }
     
-    if (m_kNewD != m_kD) {
-        m_kD = m_kNewD;
-        m_shootMotor1.Config_kD(0, m_kD, kTimeoutMs);
-    }
+    // if (m_kNewD != m_kD) {
+    //     m_kD = m_kNewD;
+    //     m_shootMotor1.Config_kD(0, m_kD, kTimeoutMs);
+    //     m_shootMotor2.Config_kD(0, m_kD, kTimeoutMs);
+    // }
 }
 
 // Providing power to the shooter motors
@@ -67,6 +80,7 @@ void ShooterSub::setPower(double power) {
 
 void ShooterSub::autoVelocity(double velocity) {
     m_shootMotor1.Set(ControlMode::Velocity, velocity); 
+    m_shootMotor2.Set(ControlMode::Velocity, velocity); 
 }
 
 double ShooterSub::getSpeed() {

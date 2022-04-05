@@ -13,11 +13,11 @@ namespace ShooterConstants {
   //All values need to be updated and tested
   constexpr double kDefaultLowerBinSpeed = 8500.0;   
   constexpr double kDefaultUpperBinSpeed = 16000.0;  
-  constexpr double kShootTolerance = 500.0;
-  constexpr double kDefaultF = 0.041;
+  constexpr double kShootTolerance = 100.0;
+  constexpr double kDefaultF = 0.0485;
   constexpr double kDefaultP = 0.18;
-  constexpr double kDefaultI = 0.00001;
-  constexpr double kDefaultD = 0;//0.5;
+  constexpr double kDefaultI = 0;
+  constexpr double kDefaultD = 0;
 }
 
 class ShooterSub : public frc2::SubsystemBase {
