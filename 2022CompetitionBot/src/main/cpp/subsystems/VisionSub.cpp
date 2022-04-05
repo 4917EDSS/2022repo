@@ -6,26 +6,26 @@
 
 VisionSub::VisionSub() {
     init();
-}
-
-void VisionSub::init() {
     frc::ShuffleboardTab& visTab = frc::Shuffleboard::GetTab("Vision Data");
     distEntry = visTab.Add("Distance to goal",0.).GetEntry();
     angleEntry = visTab.Add("Angle to goal",0.).GetEntry();
+}
+
+void VisionSub::init() {
     targetVisionPipeline();
 }
 
 // This method will be called once per scheduler run
 void VisionSub::Periodic() {
-    distEntry.SetDouble(VisionSub::estimateDistanceMeters());
-    angleEntry.SetDouble(VisionSub::getHorizontalAngle());
+    distEntry.SetDouble(estimateDistanceMeters());
+    angleEntry.SetDouble(getHorizontalAngle());
 }
 
 double VisionSub::estimateDistanceMeters() { //estimate from camera to goal
-    if (VisionSub::getTargetArea() == 0.0) {
+    if (getTargetArea() == 0.0) {
       return 0.0;
     }
-    double verticalOffset = VisionSub::getVerticalAngle();
+    double verticalOffset = getVerticalAngle();
 
     double angleToGoal = VisionConstants::kMountAngleDegrees+verticalOffset;
     double goalToRadians = angleToGoal*(3.14159/180.0);
