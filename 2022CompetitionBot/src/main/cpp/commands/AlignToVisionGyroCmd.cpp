@@ -58,18 +58,13 @@ void AlignToVisionGyroCmd::End(bool interrupted) {
 bool AlignToVisionGyroCmd::IsFinished() {
   double angleRemaining = m_angle-m_drivetrainSubPtr->getHeading();
   if(m_visionSubPtr->getTargetArea() == 0 && (frc::RobotController::GetFPGATime() - m_startTime) > 300000) {
-    std:: cout << "11111111111111111111111" << std::endl;
     return true;
   }
   if((frc::RobotController::GetFPGATime() - m_startTime) > 5000000) {
-    std:: cout << "22222222222222222222222" << std::endl;
     return true;
   }
   if(fabs(angleRemaining) < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
-    std:: cout << "33333333333333333333333" << std::endl;
     return true;
   }
-  else{
-    return false;
-  }
+  return false;
 }
