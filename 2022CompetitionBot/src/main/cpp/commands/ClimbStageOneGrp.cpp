@@ -147,6 +147,11 @@ ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
     ClimberArmLowerCmd(climberSub, 70.0),
     ClimberArmsLatchReleaseCmd(climberSub, false),
     ClimberArmLowerCmd(climberSub, 0.0),
+    frc2::WaitCommand(0.1_s),
+    ClimberArmLowerCmd(climberSub, 0.0),
+    frc2::WaitCommand(0.1_s),
+    ClimberArmLowerCmd(climberSub, 0.0),
+    frc2::WaitCommand(0.2_s),
 
     // Robot is swinging on high rung by mast arm.
     // Hook arms are fully extended or on the way to be.
