@@ -19,7 +19,6 @@ class IntakeCargoCmd
     : public frc2::CommandHelper<frc2::CommandBase, IntakeCargoCmd> {
  public:
   IntakeCargoCmd(IntakeSub* intakeSub);
-  IntakeCargoCmd(IntakeSub* intakeSub, bool timeout);
 
   void Initialize() override;
 
@@ -32,6 +31,4 @@ class IntakeCargoCmd
 private:
   IntakeSub *m_intakeSubPtr;
   bool atCargoMagazineFront;
-  bool m_doTimeout;
-  uint64_t m_startTime;
 };

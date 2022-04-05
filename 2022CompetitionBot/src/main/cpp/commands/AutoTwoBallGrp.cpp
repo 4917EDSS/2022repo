@@ -24,7 +24,7 @@ AutoTwoBallGrp::AutoTwoBallGrp(DrivetrainSub *drivetrainSub, IntakeSub *intakeSu
     //Retrieve and shoot first ball
     frc2::ParallelCommandGroup{
       DriveStraightCmd(drivetrainSub, 2), 
-      IntakeCargoCmd(intakeSub,true)},
+      IntakeCargoCmd(intakeSub)},
     RotateRobotCmd(drivetrainSub, -180), 
     AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, true)
   );
