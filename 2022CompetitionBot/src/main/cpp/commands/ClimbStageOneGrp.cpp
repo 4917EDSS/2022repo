@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc2/command/WaitCommand.h>
 #include "commands/ClimbStageOneGrp.h"
 #include "commands/ClimberArmRaiseCmd.h"
 #include "commands/ClimberArmLowerCmd.h"
@@ -16,7 +17,7 @@ ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
   // NOTES: 1. To fully lower mast arm pulling robot up from lowest to highest position
   //           takes roughly 1.4 seconds.
   //        2. Mast arm travel distance from its lowest (starting retracted) position to
-  //           highest (extended) position is xxx cm.
+  //           highest (extended) position is 21 inch.
   //        3. Mast arm travel distance from highest position down to securely grabbing the
   //           medium rung, but not really lifting the robot is xxx cm.
   //        4. Mast arm travel distance from highest position down to securely grabbing the
@@ -84,31 +85,34 @@ ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
     // STAGE 1
     // ---------------------------------------------------------------------------------------
     
-    // TODO: 1. Partially lower (retract) mast arm by 3-5% only to secure the mast hook on the
-    //          medium rung before unfolding (extending) hook arms (this helps avoid being
-    //          bumped out of position while the hook arms extend):
+    // 1. Partially lower (retract) mast arm by 3-5% only to secure the mast hook on the
+    //    medium rung before unfolding (extending) hook arms (this helps avoid being
+    //    bumped out of position while the hook arms extend):
+    ClimberArmLowerCmd(climberSub, 85.0),
     // 2. Unfold (extend) hook arms - no delays:
-    ClimberArmsLatchReleaseCmd(climberSub, false, false, false),
+    ClimberArmsLatchReleaseCmd(climberSub, false),
+    frc2::WaitCommand(0.3_s),
     // 3. Fully lower (retract) mast arm, lifting robot as high as possible:
-    ClimberArmLowerCmd(climberSub),
+    ClimberArmLowerCmd(climberSub, 0.0),
 
     // Robot is now hanging by mast arm from medium rung.
     // Hook arms are ready to grab high rung from rear.
     // Robot is not swinging.
 
     // 4. Fold in (retract) hook arms - no delays:
-    ClimberArmsLatchReleaseCmd(climberSub, true, false, false),
+    ClimberArmsLatchReleaseCmd(climberSub, true),
+    frc2::WaitCommand(0.2_s),
     // 5. Partially raise (extend) mast arm to lower robot and unhook mast from medium rung:
-    ClimberArmRaiseCmd(climberSub, true),
+    ClimberArmRaiseCmd(climberSub, 60.0),
 
     // Robot is now detached from medium rung.
     // Robot is swinging on high rung by hook arms.
     // Mast is not fully extended yet.
 
-    // 6. Fold in (retract) hook arms - delay at end:
-    ClimberArmsLatchReleaseCmd(climberSub, true, false, true),
+    // 6. Let hook arms fully fold in (retract):
+    frc2::WaitCommand(2.0_s),
     // 7. Fully raise (extend) mast arm => mast arm hook *MUST* end up on rear side of high rung:
-    ClimberArmRaiseCmd(climberSub, false),
+    ClimberArmRaiseCmd(climberSub, 100.0),
 
     // Attempt to recover from mast hook ending up on the wrong side (front) of high rung.
     // If we have this condition, the back of the mast hook will be rubbing against the front
@@ -135,9 +139,14 @@ ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
     // ---------------------------------------------------------------------------------------
 
     // 10. Delay at start - unfold (extend) hook arms to press mast against rear side of high rung:
-    ClimberArmsLatchReleaseCmd(climberSub, false, true, false),
+    ClimberArmsLatchReleaseCmd(climberSub, false),
+    frc2::WaitCommand(0.2_s),
     // 11. Fully lower (retract) mast arm to lift robot and allow hook arms to pop off high rung:
-    ClimberArmLowerCmd(climberSub),
+    ClimberArmLowerCmd(climberSub, 85.0),
+    ClimberArmsLatchReleaseCmd(climberSub, true),
+    ClimberArmLowerCmd(climberSub, 70.0),
+    ClimberArmsLatchReleaseCmd(climberSub, false),
+    ClimberArmLowerCmd(climberSub, 0.0),
 
     // Robot is swinging on high rung by mast arm.
     // Hook arms are fully extended or on the way to be.
@@ -165,15 +174,18 @@ ClimbStageOneGrp::ClimbStageOneGrp(ClimberSub *climberSub) {
     // ---------------------------------------------------------------------------------------
 
     // 12. Fold in (retract) hook arms - no delays:
-    ClimberArmsLatchReleaseCmd(climberSub, true, false, false)
+    ClimberArmsLatchReleaseCmd(climberSub, true),
+    frc2::WaitCommand(0.2_s),
 
-    // TODO: 13. Partially raise (extend) mast arm to lower robot and unhook mast from high rung.
-    
+    // 13. Partially raise (extend) mast arm to lower robot and unhook mast from high rung.
+    ClimberArmRaiseCmd(climberSub, 100.0),
+
     // Robot is swinging on traversal rung by mast arm.
     // Hook arms are becoming fully folded in (retracted).
     // Robot should end up straight.
 
-    // TODO: 14. Fully lower (retract) mast arm, returning it to start position for next match.
+    // 14. Fully lower (retract) mast arm, returning it to start position for next match.
+    ClimberArmLowerCmd(climberSub, 0.0)
   );
 }
 

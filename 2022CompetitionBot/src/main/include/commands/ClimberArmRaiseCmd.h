@@ -18,7 +18,7 @@
 class ClimberArmRaiseCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimberArmRaiseCmd> {
  public:
-  ClimberArmRaiseCmd(ClimberSub* climberSub, bool isPartial);
+  ClimberArmRaiseCmd(ClimberSub* climberSub, double targetHeightPercentage);
 
   void Initialize() override;
 
@@ -30,5 +30,5 @@ class ClimberArmRaiseCmd
   
  private:
   ClimberSub *m_climberSubPtr;
-  bool m_isPartial;
+  double m_targetHeightPercentage;
 };

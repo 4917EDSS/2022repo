@@ -18,7 +18,7 @@
 class ClimberArmsLatchReleaseCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimberArmsLatchReleaseCmd> {
  public:
-  ClimberArmsLatchReleaseCmd(ClimberSub * climberSub, bool isFoldIn,  bool isDelayAtStart, bool isDelayAtEnd);
+  ClimberArmsLatchReleaseCmd(ClimberSub * climberSub, bool isFoldIn);
 
   void Initialize() override;
 
@@ -31,9 +31,5 @@ class ClimberArmsLatchReleaseCmd
  private:
   ClimberSub * m_climberSubPtr;
   bool m_isFoldIn;
-  bool m_executeCmd;
-  bool m_hasExecuted;
-  bool m_isDelayAtStart;
-  bool m_isDelayAtEnd;
   uint64_t m_startTime;
 };

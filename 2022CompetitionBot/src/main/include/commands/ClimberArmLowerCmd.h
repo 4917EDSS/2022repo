@@ -18,7 +18,7 @@
 class ClimberArmLowerCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimberArmLowerCmd> {
  public:
-  ClimberArmLowerCmd(ClimberSub* climberSub);
+  ClimberArmLowerCmd(ClimberSub* climberSub, double targetHeightPercentage);
 
   void Initialize() override;
 
@@ -30,4 +30,5 @@ class ClimberArmLowerCmd
   
  private:
   ClimberSub *m_climberSubPtr;
+  double m_targetHeightPercentage; 
 };

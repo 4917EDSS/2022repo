@@ -6,19 +6,21 @@
 
 constexpr double kClimberArmPower = 1.0;
 constexpr int kClimberArmMinHeight = 5000;
+constexpr int kClimberArmMaxHeight = 203000;
 
-ClimberArmLowerCmd::ClimberArmLowerCmd(ClimberSub* climberSub) {
+ClimberArmLowerCmd::ClimberArmLowerCmd(ClimberSub* climberSub,  double targetHeightPercentage) {
   AddRequirements({climberSub});
   m_climberSubPtr = climberSub;
+  m_targetHeightPercentage = targetHeightPercentage;
 }
 
 // Called when the command is initially scheduled.
-void ClimberArmLowerCmd::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void ClimberArmLowerCmd::Execute() {
+void ClimberArmLowerCmd::Initialize() {
   m_climberSubPtr->setClimberArmPower(-kClimberArmPower);
 }
+
+// Called repeatedly when this Command is scheduled to run
+void ClimberArmLowerCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
 void ClimberArmLowerCmd::End(bool interrupted) {
@@ -27,7 +29,8 @@ void ClimberArmLowerCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ClimberArmLowerCmd::IsFinished() {
-  if (m_climberSubPtr->getClimberEncoder() < kClimberArmMinHeight) {
+  double targetClimbHeight =  (m_targetHeightPercentage/100) * (double) kClimberArmMaxHeight;
+  if (m_climberSubPtr->getClimberEncoder() < targetClimbHeight) {
     return true;
   }
   else {
