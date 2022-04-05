@@ -27,7 +27,7 @@ AutoFourBallGrp::AutoFourBallGrp(ShooterSub* shooterSub, IntakeSub* intakeSub, D
     AlignThenShootGrp(shooterSub, visionSub, drivetrainSub, intakeSub, true),
     RotateRobotCmd(drivetrainSub, -150),
     frc2::ParallelCommandGroup{
-      DriveStraightCmd(drivetrainSub, 2.5), 
+      DriveStraightCmd(drivetrainSub, 3.5), 
       IntakeCargoCmd(intakeSub)},
     RotateRobotCmd(drivetrainSub, 150),
     DriveStraightCmd(drivetrainSub, 2.5),

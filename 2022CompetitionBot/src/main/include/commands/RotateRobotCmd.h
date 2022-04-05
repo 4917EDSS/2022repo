@@ -34,4 +34,5 @@ class RotateRobotCmd
   double m_angle;
   double power;
   double rotationRemaining;
+  uint64_t m_startTime;
 };

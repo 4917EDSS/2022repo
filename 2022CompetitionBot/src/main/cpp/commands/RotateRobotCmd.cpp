@@ -5,8 +5,10 @@
 #include "commands/RotateRobotCmd.h"
 #include "subsystems/DrivetrainSub.h"
 
-constexpr double kMinPower = 0.3;
-constexpr double kMaxPower = 1;
+#include <frc/RobotController.h>
+
+constexpr double kMinPower = 0.2; //
+constexpr double kMaxPower = 0.8; // changed from 1, 4/4/22
 constexpr double kTolerance = 1;//degrees
 
 RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
@@ -20,13 +22,14 @@ RotateRobotCmd::RotateRobotCmd(DrivetrainSub *drivetrainSub, double angle) {
 void RotateRobotCmd::Initialize() {
   m_drivetrainSubPtr->shiftDown();
   m_drivetrainSubPtr->zeroHeading();
+  m_startTime = frc::RobotController::GetFPGATime();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RotateRobotCmd::Execute() {
-  double power = 1;
+  double power = 0.8; //
   rotationRemaining = m_angle-m_drivetrainSubPtr->getHeading();
-  double dir = (rotationRemaining < 0) ? -1: 1;
+  double dir = (rotationRemaining < 0) ? -1: 1; 
   rotationRemaining = fabs(rotationRemaining);
   if(rotationRemaining <= 40)
   {
@@ -46,7 +49,10 @@ void RotateRobotCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool RotateRobotCmd::IsFinished() {
-  if((rotationRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getTurnRate()) <= 5)) {
+  if((rotationRemaining <= kTolerance) && (fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.1)) {
+    return true;
+  }
+  if((frc::RobotController::GetFPGATime() - m_startTime) > 3000000) {
     return true;
   }
   return false;
