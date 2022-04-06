@@ -32,7 +32,7 @@ bool ClimberArmLowerCmd::IsFinished() {
   double targetHeight =  (m_targetHeightPercentage / 100) * (double)kClimberArmMaxHeight;
 
   // Don't let target height be lower than minimum allowed.
-  if (targetHeight > kClimberArmMinHeight) {
+  if (targetHeight < kClimberArmMinHeight) {
     targetHeight = kClimberArmMinHeight;
   }
 
