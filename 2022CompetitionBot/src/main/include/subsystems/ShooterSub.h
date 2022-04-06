@@ -40,6 +40,7 @@ class ShooterSub : public frc2::SubsystemBase {
   void setPower(double power);
   double getSpeed();
   void autoVelocity(double velocity);
+  double getShotPower(double distanceM);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

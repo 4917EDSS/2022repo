@@ -37,6 +37,8 @@ void ShootCargoCmd::Initialize() {
     }
     // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
     double currentDistance = m_visionSubPtr->estimateDistanceMeters();
+
+#if 1
     double slope = (kSpeedMax - kSpeedMin) / (kDistanceMax - kDistanceMin);
     double intercept = kSpeedMin - (slope * kDistanceMin);
     if(currentDistance == 0.0) {
@@ -44,6 +46,9 @@ void ShootCargoCmd::Initialize() {
     } else {
       m_targetSpeed = (slope * currentDistance) + intercept;
     }
+#else
+    m_targetSpeed = m_shooterSubPtr->getShotPower(currentDistance);
+#endif
   }
   else {
     m_targetSpeed = m_shooterSubPtr->m_lowerBinSpeed;

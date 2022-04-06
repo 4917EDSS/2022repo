@@ -86,3 +86,19 @@ void ShooterSub::autoVelocity(double velocity) {
 double ShooterSub::getSpeed() {
     return m_shootMotor1.GetSelectedSensorVelocity();
 }
+
+double ShooterSub::getShotPower(double distanceM) {
+    int mapSize = 4;
+    double distanceMap[mapSize][2] = {{2.25, 14900}, {2.5, 15500}, {2.75, 16750}, {3, 18000}};
+
+    if (distanceM <= distanceMap[0][0]) {
+        return distanceMap[0][1];
+    }
+
+    for(int i = 1; i < mapSize; i++) {
+        if (distanceM <= distanceMap[i][0]) {
+            double ratio = 1 - ((distanceMap[i][0] - distanceM) / (distanceMap[i][0] - distanceMap[i-1][0]));
+            return (distanceMap[i-1][1] + ratio * (distanceMap[i][1] - distanceMap[i-1][1]));
+        }
+    }
+}
