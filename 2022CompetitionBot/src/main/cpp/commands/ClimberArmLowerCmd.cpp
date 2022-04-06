@@ -6,7 +6,7 @@
 
 constexpr double kClimberArmPower = 1.0;
 constexpr int kClimberArmMinHeight = 5000;
-constexpr int kClimberArmMaxHeight = 203000;
+constexpr int kClimberArmMaxHeight = 206000;
 
 ClimberArmLowerCmd::ClimberArmLowerCmd(ClimberSub* climberSub,  double targetHeightPercentage) {
   AddRequirements({climberSub});
