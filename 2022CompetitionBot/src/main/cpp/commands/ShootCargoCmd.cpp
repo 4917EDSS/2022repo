@@ -70,7 +70,7 @@ void ShootCargoCmd::Execute() {
     m_intakeSubPtr->disableMagazineMotor();
   }
 
-  if(m_intakeSubPtr->isCargoAtMagazineBack()) {
+  if(m_intakeSubPtr->isCargoAtMagazineBack() || m_intakeSubPtr->isCargoAtMagazineFront()) {
     m_ballLastSeenTime = frc::RobotController::GetFPGATime();
   }
 }
@@ -86,7 +86,7 @@ void ShootCargoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ShootCargoCmd::IsFinished() {
-  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 1500000) {
+  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 1000000) {
     return true;
   }
   return false;
