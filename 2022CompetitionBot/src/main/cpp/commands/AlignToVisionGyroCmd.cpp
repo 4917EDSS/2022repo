@@ -66,5 +66,10 @@ bool AlignToVisionGyroCmd::IsFinished() {
   if(fabs(angleRemaining) < .5 && fabs(m_drivetrainSubPtr->getTurnRate()) <= 0.3) {
     return true;
   }
+
+  if(fabs(angleRemaining) > 90) {
+    std::cout << "999999999999999999 Angle Remaining is greater than 90";
+    return true;
+  }
   return false;
 }

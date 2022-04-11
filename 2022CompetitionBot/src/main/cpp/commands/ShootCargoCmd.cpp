@@ -39,8 +39,8 @@ void ShootCargoCmd::Initialize() {
     double currentDistance = m_visionSubPtr->estimateDistanceMeters();
 
 #if 1
-    double slope = 2840; //Average between slope 2680 (old) and 3000 (new) //(kSpeedMax - kSpeedMin) / (kDistanceMax - kDistanceMin); 
-    double intercept = 6990; //Average between intercepts 8980 (old) and 5000 (new) //kSpeedMin - (slope * kDistanceMin);
+    double slope = 3000; //Tweaked average between slope 2680 (old) and 3000 (new) //(kSpeedMax - kSpeedMin) / (kDistanceMax - kDistanceMin); 
+    double intercept = 8780; //Tweaked average between intercepts 8980 (old) and 5000 (new) //kSpeedMin - (slope * kDistanceMin);
     if(currentDistance == 0.0) {
       m_targetSpeed = m_shooterSubPtr->m_upperBinSpeed;
     } else {
