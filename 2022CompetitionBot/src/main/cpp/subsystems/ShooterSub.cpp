@@ -111,6 +111,6 @@ double ShooterSub::getShotPower(double distanceM) {
         }
     }
 
-    // Distance too far - use faster from map.
+    // Distance too far - use fastest speed from map (from last data point).
     return distanceMap[mapSize - 1][1];
 }
