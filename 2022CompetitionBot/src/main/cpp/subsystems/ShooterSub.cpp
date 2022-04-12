@@ -88,17 +88,29 @@ double ShooterSub::getSpeed() {
 }
 
 double ShooterSub::getShotPower(double distanceM) {
-    int mapSize = 4;
-    double distanceMap[mapSize][2] = {{2.25, 14900}, {2.5, 15500}, {2.75, 16750}, {3, 18000}};
+    int mapSize = 7;
+    double distanceMap[mapSize][2] = {
+            {1.65, 13000},
+            {1.75, 13230},
+            {2.00, 14000},
+            {2.25, 14250},
+            {2.50, 14700},
+            {2.75, 16000},
+            {3.00, 16800}
+        };
 
-    if (distanceM <= distanceMap[0][0]) {
-        return distanceMap[0][1];
+    if (distanceM < distanceMap[0][0]) {
+        // Distance too close - default to low shot.
+        return 6500;
     }
 
-    for(int i = 1; i < mapSize; i++) {
+    for(int i = 0; i < mapSize; i++) {
         if (distanceM <= distanceMap[i][0]) {
             double ratio = 1 - ((distanceMap[i][0] - distanceM) / (distanceMap[i][0] - distanceMap[i-1][0]));
             return (distanceMap[i-1][1] + ratio * (distanceMap[i][1] - distanceMap[i-1][1]));
         }
     }
+
+    // Distance too far - use faster from map.
+    return distanceMap[mapSize - 1][1];
 }

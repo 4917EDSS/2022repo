@@ -38,7 +38,7 @@ void ShootCargoCmd::Initialize() {
     // y is speed, x is distance (one least and two greatest) y = mx+b **assumes linear relationship
     double currentDistance = m_visionSubPtr->estimateDistanceMeters();
 
-#if 1
+#if 0
     double slope = 3000; //Tweaked average between slope 2680 (old) and 3000 (new) //(kSpeedMax - kSpeedMin) / (kDistanceMax - kDistanceMin); 
     double intercept = 8780; //Tweaked average between intercepts 8980 (old) and 5000 (new) //kSpeedMin - (slope * kDistanceMin);
     if(currentDistance == 0.0) {
@@ -64,7 +64,7 @@ void ShootCargoCmd::Execute() {
   }
 
   if(m_isUpToSpeed) {
-    m_intakeSubPtr->setMagazineMotor(0.4);
+    m_intakeSubPtr->setMagazineMotor(1.0);
   }
   else {
     m_intakeSubPtr->disableMagazineMotor();
@@ -86,7 +86,7 @@ void ShootCargoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool ShootCargoCmd::IsFinished() {
-  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 1000000) {
+  if(frc::RobotController::GetFPGATime() - m_ballLastSeenTime > 500000) {
     return true;
   }
   return false;
