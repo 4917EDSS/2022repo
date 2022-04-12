@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include "commands/ToggleDrivetrainBrakeCmd.h"
 #include "commands/AlignThenShootGrp.h"
 #include "commands/AlignToVisionGyroCmd.h"
 #include "commands/SpinFlywheelCmd.h"
@@ -18,6 +19,8 @@ AlignThenShootGrp::AlignThenShootGrp(ShooterSub *shooterSub, VisionSub *visionSu
     frc2::ParallelDeadlineGroup{
       AlignToVisionGyroCmd(drivetrainSub, visionSub),
       SpinFlywheelCmd(shooterSub, true)},
-    ShootCargoCmd(shooterSub, intakeSub, visionSub, true, isAuto)
+    ToggleDrivetrainBrakeCmd(drivetrainSub, true),
+    ShootCargoCmd(shooterSub, intakeSub, visionSub, true, isAuto),
+    ToggleDrivetrainBrakeCmd(drivetrainSub, false)
   );
 }

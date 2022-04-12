@@ -54,6 +54,7 @@ double DriveWithJoystickCmd::capAcceleration(double targetPower, double curPower
 
 // Called when the command is initially scheduled.
 void DriveWithJoystickCmd::Initialize() {
+  m_drivetrainSubPtr->setBrakeMode(false);
 }
 
 // Called repeatedly when this Command is scheduled to run

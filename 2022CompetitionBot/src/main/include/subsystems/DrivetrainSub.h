@@ -47,6 +47,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
   double getTurnRate();
   void setIsAutoShift(bool autoShiftActive);
   bool m_isAutoShift;
+  void setBrakeMode(bool shouldBrake);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

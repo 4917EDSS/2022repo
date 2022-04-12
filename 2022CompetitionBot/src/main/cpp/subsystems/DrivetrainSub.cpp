@@ -128,3 +128,22 @@ void DrivetrainSub::setIsAutoShift(bool autoShiftActive) {
     return;
 }
 
+void DrivetrainSub::setBrakeMode(bool shouldBrake){
+    if(shouldBrake){
+        m_leftMotor3.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        m_leftMotor2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        m_leftMotor1.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        m_rightMotor3.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        m_rightMotor2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        m_rightMotor1.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    } 
+    else{
+        m_leftMotor3.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        m_leftMotor2.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        m_leftMotor1.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        m_rightMotor3.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        m_rightMotor2.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        m_rightMotor1.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    }
+}
+
