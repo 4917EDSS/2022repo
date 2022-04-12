@@ -24,6 +24,7 @@
 #include "commands/AlignThenShootGrp.h"
 #include "commands/AutoFourBallGrp.h"
 #include "commands/ClimbStageOneGrp.h"
+#include "commands/AlignToVisionGyroCmd.h"
 
 
 /*
@@ -88,7 +89,7 @@ void RobotContainer::ConfigureButtonBindings() {
   
   // Driver Controller Button Mapping
   frc2::JoystickButton AligntoVision(&m_driverController, kAligntoVision);
-  AligntoVision.WhenPressed(AlignToVisionCmd(&m_drivetrainSub, &m_visionSub));
+  AligntoVision.WhenPressed(AlignToVisionGyroCmd(&m_drivetrainSub, &m_visionSub));
 
   frc2::JoystickButton shiftLowDrvBtn(&m_driverController, kShiftLowDrvBtn);
   shiftLowDrvBtn.WhenPressed(ShiftLowCmd(&m_drivetrainSub));
