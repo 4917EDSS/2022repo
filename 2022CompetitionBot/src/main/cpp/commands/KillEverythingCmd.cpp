@@ -6,10 +6,13 @@
 
 KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* drivetrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub) {
    AddRequirements({climberSub, drivetrainSub, intakeSub, shooterSub});
+   m_drivetrainSubPtr = drivetrainSub;
 }
 
 // Called when the command is initially scheduled.
-void KillEverythingCmd::Initialize() {}
+void KillEverythingCmd::Initialize() {
+  m_drivetrainSubPtr->setBrakeMode(false);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void KillEverythingCmd::Execute() {}

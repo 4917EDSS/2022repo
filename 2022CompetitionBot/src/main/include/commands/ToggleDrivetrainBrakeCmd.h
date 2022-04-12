@@ -6,10 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/ClimberSub.h"
 #include "subsystems/DrivetrainSub.h"
-#include "subsystems/IntakeSub.h"
-#include "subsystems/ShooterSub.h"
 
 /**
  * An example command.
@@ -18,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class KillEverythingCmd
-    : public frc2::CommandHelper<frc2::CommandBase, KillEverythingCmd> {
+class ToggleDrivetrainBrakeCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ToggleDrivetrainBrakeCmd> {
  public:
-  KillEverythingCmd(ClimberSub* climberSub, DrivetrainSub* drivetrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub);
+  ToggleDrivetrainBrakeCmd(DrivetrainSub* drivetrainSub, bool shouldBrake);
 
   void Initialize() override;
 
@@ -30,8 +27,7 @@ class KillEverythingCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
  private:
-  DrivetrainSub *m_drivetrainSubPtr;
+  DrivetrainSub* m_drivetrainSubPtr;
+  bool m_shouldBrake;
 };
-
