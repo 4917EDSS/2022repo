@@ -104,7 +104,7 @@ double ShooterSub::getShotPower(double distanceM) {
         return 6500;
     }
 
-    for(int i = 0; i < mapSize; i++) {
+    for (int i = 1; i < mapSize; i++) {
         if (distanceM <= distanceMap[i][0]) {
             double ratio = 1 - ((distanceMap[i][0] - distanceM) / (distanceMap[i][0] - distanceMap[i-1][0]));
             return (distanceMap[i-1][1] + ratio * (distanceMap[i][1] - distanceMap[i-1][1]));
