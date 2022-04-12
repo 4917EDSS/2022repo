@@ -16,10 +16,11 @@ AlignThenShootGrp::AlignThenShootGrp(ShooterSub *shooterSub, VisionSub *visionSu
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands(
-    frc2::ParallelDeadlineGroup{
-      AlignToVisionGyroCmd(drivetrainSub, visionSub),
-      SpinFlywheelCmd(shooterSub, true)},
     ToggleDrivetrainBrakeCmd(drivetrainSub, true),
+    frc2::ParallelDeadlineGroup {
+      AlignToVisionGyroCmd(drivetrainSub, visionSub),
+      SpinFlywheelCmd(shooterSub, true)
+    },
     ShootCargoCmd(shooterSub, intakeSub, visionSub, true, isAuto),
     ToggleDrivetrainBrakeCmd(drivetrainSub, false)
   );

@@ -21,6 +21,7 @@ void DrivetrainSub::init() { //Reset all hardware to a safe state
     m_leftMotor2.SetInverted(true);
     m_leftMotor3.SetInverted(true);
 
+
     m_rightMotor1.SetInverted(false);
     m_rightMotor2.SetInverted(false);
     m_rightMotor3.SetInverted(false);
@@ -29,6 +30,7 @@ void DrivetrainSub::init() { //Reset all hardware to a safe state
     tankDrive(0., 0.);
     shiftDown();
     setIsAutoShift(true);
+    setBrakeMode(false);
 
     m_gyro.Reset();
 }
