@@ -4,9 +4,9 @@
 
 #include "commands/DriveWithJoystickCmd.h"
 
-constexpr int kTurnSensitivityPower = 3;
+constexpr int kTurnSensitivityPower = 1;
 constexpr int kForwardSensitivityPower = 2;
-constexpr double kDeadband = 0.03;
+constexpr double kDeadband = 0.005;
 constexpr double kMaxForwardAccl = 0.1;
 constexpr double kMaxTurnAccl = 0.2;
 
