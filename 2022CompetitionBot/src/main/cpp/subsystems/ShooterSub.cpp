@@ -88,7 +88,7 @@ double ShooterSub::getSpeed() {
 }
 
 double ShooterSub::getShotPower(double distanceM) {
-    int mapSize = 7;
+    const int mapSize = 7;
     double distanceMap[mapSize][2] = {
             {1.65, 13000},
             {1.75, 13230},
