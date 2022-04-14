@@ -16,6 +16,7 @@ AlignToVisionGyroCmd::AlignToVisionGyroCmd(DrivetrainSub *drivetrainSub, VisionS
 
 // Called when the command is initially scheduled.
 void AlignToVisionGyroCmd::Initialize() {
+  m_drivetrainSubPtr->setBrakeMode(true);
   m_visionSubPtr->targetVisionPipeline();
   m_startTime = frc::RobotController::GetFPGATime();
   

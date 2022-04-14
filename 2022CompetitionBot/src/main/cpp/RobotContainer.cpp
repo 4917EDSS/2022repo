@@ -194,6 +194,9 @@ void RobotContainer::updateDashboard() {
     frc::SmartDashboard::PutBoolean("Back Magazine", m_intakeSub.isCargoAtMagazineBack());
     frc::SmartDashboard::PutBoolean("Intake End", m_intakeSub.isCargoAtIntakeEnd());
     frc::SmartDashboard::PutBoolean("Climb Arms In", !m_climberSub.getArmStatus());
+
+    frc::SmartDashboard::PutNumber("Distance to Goal",m_visionSub.estimateDistanceMeters()); //Put vision data in normal tab to see it easier
+    frc::SmartDashboard::PutNumber("Angle to goal",m_visionSub.getHorizontalAngle());
   } 
   if (i == 10) {
     // m_lowShootSpeedNte.SetDouble(m_shooterSub.m_lowerBinSpeed);

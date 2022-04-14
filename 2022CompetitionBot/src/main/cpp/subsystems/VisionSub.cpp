@@ -17,8 +17,8 @@ void VisionSub::init() {
 
 // This method will be called once per scheduler run
 void VisionSub::Periodic() {
-    distEntry.SetDouble(estimateDistanceMeters());
-    angleEntry.SetDouble(getHorizontalAngle());
+    //distEntry.SetDouble(estimateDistanceMeters());
+    //angleEntry.SetDouble(getHorizontalAngle());
 }
 
 double VisionSub::estimateDistanceMeters() { //estimate from camera to goal
