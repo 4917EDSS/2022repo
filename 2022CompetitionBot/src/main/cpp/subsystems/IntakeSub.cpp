@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/IntakeSub.h"
+#include <frc/RobotController.h>
+#include <iostream>
 
 //Constants
 constexpr double kFrontRollerIntakeMotorPower = 1.0;
@@ -94,7 +96,17 @@ bool IntakeSub::isCargoAtMagazineFront(){
 }
 
 bool IntakeSub::isCargoAtIntakeEnd(){
-  return (!m_EndOfIntake.Get()) || (!m_EndOfIntakeTwo.Get());
+  /*
+  if(!m_EndOfIntake.Get()) {
+    std::cout << "cargo in front intake 1" << frc::RobotController::GetFPGATime() << std::endl;
+  
+  } 
+    if(!m_EndOfIntakeTwo.Get()) {
+    std::cout << "cargo in front intake 2" << frc::RobotController::GetFPGATime() << std:: endl;
+  } 
+  */
+
+  return (!m_EndOfIntake.Get()) && (!m_EndOfIntakeTwo.Get());
 }
  
  bool IntakeSub::isIntakeArmUp() {

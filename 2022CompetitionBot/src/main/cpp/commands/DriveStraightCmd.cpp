@@ -5,7 +5,7 @@
 #include "commands/DriveStraightCmd.h"
 #include "subsystems/DrivetrainSub.h"
 
-constexpr double kRotateAdjustment = 0.05;
+constexpr double kRotateAdjustment = 0.045;
 constexpr double kMinPower = 0.15;
 constexpr double kTolerance = 0.03;
 

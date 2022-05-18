@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/IntakeCargoCmd.h"
+#include <frc/RobotController.h>
+#include <iostream>
 
 IntakeCargoCmd::IntakeCargoCmd(IntakeSub* intakeSub) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -13,6 +15,7 @@ IntakeCargoCmd::IntakeCargoCmd(IntakeSub* intakeSub) {
 // Called when the command is initially scheduled.
 void IntakeCargoCmd::Initialize() {
   if(!m_intakeSubPtr->isCargoAtMagazineBack()) {
+    //std::cout << "initalize and cargo in back magazine" << frc::RobotController::GetFPGATime() << std::endl;
     m_intakeSubPtr->lowerIntake();
     m_intakeSubPtr->enableFrontRollerIntakeMotor(false);
   }
@@ -29,9 +32,11 @@ void IntakeCargoCmd::Execute() {
 
   if(m_intakeSubPtr->isCargoAtIntakeEnd() && !m_intakeSubPtr->isCargoAtMagazineBack()) {
     m_intakeSubPtr->enableMagazineMotor(false);
+    //std::cout << "cargo at intake end" << frc::RobotController::GetFPGATime() << std::endl;
   }
   if(m_intakeSubPtr->isCargoAtMagazineFront() && !m_intakeSubPtr->isCargoAtMagazineBack()) {
     m_intakeSubPtr->enableMagazineMotor(false);
+    //std::cout << "cargo at magazine front" << frc::RobotController::GetFPGATime() << std::endl;
     atCargoMagazineFront = true;
   }
   if(atCargoMagazineFront){
