@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DriveForwardCmd;
+import frc.robot.commands.DriveWithJoystickCmd;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.DrivetrainSub;
@@ -30,11 +32,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
-  
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_drivetrainSub.setDefaultCommand(new DriveWithJoystickCmd(m_drivetrainSub, m_driverController));
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -46,32 +49,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Buttons
-    // ID F310                              XboxController
-    // -- --------------------------------  --------------
-    // 1  X (Blue)                          kA
-    // 2  A (Green)                         kB
-    // 3  B (Red)                           kX
-    // 4  Y (Yellow)                        kY
-    // 5  LB (Left-Bumper: top button)      kLeftBumper
-    // 6  RB (Right-Bumper: top button)     kRightBumper
-    // 7  LT (Left-Trigger: bottom button)  kBack
-    // 8  RT (Right-Trigger: bottom button) kStart
-    // 9  Select/Back (Above left joystick) kLeftStick
-    // 10 Start (Above right joystick)      kRightStick
-    // 11 L3 (Press left joystick)          ---
-    // 12 R3 (Press right joystick)         ---
-    
-    // Axes
-    // ID F310                    XboxController
-    // -- ----------------------  ----------------
-    // 0  Left Stick Horizontal   kLeftX
-    // 1  Left Stick Vertical     kLeftY
-    // 2  Right Stick Horizontal  KLeftTrigger
-    // 3  Right Stick Vertical    KRightTrigger
-    // 4  ---                     kRightX
-    // 5  ---                     kRightY
-  
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whileHeld(new DriveForwardCmd(m_drivetrainSub)); // This . means "use result of previous parent line"
   }
 
   /**
