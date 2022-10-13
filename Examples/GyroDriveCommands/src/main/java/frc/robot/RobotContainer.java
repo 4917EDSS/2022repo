@@ -7,7 +7,6 @@ package frc.robot;
 import static edu.wpi.first.wpilibj.PS4Controller.Button;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
