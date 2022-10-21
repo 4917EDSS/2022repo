@@ -5,15 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveForwardCmd;
 import frc.robot.commands.DriveWithJoystickCmd;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.DrivetrainSub;
-import edu.wpi.first.wpilibj2.command.Command;
 
 
 /**
@@ -26,8 +25,8 @@ public class RobotContainer {
   private final static int m_kDriverControllerPort = 0;
   private final static int m_kOperatorControllerPort = 1;
 
-  XboxController m_driverController = new XboxController(m_kDriverControllerPort);
-  XboxController m_operaterController = new XboxController(m_kOperatorControllerPort);
+  PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
+  PS4Controller m_operaterController = new PS4Controller(m_kOperatorControllerPort);
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -49,7 +48,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
       .whileHeld(new DriveForwardCmd(m_drivetrainSub)); // This . means "use result of previous parent line"
   }
 
