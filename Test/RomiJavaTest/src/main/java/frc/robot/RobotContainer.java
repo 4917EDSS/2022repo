@@ -4,11 +4,13 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller;
 import frc.robot.commands.DriveWithJoystickCmd;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   private final static int m_kDriverControllerPort = 0;
-  XboxController m_driverController = new XboxController(m_kDriverControllerPort);
+  PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
 
   // The robot's subsystems and commands are defined here...
   private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
@@ -38,7 +40,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
+      .whenPressed(new PrintCommand("Cross Pressed"))
+      .whenReleased(new PrintCommand("Cross Released"));
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

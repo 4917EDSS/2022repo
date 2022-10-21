@@ -4,16 +4,16 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.RomiDrivetrain;
 
 public class DriveWithJoystickCmd extends CommandBase {
   /** Creates a new DriveWithJoystickCmd. */
-  XboxController m_controller;
+  PS4Controller m_controller;
   RomiDrivetrain m_drivetrain;
 
-  public DriveWithJoystickCmd(XboxController controller, RomiDrivetrain drivetrain) {
+  public DriveWithJoystickCmd(PS4Controller controller, RomiDrivetrain drivetrain) {
     m_controller = controller;
 
     m_drivetrain = drivetrain;
