@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DrivetrainSub extends SubsystemBase {
-  private final CANSparkMax m_leftMotor1 = new CANSparkMax(Constants.CanIds.kLeftMotors1.CANSparkMaxLowLevel.MotorType.kBrushless);
-  private final CANSparkMax m_rightMotor1 = new CANSparkMax(Constants.CanIds.kRightMotors1.CANSparkMaxLowLevel.MotorType.kBrushless);
+  private final CANSparkMax m_leftMotor1 = new CANSparkMax(Constants.CanIds.kLeftMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
+  private final CANSparkMax m_rightMotor1 = new CANSparkMax(Constants.CanIds.kRightMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
   /** Creates a new DrivetrainSub. */
   public DrivetrainSub() {}
 
