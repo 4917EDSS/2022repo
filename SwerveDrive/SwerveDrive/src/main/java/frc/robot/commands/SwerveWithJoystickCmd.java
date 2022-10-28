@@ -1,0 +1,60 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.PS4Controller;
+import frc.robot.subsystems.SwerveDrivetrain;
+
+public class SwerveWithJoystickCmd extends CommandBase {
+  /** Creates a new SwerveWithJoystickCmd. */
+
+  SwerveDrivetrain m_swervetrainSub;
+  PS4Controller m_controller;
+
+  public SwerveWithJoystickCmd(SwerveDrivetrain swerveSub,PS4Controller controller) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_swervetrainSub = swerveSub;
+    m_controller = controller;
+    addRequirements(swerveSub);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    double stSpeed0 = m_controller.getTriangleButton() ? 0.1 : 0.0;
+    double stSpeed1 = m_controller.getCircleButton() ? 0.1 : 0.0;
+    double stSpeed3 = m_controller.getCrossButton() ? 0.1 : 0.0;
+    double stSpeed2 = m_controller.getSquareButton() ? 0.1 : 0.0;
+
+    double drSpeed0 = m_controller.getL1Button() ? 0.1 : 0.0;
+    double drSpeed1 = m_controller.getR1Button() ? 0.1 : 0.0;
+    double drSpeed2 = m_controller.getL2Button() ? 0.1 : 0.0;
+    double drSpeed3 = m_controller.getR2Button() ? 0.1 : 0.0;
+    m_swervetrainSub.steerMotor(0, stSpeed0);
+    m_swervetrainSub.steerMotor(1, stSpeed1);
+    m_swervetrainSub.steerMotor(2, stSpeed2);
+    m_swervetrainSub.steerMotor(3, stSpeed3);
+
+    m_swervetrainSub.driveMotor(0, drSpeed0);
+    m_swervetrainSub.driveMotor(1, drSpeed1);
+    m_swervetrainSub.driveMotor(2, drSpeed2);
+    m_swervetrainSub.driveMotor(3, drSpeed3);
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}
