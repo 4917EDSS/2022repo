@@ -8,14 +8,25 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.revrobotics.CANSparkMaxLowLevel;
+
+import frc.robot.subsystems.DrivetrainSub;
+
+import frc.robot.Constants;
 
 public class DrivetrainSub extends SubsystemBase {
   /** Creates a new DrivetrainSub. */
+  private final CANSparkMax m_leftMotor1 = new CANSparkMax(Constants.CanIds.kLeftMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
+  private final CANSparkMax m_rightMotor1 = new CANSparkMax(Constants.CanIds.kRightMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
   public DrivetrainSub() {
-   // private final CANSparkMax;
-   // private final CANSparkMax m_leftMotor1 = new CANSparkMax(Constants.CanIds.kLeftMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
-   // private final CANSparkMax m_rightMotor1 = new CANSparkMax(Constants.CanIds.kRightMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    
+  //private final CANSparkMax;
+   
+  
+  
+  }
+  public void 	tankDrive(double leftPower, double rightPower) {
+    m_leftMotor1.set(leftPower);
+    m_rightMotor1.set(rightPower);
   }
 
   @Override
