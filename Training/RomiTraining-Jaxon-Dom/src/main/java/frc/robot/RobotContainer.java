@@ -13,8 +13,9 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.DrivetrainSub;
-
-
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DriveForwardCmd;
+import edu.wpi.first.wpilibj.PS4Controller;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -31,7 +32,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final DrivetrainSub m_drivetrain = new DrivetrainSub();
+  private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
 
 
 
@@ -50,6 +51,9 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(m_driveController, PS4Controller.Button.kCross.value)
+  // This . means "use result of previous parent line"
+  .whenHeld(new DriveForwardCmd(m_drivetrainSub));
   }
 
 
