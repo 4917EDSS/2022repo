@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import frc.robot.Constants;
 
 public class DrivetrainSub extends SubsystemBase {
   private final CANSparkMax m_leftMotor1 = new CANSparkMax(Constants.CanIds.kLeftMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -15,11 +16,18 @@ public class DrivetrainSub extends SubsystemBase {
 
   /** Creates a new DrivetrainSub. */
   public DrivetrainSub() {
-    private final CANSparkMax m_leftMotor1
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+
+
+  public void arcadeDrive(double leftPower, double rightPower) {
+    m_leftMotor1.set(leftPower);
+    m_rightMotor1.set(rightPower);
+  }
+  
 }
