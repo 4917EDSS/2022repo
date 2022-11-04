@@ -27,7 +27,7 @@ public class DriveWithJoystickCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightY());
+    m_drivetrainSub.arcadeDrive((m_controller.getLeftY() * 0.5), (m_controller.getRightX() * 0.5));
   }
 
   // Called once the command ends or is interrupted.
