@@ -24,7 +24,7 @@ public class DriveBackwardCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrainSub.arcadeDrive(0.6,0.0);
+    m_drivetrainSub.arcadeDrive(-0.6,0.0);
   }
 
   // Called once the command ends or is interrupted.
