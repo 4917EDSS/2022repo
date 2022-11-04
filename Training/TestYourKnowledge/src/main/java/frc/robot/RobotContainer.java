@@ -4,15 +4,13 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveForwardCmd;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.DrivetrainSub;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveForwardCmd;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,15 +19,14 @@ import frc.robot.commands.DriveForwardCmd;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final static int m_kDriverControllerPort = 0; 
-
-  PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
+  private final static int m_kDriverControllerPort = 0;
 
   // The robot's subsystems and commands are defined here...
   private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
-  private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
+
+  private final PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -45,13 +42,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
-    .whenHeld(new DriveForwardCmd(m_romiDrivetrain)); 
- 
-    // You can test that a button works by using this instead of the line above
-    //.whenPressed(new PrintCommand("Button Pressed"))
-    //.whenReleased(new PrintCommand("Button Released"));
-  
-
+      .whenHeld(new DriveForwardCmd(m_romiDrivetrain));
   }
 
   /**
