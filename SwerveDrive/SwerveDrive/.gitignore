@@ -36,6 +36,8 @@
 *.app
 
 ### Java ###
+*.pdb
+
 # Compiled class file
 *.class
 
