@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.RomiDrivetrain;
 
-public class DriveFwdCmd extends CommandBase {
+public class DriveForewardCmd extends CommandBase {
   private final RomiDrivetrain m_drivetrainSub;
 
-  /** Creates a new DriveFwdCmd. */
-  public DriveFwdCmd(RomiDrivetrain drivetrainSub) {
+  /** Creates a new DriveForewardCmd. */
+  public DriveForewardCmd(RomiDrivetrain drivetrainSub) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrainSub);
 
@@ -21,6 +21,7 @@ public class DriveFwdCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.

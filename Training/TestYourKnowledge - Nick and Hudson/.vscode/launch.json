@@ -9,7 +9,7 @@
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",
-      "projectName": "RomiTraining, Ryan, Nick"
+      "projectName": "TestYourKnowledge - Nick and Hudson"
     },
     {
       "type": "wpilib",
