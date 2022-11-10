@@ -19,6 +19,11 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   // Steering Encoders
 
+  private static final double fl_encoderOffset = 0.0;
+  private static final double fr_encoderOffset = 0.0;
+  private static final double bl_encoderOffset = 0.0;
+  private static final double br_encoderOffset = 0.0;
+  
   //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
 
   private final CANCoder m_encoderFrontLeft = new CANCoder(Constants.CanIds.kEncoderFL);
@@ -60,6 +65,53 @@ public class SwerveDrivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Back Left ID: ",m_encoderBackLeft.getDeviceID());
     SmartDashboard.putNumber("Back Right ID: ",m_encoderBackRight.getDeviceID());
     
+  }
+
+  // Steering functions
+
+  public double getAngle(int id) { // Get Steering encoder (0: FL, 1: FR, 2: BL, 3: BR)
+    double angle = 0.0;
+    switch(id) {
+      case 0:
+
+      break;
+
+      case 1:
+      
+      break;
+
+      case 2:
+      
+      break;
+
+      case 3:
+      
+      break;
+
+    }
+    return angle;
+  }
+  public double getGlobalAngle(int id) { // Get Steering encoder (0: FL, 1: FR, 2: BL, 3: BR)
+    double angle = 0.0;
+    switch(id) {
+      case 0:
+
+      break;
+
+      case 1:
+      
+      break;
+
+      case 2:
+      
+      break;
+
+      case 3:
+      
+      break;
+
+    }
+    return angle;
   }
 
   public void motorDrive(double power) {
@@ -118,4 +170,6 @@ public class SwerveDrivetrain extends SubsystemBase {
     m_backleftSteerMotor.set(0.0);
     m_backrightSteerMotor.set(0.0);
   }
+
+  
 }
