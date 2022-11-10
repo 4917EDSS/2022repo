@@ -26,5 +26,13 @@ public final class Constants {
 
     public final static int kDriveMotorBR = 7; // Back right motor
     public final static int kSteeringMotorBR = 8;
+
+    public final static int kEncoderFL = 0; // All steering encoders
+
+    public final static int kEncoderFR = 0;
+
+    public final static int kEncoderBL = 0;
+    
+    public final static int kEncoderBR = 0;
     }
 }

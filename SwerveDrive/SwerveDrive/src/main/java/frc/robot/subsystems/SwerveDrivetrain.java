@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,6 +16,21 @@ import frc.robot.Constants;
 
 public class SwerveDrivetrain extends SubsystemBase {
   /** Creates a new SwerveDrivetrain. */
+
+  // Steering Encoders
+
+  //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
+
+  private final CANCoder m_encoderFrontLeft = new CANCoder(Constants.CanIds.kEncoderFL);
+
+  private final CANCoder m_encoderFrontRight = new CANCoder(Constants.CanIds.kEncoderFR);
+
+  private final CANCoder m_encoderBackLeft = new CANCoder(Constants.CanIds.kEncoderBL);
+
+  private final CANCoder m_encoderBackRight = new CANCoder(Constants.CanIds.kEncoderBR);
+
+
+  // Motors
 
   private final CANSparkMax m_frontleftSteerMotor = new CANSparkMax(Constants.CanIds.kSteeringMotorFL,CANSparkMax.MotorType.kBrushless);
   private final TalonFX m_frontleftDriveMotor = new TalonFX(Constants.CanIds.kDriveMotorFL);
@@ -31,7 +48,17 @@ public class SwerveDrivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("d",1);
+
+    // Display Encoder angles and velocities
+    SmartDashboard.putNumber("Front Left Angle (ABS): ",m_encoderFrontLeft.getAbsolutePosition());
+    SmartDashboard.putNumber("Front Right Angle (ABS): ",m_encoderFrontRight.getAbsolutePosition());
+    SmartDashboard.putNumber("Back Left Angle (ABS): ",m_encoderBackLeft.getAbsolutePosition());
+    SmartDashboard.putNumber("Back Right Angle (ABS): ",m_encoderBackRight.getAbsolutePosition());
+
+    SmartDashboard.putNumber("Front Left ID: ",m_encoderFrontLeft.getDeviceID());
+    SmartDashboard.putNumber("Front Right ID: ",m_encoderFrontRight.getDeviceID());
+    SmartDashboard.putNumber("Back Left ID: ",m_encoderBackLeft.getDeviceID());
+    SmartDashboard.putNumber("Back Right ID: ",m_encoderBackRight.getDeviceID());
     
   }
 
