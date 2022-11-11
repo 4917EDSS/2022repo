@@ -4,21 +4,23 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.PS4Controller;
-import frc.robot.subsystems.RomiDrivetrain;
 
+/** An example command that uses an example subsystem. */
+public class ExampleCommand extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final ExampleSubsystem m_subsystem;
 
-public class DriveWithJoyStickCmd extends CommandBase {
-  RomiDrivetrain m_drivetrainSub;
-  PS4Controller m_controller;
-  /** Creates a new DriveWithJoyStick. */
-  
-  public DriveWithJoyStickCmd(PS4Controller controller, RomiDrivetrain drivetrainSub) {
+  /**
+   * Creates a new ExampleCommand.
+   *
+   * @param subsystem The subsystem used by this command.
+   */
+  public ExampleCommand(ExampleSubsystem subsystem) {
+    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrainSub);
-    m_drivetrainSub = drivetrainSub;
-    m_controller = controller;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,15 +29,11 @@ public class DriveWithJoyStickCmd extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightX());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_drivetrainSub.arcadeDrive(0.0,0.0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
