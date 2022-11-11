@@ -4,15 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.DriveBackwardCmd;
-import frc.robot.commands.DriveForwardCmd;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.RomiDrivetrain;
+import frc.robot.subsystems.DrivetrainSub;
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveWithJoyStickCmd;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -20,37 +18,29 @@ import frc.robot.commands.DriveWithJoyStickCmd;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final static int m_kDriverControllerPort = 0;
-
   // The robot's subsystems and commands are defined here...
-  private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
+  private final static int m_kDriverControllerPort = 0;
+  private final static int m_kOperatorControllerPort = 1;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
+  PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
+  PS4Controller m_operaterController = new PS4Controller(m_kOperatorControllerPort);
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
 
-  private final PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
-
+  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_romiDrivetrain.setDefaultCommand(
-      new DriveWithJoyStickCmd(m_driverController, m_romiDrivetrain));
     // Configure the button bindings
     configureButtonBindings();
   }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
-      .whenHeld(new DriveForwardCmd(m_romiDrivetrain));
-
-    new JoystickButton(m_driverController, PS4Controller.Button.kCircle.value)
-      .whenHeld(new DriveBackwardCmd(m_romiDrivetrain));
-
-  }
+  private void configureButtonBindings() {}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

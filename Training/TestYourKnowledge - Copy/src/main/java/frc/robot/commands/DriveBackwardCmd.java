@@ -7,11 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.RomiDrivetrain;
 
-public class DriveForwardCmd extends CommandBase {
-  RomiDrivetrain m_drivetrainSub;
- 
-  /** Creates a new DriveForwardCmd. */
-  public DriveForwardCmd(RomiDrivetrain drivetrainSub) {
+public class DriveBackwardCmd extends CommandBase {
+ RomiDrivetrain m_drivetrainSub;
+  public DriveBackwardCmd(RomiDrivetrain drivetrainSub) {
+    
     m_drivetrainSub = drivetrainSub;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrainSub);
@@ -24,15 +23,13 @@ public class DriveForwardCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Normally we would put this in initialize but the FRC differential drive object
-    // times out if you don't call arcadeDrive() continuously.
-    m_drivetrainSub.arcadeDrive(0.5, 0.0);
-  }
+     m_drivetrainSub.arcadeDrive(-0.6, 0.0);
+    }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_drivetrainSub.arcadeDrive(0.0, 0.0);
+  public void end(boolean interrupted) 
+  { m_drivetrainSub.arcadeDrive(0.0, 0.0);
   }
 
   // Returns true when the command should end.
