@@ -28,6 +28,24 @@ public class SwerveWithJoystickCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double angl = 0.0f;
+
+    if(m_controller.getTriangleButton()) {
+      angl = 0.0f;
+    }
+    else if(m_controller.getCircleButton()) {
+      angl = 90.0f;
+    }
+    else if(m_controller.getCrossButton()) {
+      angl = 180.0f;
+    }
+    else if(m_controller.getSquareButton()) {
+      angl = 270.0f;
+    }
+    m_swervetrainSub.setAngleFL(angl);
+
+    /*
+
     double stSpeed0 = m_controller.getTriangleButton() ? 0.1 : 0.0;
     double stSpeed1 = m_controller.getCircleButton() ? 0.1 : 0.0;
     double stSpeed3 = m_controller.getCrossButton() ? 0.1 : 0.0;
@@ -46,6 +64,7 @@ public class SwerveWithJoystickCmd extends CommandBase {
     m_swervetrainSub.driveMotor(1, drSpeed1);
     m_swervetrainSub.driveMotor(2, drSpeed2);
     m_swervetrainSub.driveMotor(3, drSpeed3);
+    */
   }
 
   // Called once the command ends or is interrupted.

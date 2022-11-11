@@ -11,7 +11,10 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -19,10 +22,10 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   // Steering Encoders
 
-  private static final double fl_encoderOffset = 0.0;
-  private static final double fr_encoderOffset = 0.0;
-  private static final double bl_encoderOffset = 0.0;
-  private static final double br_encoderOffset = 0.0;
+  private static final double fl_encoderOffset = 215.1;
+  private static final double fr_encoderOffset = 210.1;
+  private static final double bl_encoderOffset = 182.3;
+  private static final double br_encoderOffset = 82.7;
   
   //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
 
@@ -48,22 +51,27 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   private final CANSparkMax m_backrightSteerMotor = new CANSparkMax(Constants.CanIds.kSteeringMotorBR,CANSparkMax.MotorType.kBrushless);
   private final TalonFX m_backrightDriveMotor = new TalonFX(Constants.CanIds.kDriveMotorBR);
-  public SwerveDrivetrain() {}
+
+  private final PIDController pid = new PIDController(1, 0, 0.0);
+  public SwerveDrivetrain() {
+
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
     // Display Encoder angles and velocities
-    SmartDashboard.putNumber("Front Left Angle (ABS): ",m_encoderFrontLeft.getAbsolutePosition());
-    SmartDashboard.putNumber("Front Right Angle (ABS): ",m_encoderFrontRight.getAbsolutePosition());
-    SmartDashboard.putNumber("Back Left Angle (ABS): ",m_encoderBackLeft.getAbsolutePosition());
-    SmartDashboard.putNumber("Back Right Angle (ABS): ",m_encoderBackRight.getAbsolutePosition());
+    SmartDashboard.putNumber("Front Left Angle (ABS): ", m_encoderFrontLeft.getAbsolutePosition()-fl_encoderOffset);
+    SmartDashboard.putNumber("Front Right Angle (ABS): ",m_encoderFrontRight.getAbsolutePosition()-fr_encoderOffset);
+    SmartDashboard.putNumber("Back Left Angle (ABS): ",m_encoderBackLeft.getAbsolutePosition()-bl_encoderOffset);
+    SmartDashboard.putNumber("Back Right Angle (ABS): ",m_encoderBackRight.getAbsolutePosition()-br_encoderOffset);
 
     SmartDashboard.putNumber("Front Left ID: ",m_encoderFrontLeft.getDeviceID());
     SmartDashboard.putNumber("Front Right ID: ",m_encoderFrontRight.getDeviceID());
     SmartDashboard.putNumber("Back Left ID: ",m_encoderBackLeft.getDeviceID());
     SmartDashboard.putNumber("Back Right ID: ",m_encoderBackRight.getDeviceID());
+
+    
     
   }
 
@@ -112,6 +120,12 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     }
     return angle;
+  }
+
+  public void setAngleFL(double angle) {
+    pid.enableContinuousInput(0, 360);
+    double power = MathUtil.clamp(pid.calculate(m_encoderFrontLeft.getAbsolutePosition(),angle),-0.3,0.3);
+    m_frontleftSteerMotor.set(power);
   }
 
   public void motorDrive(double power) {
