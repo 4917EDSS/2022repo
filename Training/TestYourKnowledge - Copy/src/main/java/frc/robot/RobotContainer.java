@@ -7,12 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveForwardCmd;
-import frc.robot.commands.DriveWithJoystickCmd;
+import frc.robot.commands.DriveBackwardCmd;
+import frc.robot.commands.DriveJoystickCmd;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveBackwardCmd;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,19 +22,19 @@ import frc.robot.commands.DriveBackwardCmd;
  */
 public class RobotContainer {
   private final static int m_kDriverControllerPort = 0;
-  private final static int m_kOperatorControllerPort = 1;
+
+  // The robot's subsystems and commands are defined here...
   private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
 
   private final PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
-  private final PS4Controller m_operatorController = new
-      PS4Controller(m_kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_romiDrivetrain.setDefaultCommand(
-      new DriveWithJoystickCmd(m_driverController, m_romiDrivetrain));
+      new DriveJoystickCmd(m_driverController, m_romiDrivetrain));
+      // For the Romi template, use m_romiDrivetrain instead of nm_drivetrainSub
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -49,9 +49,10 @@ public class RobotContainer {
     new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
       .whenHeld(new DriveForwardCmd(m_romiDrivetrain));
       new JoystickButton(m_driverController, PS4Controller.Button.kSquare.value)
-        .whenHeld(new DriveBackwardCmd(m_romiDrivetrain));
+      .whenHeld(new DriveBackwardCmd(m_romiDrivetrain));
+     
   }
-
+    
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
