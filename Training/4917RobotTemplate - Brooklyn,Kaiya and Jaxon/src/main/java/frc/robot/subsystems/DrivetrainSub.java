@@ -24,4 +24,8 @@ private final CANSparkMax m_rightMotor1 = new CANSparkMax(Constants.CanIds.kRigh
   public void periodic() {
     // This method will be called once per scheduler run
   }
+  public void tankDrive(double leftPower, double rightPower){
+    m_leftMotor1.set(leftPower);
+    m_rightMotor1.set(rightPower);
+  }
 }
