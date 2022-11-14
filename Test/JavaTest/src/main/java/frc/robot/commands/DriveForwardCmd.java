@@ -9,7 +9,7 @@ import frc.robot.subsystems.DrivetrainSub;
 
 public class DriveForwardCmd extends CommandBase {
   /** Creates a new DriveForwardCmd. */
-  private final DrivetrainSub m_drivetrainSub;
+  private DrivetrainSub m_drivetrainSub;
 
   public DriveForwardCmd(DrivetrainSub drivetrainSub) {
     // Use addRequirements() here to declare subsystem dependencies.
