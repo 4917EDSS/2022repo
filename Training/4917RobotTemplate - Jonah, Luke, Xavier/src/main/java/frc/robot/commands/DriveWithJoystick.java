@@ -5,20 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DrivetrainSub;
 import edu.wpi.first.wpilibj.PS4Controller;
-import frc.robot.subsystems.RomiDrivetrain;
 
+public class DriveWithJoystick extends CommandBase {
+  /** Creates a new DriveWithJoystick. */
 
-public class DriveWithJoyStickCmd extends CommandBase {
-  RomiDrivetrain m_drivetrainSub;
+  DrivetrainSub m_drivetrainSub;
+  PS4Controller m_controller; 
 
-  PS4Controller m_controller;
-  /** Creates a new DriveWithJoyStick. */
-  
-  public DriveWithJoyStickCmd(PS4Controller controller, RomiDrivetrain drivetrainSub) {
+  public DriveWithJoystick(PS4Controller controller, DrivetrainSub drivetrainSub) {
     // Use addRequirements() here to declare subsystem dependencies.
-
     addRequirements(drivetrainSub);
+
     m_drivetrainSub = drivetrainSub;
     m_controller = controller;
   }
@@ -30,13 +29,13 @@ public class DriveWithJoyStickCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightX());
+    m_drivetrainSub.tankDrive(-m_controller.getLeftY(), -m_controller.getLeftY());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drivetrainSub.arcadeDrive(0.0,0.0);
+    m_drivetrainSub.tankDrive(0, 0);
   }
 
   // Returns true when the command should end.
