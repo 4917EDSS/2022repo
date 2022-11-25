@@ -11,13 +11,16 @@ import frc.robot.subsystems.RomiDrivetrain;
 
 public class DriveWithJoyStickCmd extends CommandBase {
   RomiDrivetrain m_drivetrainSub;
-  PS4Controller m_controller; 
+
+  PS4Controller m_controller;
   /** Creates a new DriveWithJoyStick. */
   
   public DriveWithJoyStickCmd(PS4Controller controller, RomiDrivetrain drivetrainSub) {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+
     addRequirements(drivetrainSub);
+    m_drivetrainSub = drivetrainSub;
+    m_controller = controller;
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +30,7 @@ public class DriveWithJoyStickCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrainSub.tankDrive(m_controller.getLeftY(), m_controller.getRightX());
+    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightX());
   }
 
   // Called once the command ends or is interrupted.

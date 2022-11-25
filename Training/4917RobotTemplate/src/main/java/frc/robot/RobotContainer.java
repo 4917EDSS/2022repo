@@ -5,10 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+/*-----------------------------------------------------------------------
+| Import the classes that you need to use in this subsystem.            |
+| Keep them in alphabetical order, including existing ones.             |
+|                                                                       |
+-----------------------------------------------------------------------*/
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,6 +22,22 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  /*-----------------------------------------------------------------------
+  | Member variables                                                      |
+  | -  Available to the entire class.                                     |
+  | -  Start with m_                                                      |
+  |                                                                       |
+  | Examples                                                              |
+  | - "private final" controller IDs (e.g. m_kDriverControllerPort)       |
+  | - "private final" controllers (e.g. m_driverController)               |
+  | - "private final" subsystems (e.g. m_drivetrainSub)                   |
+  |                                                                       |
+  | Note:                                                                 |
+  | - We don't usually define our auto command here.  We have multiple    |
+  |   commands to choose from and use the SmartDashboard to select it.    |
+  |                                                                       |
+  -----------------------------------------------------------------------*/
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -24,6 +45,11 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    /*-----------------------------------------------------------------------
+    | Set default subsystem commands.                                       |
+    |                                                                       |
+    -----------------------------------------------------------------------*/
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -31,10 +57,16 @@ public class RobotContainer {
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link PS4Controller}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    /*-----------------------------------------------------------------------
+    | Create controller buttons and connect them to commands                |
+    |                                                                       |
+    -----------------------------------------------------------------------*/
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

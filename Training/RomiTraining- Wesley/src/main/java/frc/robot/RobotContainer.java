@@ -31,8 +31,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_drivetrainSub.setDefaultCommand(
-      new DriveWithJoyStickCmd(m_driverController, m_drivetrainSub));
+    m_romiDrivetrain.setDefaultCommand(
+      new DriveWithJoyStickCmd(m_driverController, m_romiDrivetrain));
     // Configure the button bindings
     configureButtonBindings();
   }

@@ -12,4 +12,13 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+  /*-----------------------------------------------------------------------
+  | Robot-wide constants, including hardware mapping                      |
+  | - "public final static class" sub-class (e.g. CanIds, DioIds)         |
+  |   - "public final static" constants in the sub-class (e.g. kLeftMotor)|
+  | - "public final static" ungrouped constants                           |
+  |                                                                       |
+  -----------------------------------------------------------------------*/
+  
+}
