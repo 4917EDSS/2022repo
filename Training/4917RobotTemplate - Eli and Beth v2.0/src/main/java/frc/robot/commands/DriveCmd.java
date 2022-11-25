@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 import frc.robot.subsystems.DrivetrainSub;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveCmd extends CommandBase {
@@ -21,7 +20,7 @@ public class DriveCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drivetrainSub.tankDrive(0.5, -0.5);
+    m_drivetrainSub.tankDrive(-0.5, -0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

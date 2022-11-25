@@ -17,6 +17,9 @@ public class DriveWithJoystick extends CommandBase {
   public DriveWithJoystick(PS4Controller controller, DrivetrainSub drivetrainSub) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrainSub);
+
+    m_drivetrainSub = drivetrainSub;
+    m_controller = controller;
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +29,7 @@ public class DriveWithJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrainSub.tankDrive(m_controller.getLeftY(), m_controller.getRightX());
+    m_drivetrainSub.tankDrive(-m_controller.getLeftY(), -m_controller.getLeftY());
   }
 
   // Called once the command ends or is interrupted.
