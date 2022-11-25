@@ -21,7 +21,6 @@ public class DrivetrainSub extends SubsystemBase {
 
   /** Creates a new DrivetrainSub. */
   public DrivetrainSub() {}
-private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
 
   @Override
   public void periodic() {
@@ -35,4 +34,7 @@ private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
     m_rightMotor2.set(rightPower);
     m_rightMotor3.set(rightPower);
   }
+
+public void arcadeDrive(double d, double e) {
+}
 }
