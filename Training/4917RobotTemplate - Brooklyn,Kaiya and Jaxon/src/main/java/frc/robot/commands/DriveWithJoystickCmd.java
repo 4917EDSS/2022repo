@@ -4,26 +4,38 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSub;
 
-public class DriveForwardCmd extends CommandBase {
+public class DriveWithJoystickCmd extends CommandBase {
+  private DrivetrainSub m_drivetrainSub;
+  private PS4Controller m_controller;
   /** Creates a new DriveForwardCmd. */
-  public DriveForwardCmd(DrivetrainSub drivetrainSub) {
+  public DriveWithJoystickCmd(PS4Controller controller, DrivetrainSub drivetrainSub) {
+    m_drivetrainSub = drivetrainSub;
+    m_controller = controller;
+    addRequirements(drivetrainSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_drivetrainSub.tankDrive(m_controller.getLeftY(), m_controller.getRightX());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drivetrainSub.tankDrive(0.0, 0.0);
+  }
 
   // Returns true when the command should end.
   @Override
