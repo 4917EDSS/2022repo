@@ -5,13 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RomiDrivetrain;
+import frc.robot.subsystems.DrivetrainSub;
 
 public class DriveBackwardCmd extends CommandBase {
-  RomiDrivetrain m_drivetrainSub;
+  DrivetrainSub m_drivetrainSub;
   
   /** Creates a new DriveBackwardCmd. */
-  public DriveBackwardCmd(RomiDrivetrain drivetrainSub) {
+  public DriveBackwardCmd(DrivetrainSub drivetrainSub) {
     m_drivetrainSub = drivetrainSub;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrainSub);

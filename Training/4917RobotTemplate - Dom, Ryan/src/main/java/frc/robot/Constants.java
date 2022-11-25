@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import frc.robot.subsystems.DrivetrainSub;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,8 +13,12 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public final static class CanIds {
-        public final static int kLeftMotor1 = 1;
-        public final static int kRightMotor1 = 5;
-      }      
+  /*-----------------------------------------------------------------------
+  | Robot-wide constants, including hardware mapping                      |
+  | - "public final static class" sub-class (e.g. CanIds, DioIds)         |
+  |   - "public final static" constants in the sub-class (e.g. kLeftMotor)|
+  | - "public final static" ungrouped constants                           |
+  |                                                                       |
+  -----------------------------------------------------------------------*/
+  
 }
