@@ -15,6 +15,6 @@ package frc.robot;
 public final class Constants {
     public final static class CanIds {
         public final static int kLeftMotor1 = 1;
-        public final static int kRightMotor1 = 4;
+        public final static int kRightMotor1 = 5;
       }      
 }

@@ -9,10 +9,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveForwardCmd;
 import frc.robot.commands.DriveWithJoystickCmd;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.RomiDrivetrain;
+import frc.robot.subsystems.DrivetrainSub;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveBackwardCmd;
+import frc.robot.subsystems.ClimbSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,9 +24,9 @@ import frc.robot.commands.DriveBackwardCmd;
 public class RobotContainer {
   private final static int m_kDriverControllerPort = 0;
   private final static int m_kOperatorControllerPort = 1;
-  private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
+  private final DrivetrainSub m_drivetrainSub = new DrivetrainSub();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
+  private final ExampleCommand m_autoCommand = new ExampleCommand(m_drivetrainSub);
 
   private final PS4Controller m_driverController = new PS4Controller(m_kDriverControllerPort);
   private final PS4Controller m_operatorController = new
@@ -33,8 +34,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_romiDrivetrain.setDefaultCommand(
-      new DriveWithJoystickCmd(m_driverController, m_romiDrivetrain));
+    m_drivetrainSub.setDefaultCommand(
+      new DriveWithJoystickCmd(m_driverController, m_drivetrainSub));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -47,9 +48,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
-      .whenHeld(new DriveForwardCmd(m_romiDrivetrain));
+      .whenHeld(new DriveForwardCmd(m_drivetrainSub));
       new JoystickButton(m_driverController, PS4Controller.Button.kSquare.value)
-        .whenHeld(new DriveBackwardCmd(m_romiDrivetrain));
+        .whenHeld(new DriveBackwardCmd(m_drivetrainSub));
   }
 
   /**
