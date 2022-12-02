@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.SwerveDrivetrain;
 
 public class SwerveWithJoystickCmd extends CommandBase {
@@ -19,6 +20,8 @@ public class SwerveWithJoystickCmd extends CommandBase {
     m_swervetrainSub = swerveSub;
     m_controller = controller;
     addRequirements(swerveSub);
+
+    
   }
 
   // Called when the command is initially scheduled.
@@ -30,19 +33,37 @@ public class SwerveWithJoystickCmd extends CommandBase {
   public void execute() {
     double angl = 0.0f;
 
+    double xVector = m_controller.getLeftX();
+    double yVector = m_controller.getLeftY();
+
+
+    if(xVector+yVector != 0) {
+      angl = m_swervetrainSub.vecToAngle(xVector, yVector);
+      m_swervetrainSub.setAngle(angl);
+      SmartDashboard.putNumber("Angle Controller", angl);
+    }
+    /*
     if(m_controller.getTriangleButton()) {
       angl = 0.0f;
+      m_swervetrainSub.setAngleFL(angl);
     }
     else if(m_controller.getCircleButton()) {
       angl = 90.0f;
+      m_swervetrainSub.setAngleFL(angl);
     }
     else if(m_controller.getCrossButton()) {
       angl = 180.0f;
+      m_swervetrainSub.setAngleFL(angl);
     }
     else if(m_controller.getSquareButton()) {
       angl = 270.0f;
+      m_swervetrainSub.setAngleFL(angl);
+    }*/
+    else {
+      m_swervetrainSub.brake(); // Comment this out for the funny
+      
     }
-    m_swervetrainSub.setAngleFL(angl);
+    
 
     /*
 
@@ -65,6 +86,13 @@ public class SwerveWithJoystickCmd extends CommandBase {
     m_swervetrainSub.driveMotor(2, drSpeed2);
     m_swervetrainSub.driveMotor(3, drSpeed3);
     */
+
+    if(m_controller.getOptionsButton()) {
+      m_swervetrainSub.sans();
+    }
+    else if(m_controller.getShareButton()) {
+      m_swervetrainSub.stop_tone();
+    }
   }
 
   // Called once the command ends or is interrupted.
