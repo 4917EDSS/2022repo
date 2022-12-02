@@ -31,7 +31,8 @@ public class SwerveWithJoystickCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angl = 0.0f;
+    double angl = 0.0;
+    double power = 0.0f;
 
     double xVector = m_controller.getLeftX();
     double yVector = m_controller.getLeftY();
@@ -41,6 +42,19 @@ public class SwerveWithJoystickCmd extends CommandBase {
       angl = m_swervetrainSub.vecToAngle(xVector, yVector);
       m_swervetrainSub.setAngle(angl);
       SmartDashboard.putNumber("Angle Controller", angl);
+    }
+    else {
+      m_swervetrainSub.brakeSteer(); // Comment this out for the funny
+    }
+
+    if(m_controller.getTriangleButton()) { // Forwards
+      m_swervetrainSub.driveMotors(0.3, angl, 10.0);
+    }
+    else if(m_controller.getCrossButton()) { //Backwards
+      m_swervetrainSub.driveMotors(-0.3, angl, 10.0);
+    }
+    else {
+      m_swervetrainSub.brakeDrive(); //Also comment for the funny
     }
     /*
     if(m_controller.getTriangleButton()) {
@@ -59,10 +73,7 @@ public class SwerveWithJoystickCmd extends CommandBase {
       angl = 270.0f;
       m_swervetrainSub.setAngleFL(angl);
     }*/
-    else {
-      m_swervetrainSub.brake(); // Comment this out for the funny
-      
-    }
+    
     
 
     /*

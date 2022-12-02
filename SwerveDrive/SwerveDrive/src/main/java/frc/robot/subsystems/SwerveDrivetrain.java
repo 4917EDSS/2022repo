@@ -98,53 +98,13 @@ public class SwerveDrivetrain extends SubsystemBase {
   
   // Steering functions
 
-  public double getAngle(int id) { // Get Steering encoder (0: FL, 1: FR, 2: BL, 3: BR)
-    double angle = 0.0;
-    switch(id) {
-      case 0:
-
-      break;
-
-      case 1:
-      
-      break;
-
-      case 2:
-      
-      break;
-
-      case 3:
-      
-      break;
-
-    }
-    return angle;
-  }
-  public double getGlobalAngle(int id) { // Get Steering encoder (0: FL, 1: FR, 2: BL, 3: BR)
-    double angle = 0.0;
-    switch(id) {
-      case 0:
-
-      break;
-
-      case 1:
-      
-      break;
-
-      case 2:
-      
-      break;
-
-      case 3:
-      
-      break;
-
-    }
-    return angle;
-  }
   public double vecToAngle(double x, double y) {
     return Math.atan2(x,y) * 180.0f / 3.14159;
   }
+
+  public double angleDiff(double a, double b) {
+    return (a - b + 540.0) % 360 - 180;
+  } // find difference between angles
 
   public void setAngle(double angle) {
     pid.enableContinuousInput(0, 180);
@@ -157,34 +117,41 @@ public class SwerveDrivetrain extends SubsystemBase {
     m_backleftSteerMotor.set(powerBL);
     //m_backrightSteerMotor.set(powerBR);
   }
-  private boolean isOriented(double currentAngle, double targetAngle) {
+  private boolean isOriented(int motor, double targetAngle,double range) { // FL, FR, BL, BR
     boolean oriented = false;
+
+    if(motor == 1) {
+      if(angleDiff(m_encoderFrontRight.getAbsolutePosition()-fr_encoderOffset+180.0,targetAngle+180.0) < range) // -180 - 180 to 0 - 360 range
+      oriented = true;
+    }
+    else if(motor == 2) {
+      if(angleDiff(m_encoderBackLeft.getAbsolutePosition()-bl_encoderOffset+180.0,targetAngle+180.0) < range)
+      oriented = true;
+    }
+    else if(motor == 3) {
+      if(angleDiff(m_encoderBackRight.getAbsolutePosition()-br_encoderOffset+180.0,targetAngle+180.0) < range)
+      oriented = true;
+    }
+    else {
+      if(angleDiff(m_encoderFrontLeft.getAbsolutePosition()-fl_encoderOffset+180.0,targetAngle+180.0) < range)
+      oriented = true;
+    }
 
     return oriented;
   }
 
-  public void driveMotors(double power, double setAngle) {
-    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power); // Uncomment to spin drive motors
-    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power);
-    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power);
-    m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power);
+  public void driveMotors(double power, double tarAngle, double range) {
+
+    
+    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, tarAngle, 30.0) ? -1.0 : 1.0));
+    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(1, tarAngle, 30.0) ? 1.0 : -1.0)); // Inverted
+    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, tarAngle, 30.0) ? -1.0 : 1.0));
+    //m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, tarAngle, 10.0) ? -1.0 : 1.0));
+
+
   }
-  public void driveMotor(int motor, double power) { // Spin a drive motor (FL,FR,BL,BR)
-    switch(motor) {
-      case 0:
-      m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power);
-      break;
-      case 1:
-      m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power);
-      break;
-      case 2:
-      m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power);
-      break;
-      case 3:
-      m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power);
-      break;
-    }
-  }
+
+  // Test function
   public void steerMotor(int motor, double power) { // Spin a steering motor (FL,FR,BL,BR)
     switch(motor) {
       case 0:
@@ -201,11 +168,14 @@ public class SwerveDrivetrain extends SubsystemBase {
       break;
     }
   }
-  public void brake() { // Set all motors to 0 power
-    //m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
-    //m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
-    //m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
-    //m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
+  public void brakeDrive() { // Set all motors to 0 power
+    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
+    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
+    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
+    m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
+
+  }
+  public void brakeSteer() { // Set all motors to 0 power
 
     
     m_frontleftSteerMotor.set(0.0);
