@@ -98,13 +98,13 @@ public class SwerveDrivetrain extends SubsystemBase {
   
   // Steering functions
 
-  public double vecToAngle(double x, double y) {
+  public double vecToAngle(double x, double y) { // Convert 2d vectors to angles in degrees
     return Math.atan2(x,y) * 180.0f / 3.14159;
   }
 
-  public double angleDiff(double a, double b) {
+  public double angleDiff(double a, double b) { // find difference between angles (can be positive or negative)
     return (a - b + 540.0) % 360 - 180;
-  } // find difference between angles
+  } 
 
   public void setAngle(double angle) {
     pid.enableContinuousInput(0, 180);
@@ -121,19 +121,19 @@ public class SwerveDrivetrain extends SubsystemBase {
     boolean oriented = false;
 
     if(motor == 1) {
-      if(angleDiff(m_encoderFrontRight.getAbsolutePosition()-fr_encoderOffset+180.0,targetAngle+180.0) < range) // -180 - 180 to 0 - 360 range
+      if(Math.abs(angleDiff(m_encoderFrontRight.getAbsolutePosition()-fr_encoderOffset+180.0,targetAngle+180.0)) < range) // -180 - 180 to 0 - 360 range
       oriented = true;
     }
     else if(motor == 2) {
-      if(angleDiff(m_encoderBackLeft.getAbsolutePosition()-bl_encoderOffset+180.0,targetAngle+180.0) < range)
+      if(Math.abs(angleDiff(m_encoderBackLeft.getAbsolutePosition()-bl_encoderOffset+180.0,targetAngle+180.0)) < range)
       oriented = true;
     }
     else if(motor == 3) {
-      if(angleDiff(m_encoderBackRight.getAbsolutePosition()-br_encoderOffset+180.0,targetAngle+180.0) < range)
+      if(Math.abs(angleDiff(m_encoderBackRight.getAbsolutePosition()-br_encoderOffset+180.0,targetAngle+180.0)) < range)
       oriented = true;
     }
     else {
-      if(angleDiff(m_encoderFrontLeft.getAbsolutePosition()-fl_encoderOffset+180.0,targetAngle+180.0) < range)
+      if(Math.abs(angleDiff(m_encoderFrontLeft.getAbsolutePosition()-fl_encoderOffset+180.0,targetAngle+180.0)) < range)
       oriented = true;
     }
 
@@ -142,17 +142,16 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   public void driveMotors(double power, double tarAngle, double range) {
 
-    
     m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, tarAngle, 30.0) ? -1.0 : 1.0));
     m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(1, tarAngle, 30.0) ? 1.0 : -1.0)); // Inverted
     m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, tarAngle, 30.0) ? -1.0 : 1.0));
-    //m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, tarAngle, 10.0) ? -1.0 : 1.0));
+    //m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, tarAngle, 10.0) ? 1.0 : -1.0));
 
 
   }
 
   // Test function
-  public void steerMotor(int motor, double power) { // Spin a steering motor (FL,FR,BL,BR)
+  public void steerMotor(int motor, double power) { // Spin a steering motor (0-3) (FL,FR,BL,BR)
     switch(motor) {
       case 0:
       m_frontleftSteerMotor.set(power);
@@ -168,14 +167,14 @@ public class SwerveDrivetrain extends SubsystemBase {
       break;
     }
   }
-  public void brakeDrive() { // Set all motors to 0 power
+  public void brakeDrive() { // Set all drive motors to 0 power
     m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
     m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
     m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
     m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
 
   }
-  public void brakeSteer() { // Set all motors to 0 power
+  public void brakeSteer() { // Set all steering motors to 0 power
 
     
     m_frontleftSteerMotor.set(0.0);
