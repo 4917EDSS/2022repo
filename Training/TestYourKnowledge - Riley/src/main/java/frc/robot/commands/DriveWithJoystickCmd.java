@@ -21,7 +21,7 @@ public class DriveWithJoystickCmd extends CommandBase {
 
   @Override
   public void execute() {
-    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightY());
+    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightX());
   }
 
   // Called once the command ends or is interrupted.

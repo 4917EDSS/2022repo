@@ -8,15 +8,22 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import frc.robot.Constants;
+
 
 public class RomiDrivetrain extends SubsystemBase {
   private static final double kCountsPerRevolution = 1440.0;
   private static final double kWheelDiameterInch = 2.75591; // 70 mm
 
-  // The Romi has the left and right motors set to
-  // PWM channels 0 and 1 respectively
-  private final Spark m_leftMotor = new Spark(0);
-  private final Spark m_rightMotor = new Spark(1);
+  private final CANSparkMax m_leftMotor1 = 
+  new CANSparkMax(Constants.CanIds.kLeftMotor1, 
+  CANSparkMaxLowLevel.MotorType.kBrushless);
+  private final CANSparkMax m_rightMotor1 = 
+  new CANSparkMax(Constants.CanIds.kRightMotor1,
+  CANSparkMaxLowLevel.MotorType.kBrushless);
+
 
   // The Romi has onboard encoders that are hardcoded
   // to use DIO pins 4/5 and 6/7 for the left and right
@@ -24,7 +31,7 @@ public class RomiDrivetrain extends SubsystemBase {
   private final Encoder m_rightEncoder = new Encoder(6, 7);
 
   // Set up the differential drive controller
-  private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
+  private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
 
   /** Creates a new RomiDrivetrain. */
   public RomiDrivetrain() {
@@ -34,7 +41,7 @@ public class RomiDrivetrain extends SubsystemBase {
     resetEncoders();
 
     // Invert right side since motor is flipped
-    m_rightMotor.setInverted(true);
+    m_rightMotor1.setInverted(true);
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
