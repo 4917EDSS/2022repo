@@ -169,8 +169,8 @@ public class SwerveDrivetrain extends SubsystemBase {
     setAngle(2,225);
     setAngle(3,315);
 
-    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, 45, 30.0) ? 1.0 : -1.0));
-    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(1, 135, 30.0) ? 1.0 : -1.0)); // Inverted
+    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, 135, 30.0) ? 1.0 : -1.0));
+    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(1, 45, 30.0) ? 1.0 : -1.0)); // Inverted
     m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, 225, 30.0) ? 1.0 : -1.0));
     m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, 315, 10.0) ? -1.0 : 1.0));
   }
