@@ -32,10 +32,10 @@ public class SwerveDrivetrain extends SubsystemBase {
   private double kD = 1.0;
   private double m_steeringPower = 0.3;
 
-  private static final double fl_encoderOffset = 37.6;
-  private static final double fr_encoderOffset = 228.0;
-  private static final double bl_encoderOffset = 7.6;
-  private static final double br_encoderOffset = 110.5;
+  private static double fl_encoderOffset = 37.6;
+  private static double fr_encoderOffset = 228.0;
+  private static double bl_encoderOffset = 7.6;
+  private static double br_encoderOffset = 110.5;
   
   //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
 
@@ -84,13 +84,23 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     
 
-    kP = SmartDashboard.getNumber("kP", 1.0);
+    kP = SmartDashboard.getNumber("kP", 0.01);
     kI = SmartDashboard.getNumber("kI", 0.0);
     kD = SmartDashboard.getNumber("kD", 0.0);
 
     SmartDashboard.putNumber("kP",kP);
     SmartDashboard.putNumber("kI",kI);
     SmartDashboard.putNumber("kD",kD);
+
+    fl_encoderOffset = SmartDashboard.getNumber("FL Offset", fl_encoderOffset);
+    fr_encoderOffset = SmartDashboard.getNumber("FR Offset", fr_encoderOffset);
+    bl_encoderOffset = SmartDashboard.getNumber("BL Offset", bl_encoderOffset);
+    br_encoderOffset = SmartDashboard.getNumber("BR Offset", br_encoderOffset);
+
+    SmartDashboard.putNumber("FL Offset", fl_encoderOffset);
+    SmartDashboard.putNumber("FR Offset", fr_encoderOffset);
+    SmartDashboard.putNumber("BL Offset", bl_encoderOffset);
+    SmartDashboard.putNumber("BR Offset", br_encoderOffset);
     
     pid.setP(kP);
     pid.setI(kI);
