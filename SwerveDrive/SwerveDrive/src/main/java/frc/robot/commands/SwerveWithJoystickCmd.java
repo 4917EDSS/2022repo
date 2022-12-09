@@ -4,10 +4,12 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.SwerveDrivetrain;
+
 
 public class SwerveWithJoystickCmd extends CommandBase {
   /** Creates a new SwerveWithJoystickCmd. */
@@ -40,18 +42,18 @@ public class SwerveWithJoystickCmd extends CommandBase {
 
     if(xVector+yVector != 0) {
       angl = m_swervetrainSub.vecToAngle(xVector, yVector);
-      m_swervetrainSub.setAngle(angl);
+      m_swervetrainSub.setSteeringAngle(angl);
       SmartDashboard.putNumber("Angle Controller", angl);
     }
     else {
       m_swervetrainSub.brakeSteer(); // Comment this out for the funny
     }
 
-    if(m_controller.getTriangleButton()) { // Forwards
-      m_swervetrainSub.driveMotors(0.3, angl, 10.0);
+    if(m_controller.getR2Button()) { // Forwards
+      m_swervetrainSub.driveMotors(m_controller.getR2Axis()*0.3, angl, 10.0);
     }
-    else if(m_controller.getCrossButton()) { //Backwards
-      m_swervetrainSub.driveMotors(-0.3, angl, 10.0);
+    else if(m_controller.getL2Button()) { //Backwards
+      m_swervetrainSub.driveMotors(m_controller.getL2Axis()*-0.3, angl, 10.0);
     }
     else {
       m_swervetrainSub.brakeDrive(); //Also comment for the funny
