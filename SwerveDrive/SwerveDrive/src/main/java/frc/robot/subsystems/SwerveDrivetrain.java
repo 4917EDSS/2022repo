@@ -9,11 +9,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
@@ -61,6 +63,9 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   private final CANSparkMax m_backrightSteerMotor = new CANSparkMax(Constants.CanIds.kSteeringMotorBR,CANSparkMax.MotorType.kBrushless);
   private static final TalonFX m_backrightDriveMotor = new TalonFX(Constants.CanIds.kDriveMotorBR);
+
+
+  private static final AHRS m_gyro = new AHRS(Port.kMXP);
 
 
   private final PIDController pid = new PIDController(0.1, 0, 0.0);
@@ -205,5 +210,12 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
   }
 
+  public static void resetGyro(){
+    m_gyro.reset(); 
+  }
+  
+  public static double getHeading(){
+    return m_gyro.getAngle(); 
+  }
 }
 
