@@ -40,24 +40,39 @@ public class SwerveWithJoystickCmd extends CommandBase {
     double yVector = m_controller.getLeftY();
 
 
-    if(xVector+yVector != 0) {
-      angl = m_swervetrainSub.vecToAngle(xVector, yVector);
-      m_swervetrainSub.setSteeringAngle(angl);
-      SmartDashboard.putNumber("Angle Controller", angl);
-    }
-    else {
-      m_swervetrainSub.brakeSteer(); // Comment this out for the funny
-    }
+    if(!m_controller.getSquareButton()) {
+      if(xVector+yVector != 0) {
+        angl = m_swervetrainSub.vecToAngle(xVector, yVector);
+        m_swervetrainSub.setSteeringAngle(angl);
+        SmartDashboard.putNumber("Angle Controller", angl);
+      }
+      else {
+        m_swervetrainSub.brakeSteer(); // Comment this out for the funny
+      }
 
-    if(m_controller.getR2Button()) { // Forwards
-      m_swervetrainSub.driveMotors(m_controller.getR2Axis()*0.3, angl, 10.0);
+      if(m_controller.getR2Button()) { // Forwards
+        m_swervetrainSub.driveMotors(0.3, angl, 10.0);
+      }
+      else if(m_controller.getL2Button()) { //Backwards
+        m_swervetrainSub.driveMotors(-0.3, angl, 10.0);
+      }
+      else {
+        m_swervetrainSub.brakeDrive(); //Also comment for the funny
+      }
     }
-    else if(m_controller.getL2Button()) { //Backwards
-      m_swervetrainSub.driveMotors(m_controller.getL2Axis()*-0.3, angl, 10.0);
+    else{
+      if(m_controller.getR2Button()) { // Forwards
+        power = 0.3;
+      }
+      else if(m_controller.getL2Button()) { //Backwards
+        power = -0.3;
+      }
+      else {
+        power = 0.0;
+      }
+      m_swervetrainSub.circularDrive(power);
     }
-    else {
-      m_swervetrainSub.brakeDrive(); //Also comment for the funny
-    }
+    
     /*
     if(m_controller.getTriangleButton()) {
       angl = 0.0f;

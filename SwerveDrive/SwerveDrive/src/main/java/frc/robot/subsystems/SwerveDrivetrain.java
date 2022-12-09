@@ -32,10 +32,10 @@ public class SwerveDrivetrain extends SubsystemBase {
   private double kD = 1.0;
   private double m_steeringPower = 0.3;
 
-  private static final double fl_encoderOffset = 215.1;
-  private static final double fr_encoderOffset = 210.1;
-  private static final double bl_encoderOffset = 182.3;
-  private static final double br_encoderOffset = 82.7;
+  private static final double fl_encoderOffset = 37.6;
+  private static final double fr_encoderOffset = 228.0;
+  private static final double bl_encoderOffset = 7.6;
+  private static final double br_encoderOffset = 110.5;
   
   //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
 
@@ -61,6 +61,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   private final CANSparkMax m_backrightSteerMotor = new CANSparkMax(Constants.CanIds.kSteeringMotorBR,CANSparkMax.MotorType.kBrushless);
   private static final TalonFX m_backrightDriveMotor = new TalonFX(Constants.CanIds.kDriveMotorBR);
+
 
   private final PIDController pid = new PIDController(0.1, 0, 0.0);
   public SwerveDrivetrain() {
@@ -130,7 +131,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     setAngle(0,angle); // Front Left
     setAngle(1,angle); // Front Right
     setAngle(2,angle); // Back Left
-    //setAngle(3,angle); // Back Right
+    setAngle(3,angle); // Back Right
   }
   private boolean isOriented(int motor, double targetAngle,double range) { // FL, FR, BL, BR
     boolean oriented = false;
@@ -156,24 +157,22 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   public void driveMotors(double power, double tarAngle, double range) {
 
-    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, tarAngle, 30.0) ? -1.0 : 1.0));
+    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, tarAngle, 30.0) ? 1.0 : -1.0));
     m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(1, tarAngle, 30.0) ? 1.0 : -1.0)); // Inverted
-    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, tarAngle, 30.0) ? -1.0 : 1.0));
-    //m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, tarAngle, 10.0) ? 1.0 : -1.0));
+    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, tarAngle, 30.0) ? 1.0 : -1.0));
+    m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, tarAngle, 10.0) ? -1.0 : 1.0));
   }
   public void circularDrive(double power) {
 
-    setAngle(0,45); // Turn steering motors in circular direction
-    setAngle(1,135);
+    setAngle(0,135); // Turn steering motors in circular direction
+    setAngle(1,45);
     setAngle(2,225);
     setAngle(3,315);
 
-    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, 45, 30.0) ? -1.0 : 1.0));
+    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(0, 45, 30.0) ? 1.0 : -1.0));
     m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(1, 135, 30.0) ? 1.0 : -1.0)); // Inverted
-    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, 225, 30.0) ? -1.0 : 1.0));
-    //m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, 315, 10.0) ? 1.0 : -1.0));
-
-
+    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(2, 225, 30.0) ? 1.0 : -1.0));
+    m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,power * (isOriented(3, 315, 10.0) ? -1.0 : 1.0));
   }
   public void brakeDrive() { // Set all drive motors to 0 power
     m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,0.0);
