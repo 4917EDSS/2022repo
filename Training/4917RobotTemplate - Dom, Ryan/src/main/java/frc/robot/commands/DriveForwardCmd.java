@@ -13,6 +13,8 @@ public class DriveForwardCmd extends CommandBase {
 
   /** Creates a new DriveForwardCmd. */
   public DriveForwardCmd(DrivetrainSub drivetrainSub) {
+    m_drivetrainSub = drivetrainSub;
+    addRequirements(drivetrainSub);
     }
     // Use addRequirements() here to declare subsystem dependencies.
   
