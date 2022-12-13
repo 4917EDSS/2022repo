@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrivetrain;
 
 
@@ -16,6 +17,7 @@ public class SwerveWithJoystickCmd extends CommandBase {
 
   SwerveDrivetrain m_swervetrainSub;
   PS4Controller m_controller;
+
 
   public SwerveWithJoystickCmd(SwerveDrivetrain swerveSub,PS4Controller controller) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -39,7 +41,6 @@ public class SwerveWithJoystickCmd extends CommandBase {
     double xVector = m_controller.getLeftX();
     double yVector = m_controller.getLeftY();
 
-
     if(!m_controller.getSquareButton()) {
       if(xVector+yVector != 0) {
         angl = m_swervetrainSub.vecToAngle(xVector, yVector);
@@ -50,22 +51,22 @@ public class SwerveWithJoystickCmd extends CommandBase {
         m_swervetrainSub.brakeSteer(); // Comment this out for the funny
       }
 
-      if(m_controller.getR2Button()) { // Forwards
-        m_swervetrainSub.driveMotors(0.3, angl, 10.0);
+      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
+        m_swervetrainSub.driveMotors(0.3*m_controller.getRawAxis(Constants.R2Axis), angl, 10.0);
       }
-      else if(m_controller.getL2Button()) { //Backwards
-        m_swervetrainSub.driveMotors(-0.3, angl, 10.0);
+      else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
+        m_swervetrainSub.driveMotors(-0.3*m_controller.getRawAxis(Constants.L2Axis), angl, 10.0);
       }
       else {
         m_swervetrainSub.brakeDrive(); //Also comment for the funny
       }
     }
     else{
-      if(m_controller.getR2Button()) { // Forwards
-        power = 0.3;
+      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
+        power = 0.3*m_controller.getRawAxis(Constants.R2Axis);
       }
-      else if(m_controller.getL2Button()) { //Backwards
-        power = -0.3;
+      else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
+        power = -0.3*m_controller.getRawAxis(Constants.L2Axis);
       }
       else {
         power = 0.0;

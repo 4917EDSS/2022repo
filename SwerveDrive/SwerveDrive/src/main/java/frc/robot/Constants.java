@@ -17,6 +17,10 @@ public final class Constants {
     public final static int kFrontRight = 1;
     public final static int kBackLeft = 2;
     public final static int kBackRight = 3;
+
+    public final static int L2Axis = 2;
+    public final static int R2Axis = 3;
+
     public final class CanIds {
         // Can ids
     public final static int kDriveMotorFL = 1; // Front left motor
