@@ -10,8 +10,8 @@ import frc.robot.subsystems.DrivetrainSub;
 
 public class DriveWithJoystickCmd extends CommandBase {
   /** Creates a new DriveWithJoystickCmd. */
-  DrivetrainSub m_drivetrainSub;
-  PS4Controller m_controller;
+  private DrivetrainSub m_drivetrainSub;
+  private PS4Controller m_controller;
 
   public DriveWithJoystickCmd(DrivetrainSub drivetrainSub, PS4Controller controller) {
     // Use addRequirements() here to declare subsystem dependencies.
