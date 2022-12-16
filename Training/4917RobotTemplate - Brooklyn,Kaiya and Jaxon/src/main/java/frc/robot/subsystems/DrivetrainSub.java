@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -27,5 +29,9 @@ private final CANSparkMax m_rightMotor1 = new CANSparkMax(Constants.CanIds.kRigh
   public void tankDrive(double leftPower, double rightPower){
     m_leftMotor1.set(leftPower);
     m_rightMotor1.set(rightPower);
+    m_leftMotor2.set(leftPower);
+    m_rightMotor2.set(rightPower);
+    m_leftMotor3.set(leftPower);
+    m_rightMotor3.set(rightPower);
   }
 }
