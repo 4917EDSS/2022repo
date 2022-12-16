@@ -39,7 +39,9 @@ public class RobotContainer {
   |   commands to choose from and use the SmartDashboard to select it.    |
   |                                                                       |
   -----------------------------------------------------------------------*/
-
+private final m_DrivetrainSub drivetrainSub = new 
+private final DriveWithJoystickCmd m_drivewithjoystickcmd = new
+private final m_DriveController m_drivecontroller = new
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -47,6 +49,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_drivetrainSub.setDefaultCommand(
+      new DriveWithJoystickCmd(m_driveController, m_drivetrainSub));
     /*-----------------------------------------------------------------------
     | Set default subsystem commands.                                       |
     |                                                                       |
@@ -76,6 +80,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
