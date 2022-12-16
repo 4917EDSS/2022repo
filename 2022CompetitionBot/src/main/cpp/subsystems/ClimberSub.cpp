@@ -15,9 +15,14 @@ void ClimberSub::init() { //Reset all hardware to a safe state
     m_climbArmMotor.ConfigVelocityMeasurementPeriod(ctre::phoenix::sensors::SensorVelocityMeasPeriod::Period_5Ms); //Make sure to use SensorVelocityMeasPeriod because VelocityMeasPeriod is depricated
     m_climbArmMotor.ConfigVelocityMeasurementWindow(4);
     m_climbArmMotor.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
-    foldArms();
-    setClimberArmPower(0.);
-    zeroClimberEncoders();
+
+    m_unfoldArms(0);
+   m_getArmStatus(0);
+   m_foldArms(true);
+   m_toggleArmSeparation(0);
+   m_setClimberArmPower(0.5);
+   m_zeroClimberEncoders(0); 
+   m_getClimberEncoder(0);
 }
 
 // This method will be called once per scheduler run
