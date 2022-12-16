@@ -5,14 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RomiDrivetrain;
+import frc.robot.subsystems.DrivetrainSub;
 import edu.wpi.first.wpilibj.PS4Controller;
 
 public class DriveWithJoystickCmd extends CommandBase {
-  RomiDrivetrain m_drivetrainSub;
+  DrivetrainSub m_drivetrainSub;
   PS4Controller m_controller;
 
-  public DriveWithJoystickCmd(PS4Controller controller, RomiDrivetrain drivetrainSub) {
+  public DriveWithJoystickCmd(PS4Controller controller, DrivetrainSub drivetrainSub) {
     m_drivetrainSub = drivetrainSub;
     m_controller = controller;
     addRequirements(drivetrainSub);
@@ -21,12 +21,12 @@ public class DriveWithJoystickCmd extends CommandBase {
 
   @Override
   public void execute() {
-    m_drivetrainSub.arcadeDrive(m_controller.getLeftY(), m_controller.getRightX());
+    m_drivetrainSub.tankDrive(m_controller.getLeftY(), m_controller.getRightX());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drivetrainSub.arcadeDrive(0.0, 0.0);
+    m_drivetrainSub.tankDrive(0.0, 0.0);
   }
 }
