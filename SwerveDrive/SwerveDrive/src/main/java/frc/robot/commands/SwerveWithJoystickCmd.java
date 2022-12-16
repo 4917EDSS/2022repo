@@ -41,7 +41,55 @@ public class SwerveWithJoystickCmd extends CommandBase {
     double xVector = m_controller.getLeftX();
     double yVector = m_controller.getLeftY();
 
-    if(!m_controller.getSquareButton()) {
+    if(m_controller.getSquareButton()) {
+      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
+        power = m_controller.getRawAxis(Constants.R2Axis);
+      }
+      else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
+        power = -m_controller.getRawAxis(Constants.L2Axis);
+      }
+      else {
+        power = 0.0;
+      }
+      m_swervetrainSub.circularDrive(power);
+    }
+    else if(m_controller.getCrossButton()) {
+      if(xVector+yVector != 0) {
+        angl = m_swervetrainSub.vecToAngle(xVector, yVector);
+        m_swervetrainSub.setGlobalSteeringAngle(angl);
+        SmartDashboard.putNumber("Angle Controller", angl);
+      }
+      else {
+        m_swervetrainSub.brakeSteer(); // Comment this out for the funny
+      }
+
+      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
+        m_swervetrainSub.driveMotors(m_controller.getRawAxis(Constants.R2Axis), angl, 10.0, true);
+      }
+      else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
+        m_swervetrainSub.driveMotors(-m_controller.getRawAxis(Constants.L2Axis), angl, 10.0, true);
+      }
+      else {
+        m_swervetrainSub.brakeDrive(); //Also comment for the funny
+      }
+      /*
+      if(xVector+yVector != 0) {
+        angl = m_swervetrainSub.vecToAngle(xVector, yVector);
+        SmartDashboard.putNumber("Angle Controller", angl);
+      }
+
+      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
+        power = 0.3*m_controller.getRawAxis(Constants.R2Axis);
+      }
+      else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
+        power = -0.3*m_controller.getRawAxis(Constants.L2Axis);
+      }
+      else {
+        power = 0.0; //Also comment for the funny
+      }
+      m_swervetrainSub.circularStrafe(power, angl);*/
+    }
+    else{
       if(xVector+yVector != 0) {
         angl = m_swervetrainSub.vecToAngle(xVector, yVector);
         m_swervetrainSub.setSteeringAngle(angl);
@@ -52,26 +100,14 @@ public class SwerveWithJoystickCmd extends CommandBase {
       }
 
       if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
-        m_swervetrainSub.driveMotors(0.3*m_controller.getRawAxis(Constants.R2Axis), angl, 10.0);
+        m_swervetrainSub.driveMotors(m_controller.getRawAxis(Constants.R2Axis), angl, 10.0, false);
       }
       else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
-        m_swervetrainSub.driveMotors(-0.3*m_controller.getRawAxis(Constants.L2Axis), angl, 10.0);
+        m_swervetrainSub.driveMotors(-m_controller.getRawAxis(Constants.L2Axis), angl, 10.0, false);
       }
       else {
         m_swervetrainSub.brakeDrive(); //Also comment for the funny
       }
-    }
-    else{
-      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
-        power = 0.3*m_controller.getRawAxis(Constants.R2Axis);
-      }
-      else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
-        power = -0.3*m_controller.getRawAxis(Constants.L2Axis);
-      }
-      else {
-        power = 0.0;
-      }
-      m_swervetrainSub.circularDrive(power);
     }
     
     /*
