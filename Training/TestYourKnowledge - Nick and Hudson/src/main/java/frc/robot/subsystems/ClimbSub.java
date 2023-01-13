@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import com.ctre.phoenix.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class ClimbSub extends SubsystemBase {
@@ -39,7 +40,8 @@ public class ClimbSub extends SubsystemBase {
     return  m_climbArmMotor.getSelectedSensorPosition();
   }
 
-  private void m_setClimberArmPower(double d) {
+  public void m_setClimberArmPower(double d) {
+    m_climbArmMotor.set(ControlMode.PercentOutput, d);
   }
   private void m_zeroClimberEncoders(int i) {
   }
