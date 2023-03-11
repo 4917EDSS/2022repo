@@ -34,7 +34,8 @@ public class Robot extends TimedRobot {
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
   @Override
@@ -58,10 +59,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    /* schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }*/
+    /*
+     * schedule the autonomous command (example)
+     * if (m_autonomousCommand != null) {
+     * m_autonomousCommand.schedule();
+     * }
+     */
   }
 
   /** This function is called periodically during autonomous. */
@@ -75,9 +78,10 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     /*
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }*/
+     * if (m_autonomousCommand != null) {
+     * m_autonomousCommand.cancel();
+     * }
+     */
   }
 
   /** This function is called periodically during operator control. */
@@ -87,6 +91,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
+    m_robotContainer.resetEncoders();
     CommandScheduler.getInstance().cancelAll();
   }
 
