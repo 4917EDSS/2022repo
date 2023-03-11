@@ -1,9 +1,0 @@
-[
-  {
-    "type": "java",
-    "name": "frcJava",
-    "port": 8349,
-    "target": "10.49.17.2",
-    "project": "SwerveDrive-2023"
-  }
-]

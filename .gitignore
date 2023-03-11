@@ -7,3 +7,8 @@
 *.class
 *.bin
 *.bin
+SwerveDrive/SwerveDrive-2023/.gradle/7.5.1/checksums/checksums.lock
+*.lock
+*.lock
+SwerveDrive/SwerveDrive-2023/.gradle/7.5.1/dependencies-accessors/gc.properties
+*.so
