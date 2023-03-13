@@ -30,7 +30,9 @@ public class StrafeMoveWithJoystickCmd extends CommandBase {
   @Override
   public void execute() {
     double turnPower = m_controller.getLeftX();
-    double fwdPower = m_controller.getRawAxis(5);
+    double rightX = m_controller.getRawAxis(4);
+    double rightY = m_controller.getRawAxis(5);
+    double fwdPower = Math.sqrt(rightX * rightX + rightY * rightY);
 
     double power = 0.0;
 
@@ -45,9 +47,9 @@ public class StrafeMoveWithJoystickCmd extends CommandBase {
       }
       m_swerveDrivetrainSub.circularDrive(power);
     } else if(m_controller.getCrossButton()) {
-      m_swerveDrivetrainSub.setSteeringAngle(0.0);
+      m_swerveDrivetrainSub.brakes();//setSteeringAngle(0.0);
     } else {
-      m_swerveDrivetrainSub.arcadeSwerveDemo(fwdPower, turnPower);
+      m_swerveDrivetrainSub.arcadeSwerve(fwdPower, turnPower, m_swerveDrivetrainSub.vecToAngle(rightX, rightY));
     }
 
   }
