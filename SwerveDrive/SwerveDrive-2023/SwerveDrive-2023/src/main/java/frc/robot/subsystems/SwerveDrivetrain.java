@@ -17,10 +17,9 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
 
-import java.util.ArrayList;
+import frc.robot.Vector;
 
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -35,14 +34,14 @@ public class SwerveDrivetrain extends SubsystemBase {
   private double m_steeringPower = 0.5;
 
   private static double fl_dir = 1.0;
-  private static double fr_dir = -1.0;
+  private static double fr_dir = 1.0;
   private static double bl_dir = 1.0;
   private static double br_dir = -1.0;
 
-  private static double fl_encoderOffset = 55.54;
-  private static double fr_encoderOffset = 161.54;
-  private static double bl_encoderOffset = 16.35;
-  private static double br_encoderOffset = 146.78;
+  private static double fl_encoderOffset = 49.21;//55.54;
+  private static double fr_encoderOffset = 313.5;//151.54;
+  private static double bl_encoderOffset = 5.27;//16.35;
+  private static double br_encoderOffset = 164.35;//146.78;
 
   //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
 
@@ -143,7 +142,18 @@ public class SwerveDrivetrain extends SubsystemBase {
   // Steering functions
 
   public double vecToAngle(double x, double y) { // Convert 2d vectors to angles in degrees
-    return Math.atan2(x, y) * 180.0f / 3.14159;
+    return Math.atan2(y, x) * 180.0f / 3.14159;
+  }
+
+  public Vector angleToVec(double dir, double power) { // Angle in 360 degrees, power between -1 and 1
+    double rad = dir * 3.14159 / 180.0;
+
+    double x = Math.cos(rad);
+    double y = Math.sin(rad);
+
+    Vector val = new Vector(x, y);
+    val.mul(power);
+    return val;
   }
 
   public double angleDiff(double a, double b) { // find difference between angles (can be positive or negative)
@@ -152,6 +162,14 @@ public class SwerveDrivetrain extends SubsystemBase {
 
   private double clamp(double a, double mini, double maxi) {
     return Math.min(Math.max(a, mini), maxi);
+  }
+
+  public double getPower(Vector a) {
+    return MathUtil.clamp(a.length(), -1.0, 1.0);
+  }
+
+  public double getDirection(Vector a) {
+    return vecToAngle(a.x, a.y);
   }
 
   public static void resetGyro() {
@@ -348,6 +366,65 @@ public class SwerveDrivetrain extends SubsystemBase {
           MathUtil.clamp(pid.calculate(motor_angle, modulo(angle, 180.0)), -m_steeringPower, m_steeringPower);
       m_backrightSteerMotor.set(m_steeringPower * powerBR);
     }
+  }
+
+  public void driveVector(Vector Vfl, Vector Vfr, Vector Vbl, Vector Vbr, boolean global) { // The good one
+
+    Vector fl = Vector.normalize(Vfl);
+    Vector fr = Vector.normalize(Vfr);
+    Vector bl = Vector.normalize(Vbl);
+    Vector br = Vector.normalize(Vbr);
+
+    double flAng = getDirection(Vfl);
+    double frAng = getDirection(Vfr);
+    double blAng = getDirection(Vbl);
+    double brAng = getDirection(Vbr);
+
+    double flPow = getPower(Vfl);
+    double frPow = getPower(Vfr);
+    double blPow = getPower(Vbl);
+    double brPow = getPower(Vbr);
+    if(!global) {
+      setAngle(0, flAng);
+      setAngle(1, frAng);
+      setAngle(2, blAng);
+      setAngle(3, brAng);
+    } else {
+      setGlobalAngle(0, flAng);
+      setGlobalAngle(1, frAng);
+      setGlobalAngle(2, blAng);
+      setGlobalAngle(3, brAng);
+    }
+
+
+    driveMotor(0, flPow, flAng, 30.0, global);
+    driveMotor(1, frPow, frAng, 30.0, global);
+    driveMotor(2, blPow, blAng, 30.0, global);
+    driveMotor(3, brPow, brAng, 30.0, global);
+  }
+
+  public void trueDrive(Vector fwd, double turnPower) {
+    Vector flTurn = angleToVec(modulo(315.0 - getHeading(), 360), 1.0);
+    Vector frTurn = angleToVec(modulo(225.0 - getHeading(), 360), 1.0);
+    Vector blTurn = angleToVec(modulo(45.0 - getHeading(), 360), 1.0);
+    Vector brTurn = angleToVec(modulo(135.0 - getHeading(), 360), 1.0);
+
+    flTurn.mul(turnPower);
+    frTurn.mul(turnPower);
+    blTurn.mul(turnPower);
+    brTurn.mul(turnPower);
+
+    Vector fl = fwd.clone();
+    Vector fr = fwd.clone();
+    Vector bl = fwd.clone();
+    Vector br = fwd.clone();
+
+    fl.add(flTurn);
+    fr.add(frTurn);
+    bl.add(blTurn);
+    br.add(brTurn);
+
+    driveVector(fl, fr, bl, br, true);
   }
 
 

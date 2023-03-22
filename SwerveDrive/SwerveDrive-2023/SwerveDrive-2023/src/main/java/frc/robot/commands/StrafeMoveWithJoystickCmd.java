@@ -5,8 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Vector;
 import frc.robot.subsystems.SwerveDrivetrain;
 
 public class StrafeMoveWithJoystickCmd extends CommandBase {
@@ -34,23 +36,33 @@ public class StrafeMoveWithJoystickCmd extends CommandBase {
     double rightY = m_controller.getRawAxis(5);
     double fwdPower = Math.sqrt(rightX * rightX + rightY * rightY);
 
-    double power = 0.0;
-
-    // Get facing direction
+    Vector stuff = new Vector(rightX, rightY);
+    m_swerveDrivetrainSub.trueDrive(stuff, turnPower);
     if(m_controller.getSquareButton()) {
-      if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
-        power = m_controller.getRawAxis(Constants.R2Axis);
-      } else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
-        power = -m_controller.getRawAxis(Constants.L2Axis);
-      } else {
-        power = 0.0;
-      }
-      m_swerveDrivetrainSub.circularDrive(power);
-    } else if(m_controller.getCrossButton()) {
-      m_swerveDrivetrainSub.brakes();//setSteeringAngle(0.0);
-    } else {
-      m_swerveDrivetrainSub.arcadeSwerve(fwdPower, turnPower, m_swerveDrivetrainSub.vecToAngle(rightX, rightY));
+      m_swerveDrivetrainSub.setSteeringAngle(0.0);
+    } else if(m_controller.getCircleButton()) {
+      m_swerveDrivetrainSub.resetGyro();
     }
+
+    /*
+     * double power = 0.0;
+     * 
+     * // Get facing direction
+     * if(m_controller.getSquareButton()) {
+     * if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
+     * power = m_controller.getRawAxis(Constants.R2Axis);
+     * } else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
+     * power = -m_controller.getRawAxis(Constants.L2Axis);
+     * } else {
+     * power = 0.0;
+     * }
+     * m_swerveDrivetrainSub.circularDrive(power);
+     * } else if(m_controller.getCrossButton()) {
+     * m_swerveDrivetrainSub.brakes();//setSteeringAngle(0.0);
+     * } else {
+     * m_swerveDrivetrainSub.arcadeSwerve(fwdPower, turnPower, m_swerveDrivetrainSub.vecToAngle(rightX, rightY));
+     * }
+     */
 
   }
 
