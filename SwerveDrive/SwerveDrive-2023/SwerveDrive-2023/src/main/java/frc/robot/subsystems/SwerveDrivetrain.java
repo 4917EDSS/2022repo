@@ -2,6 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
+/*
+ * For basic implementation
+ * 
+ * Use trueDrive(fwdPower, turnPower) to drive field oriented
+ * 
+ * 
+ */
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -33,15 +42,15 @@ public class SwerveDrivetrain extends SubsystemBase {
   private double kD = 1.0;
   private double m_steeringPower = 0.5;
 
-  private static double fl_dir = 1.0;
-  private static double fr_dir = 1.0;
-  private static double bl_dir = 1.0;
-  private static double br_dir = -1.0;
+  private double fl_dir = 1.0;
+  private double fr_dir = 1.0;
+  private double bl_dir = 1.0;
+  private double br_dir = -1.0;
 
-  private static double fl_encoderOffset = 49.21;//55.54;
-  private static double fr_encoderOffset = 313.5;//151.54;
-  private static double bl_encoderOffset = 5.27;//16.35;
-  private static double br_encoderOffset = 164.35;//146.78;
+  private double fl_encoderOffset = 49.21;//55.54;
+  private double fr_encoderOffset = 313.5;//151.54;
+  private double bl_encoderOffset = 5.27;//16.35;
+  private double br_encoderOffset = 164.35;//146.78;
 
   //private final CANCoderConfiguration m_CANConfig; // Configuration settings for encoders
 
@@ -52,7 +61,6 @@ public class SwerveDrivetrain extends SubsystemBase {
   private final CANCoder m_encoderBackLeft = new CANCoder(Constants.CanIds.kEncoderBL);
 
   private final CANCoder m_encoderBackRight = new CANCoder(Constants.CanIds.kEncoderBR);
-
 
   // Motors
 
@@ -102,23 +110,30 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Robot Gyro: ", getHeading());
 
-    kP = SmartDashboard.getNumber("kP", 0.01);
-    kI = SmartDashboard.getNumber("kI", 0.0);
-    kD = SmartDashboard.getNumber("kD", 0.0);
+    /*
+     * kP = SmartDashboard.getNumber("kP", 0.01);
+     * kI = SmartDashboard.getNumber("kI", 0.0);
+     * kD = SmartDashboard.getNumber("kD", 0.0);
+     */
 
     SmartDashboard.putNumber("kP", kP);
     SmartDashboard.putNumber("kI", kI);
     SmartDashboard.putNumber("kD", kD);
 
-    //fl_encoderOffset = SmartDashboard.getNumber("FL Offset Set", fl_encoderOffset);
-    //fr_encoderOffset = SmartDashboard.getNumber("FR Offset Set", fr_encoderOffset);
-    //bl_encoderOffset = SmartDashboard.getNumber("BL Offset Set", bl_encoderOffset);
-    //br_encoderOffset = SmartDashboard.getNumber("BR Offset Set", br_encoderOffset);
+    fl_encoderOffset = SmartDashboard.getNumber("[Set] FL Offset", fl_encoderOffset);
+    fr_encoderOffset = SmartDashboard.getNumber("[Set] FR Offset", fr_encoderOffset);
+    bl_encoderOffset = SmartDashboard.getNumber("[Set] BL Offset", bl_encoderOffset);
+    br_encoderOffset = SmartDashboard.getNumber("[Set] BR Offset", br_encoderOffset);
 
     SmartDashboard.putNumber("FL Offset", fl_encoderOffset);
     SmartDashboard.putNumber("FR Offset", fr_encoderOffset);
     SmartDashboard.putNumber("BL Offset", bl_encoderOffset);
     SmartDashboard.putNumber("BR Offset", br_encoderOffset);
+
+    fl_dir = (SmartDashboard.getBoolean("Invert FL", (fl_dir == -1.0))) ? -1.0 : 1.0;
+    fr_dir = (SmartDashboard.getBoolean("Invert FR", (fr_dir == -1.0))) ? -1.0 : 1.0;
+    bl_dir = (SmartDashboard.getBoolean("Invert BL", (bl_dir == -1.0))) ? -1.0 : 1.0;
+    br_dir = (SmartDashboard.getBoolean("Invert BR", (br_dir == -1.0))) ? -1.0 : 1.0;
 
     /*
      * SmartDashboard.putBoolean("FL In front", inFront(0));
@@ -139,7 +154,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     br_encoderOffset = m_encoderBackRight.getAbsolutePosition();
 
   }
-  // Steering functions
+  // *** Conversion functions ***
 
   public double vecToAngle(double x, double y) { // Convert 2d vectors to angles in degrees
     return Math.atan2(y, x) * 180.0f / 3.14159;
@@ -180,6 +195,8 @@ public class SwerveDrivetrain extends SubsystemBase {
     return x - Math.floor(x / b) * b;
   }
 
+  // *** Get functions ***
+
   public static double getHeading() {
     double angle = modulo(m_gyro.getAngle(), 360.0);
     if(angle >= 0) {
@@ -188,7 +205,6 @@ public class SwerveDrivetrain extends SubsystemBase {
       return (360.0 - angle);
     }
   }
-
 
   public double getGlobalSteeringAngle(int motor) {
     double angl = 0.0;
@@ -204,118 +220,38 @@ public class SwerveDrivetrain extends SubsystemBase {
     return modulo(angl, 360.0);
   }
 
-  public boolean inFront(int motor) { // Is the motor at the front of the robot
-    boolean inFron = false;
-    switch(motor) {
-      case 0:
-        if((getHeading() - 180) >= -45.0 && (getHeading() - 180) < 135.0) {
-          inFron = true;
-        } else {
-          inFron = false;
-        }
-        break;
+  private boolean isOriented(int motor, double targetAngle, double range) { // FL, FR, BL, BR
+    boolean oriented = false;
 
-      case 1:
-        if((getHeading() - 180) >= -135.0 && (getHeading() - 180) < 45.0) {
-          inFron = true;
-        } else {
-          inFron = false;
-        }
-        break;
-      case 2:
-        if((getHeading() - 180) >= -135.0 && (getHeading() - 180) < 45.0) {
-          inFron = false;
-        } else {
-          inFron = true;
-        }
-        break;
-      case 3:
-        if((getHeading() - 180) >= -45.0 && (getHeading() - 180) < 135.0) {
-          inFron = false;
-        } else {
-          inFron = true;
-        }
-        break;
+    if(motor == 0) {
+      if(Math.abs(
+          angleDiff(m_encoderFrontLeft.getAbsolutePosition() - fl_encoderOffset + 180.0, targetAngle + 180.0)) < range)
+        oriented = true;
+    } else if(motor == 1) {
+      if(Math.abs(
+          angleDiff(m_encoderFrontRight.getAbsolutePosition() - fr_encoderOffset + 180.0, targetAngle + 180.0)) < range) // -180 - 180 to 0 - 360 range
+        oriented = true;
+    } else if(motor == 2) {
+      if(Math.abs(
+          angleDiff(m_encoderBackLeft.getAbsolutePosition() - bl_encoderOffset + 180.0, targetAngle + 180.0)) < range)
+        oriented = true;
+    } else if(motor == 3) {
+      if(Math.abs(
+          angleDiff(m_encoderBackRight.getAbsolutePosition() - br_encoderOffset + 180.0, targetAngle + 180.0)) < range)
+        oriented = true;
     }
-    return inFron;
+    return oriented;
   }
 
-  public boolean inFront(int motor, double offset) { // Is the motor at the front of the robot
-    boolean inFron = false;
-    double gyroAngle = modulo(getHeading() - offset, 360.0) - 180.0;
-    switch(motor) {
-      case 0:
-        if(gyroAngle > -45.0 && gyroAngle < 135.0) {
-          inFron = true;
-        } else {
-          inFron = false;
-        }
-        SmartDashboard.putBoolean("FL In front", inFron);
-        break;
-
-      case 1:
-        if(gyroAngle > -135.0 && gyroAngle < 45.0) {
-          inFron = true;
-        } else {
-          inFron = false;
-        }
-        SmartDashboard.putBoolean("FR In front", inFron);
-        break;
-      case 2:
-        if(gyroAngle > -135.0 && gyroAngle < 45.0) {
-          inFron = false;
-        } else {
-          inFron = true;
-        }
-        SmartDashboard.putBoolean("BL In front", inFron);
-        break;
-      case 3:
-        if(gyroAngle > -45.0 && gyroAngle < 135.0) {
-          inFron = false;
-        } else {
-          inFron = true;
-        }
-        SmartDashboard.putBoolean("BR In front", inFron);
-        break;
-    }
-    return inFron;
+  private boolean isGlobalOriented(int motor, double targetAngle, double range) { // FL, FR, BL, BR
+    boolean oriented = false;
+    double motor_angle = getGlobalSteeringAngle(motor);
+    if(Math.abs(angleDiff(motor_angle + 180.0, targetAngle + 180.0)) < range)
+      oriented = true;
+    return oriented;
   }
 
-  public boolean inFrontBad(int motor) { // Is the motor at the front of the robot
-    boolean inFront = false;
-    switch(motor) {
-      case 0:
-        if(angleDiff(getHeading(), 135.0) >= 90) {
-          inFront = true;
-        } else {
-          inFront = false;
-        }
-        break;
-
-      case 1:
-        if(angleDiff(getHeading(), 225.0) > 90) {
-          inFront = true;
-        } else {
-          inFront = false;
-        }
-        break;
-      case 2:
-        if(angleDiff(getHeading(), 45.0) > 90) {
-          inFront = true;
-        } else {
-          inFront = false;
-        }
-        break;
-      case 3:
-        if(angleDiff(getHeading(), 315.0) >= 90) {
-          inFront = true;
-        } else {
-          inFront = false;
-        }
-        break;
-    }
-    return inFront;
-  }
+  // *** Set functions ***
 
   private void setAngle(int motor, double angle) { // 0 - FL, 1 - FR, 2 - BL, 3 - BR
     pid.enableContinuousInput(0, 180);
@@ -367,6 +303,66 @@ public class SwerveDrivetrain extends SubsystemBase {
       m_backrightSteerMotor.set(m_steeringPower * powerBR);
     }
   }
+
+  public void setSteeringAngle(double angle) {
+    setAngle(0, angle); // Front Left
+    setAngle(1, angle); // Front Right
+    setAngle(2, angle); // Back Left
+    setAngle(3, angle); // Back Right
+  }
+
+  public void setGlobalSteeringAngle(double angle) {
+    setGlobalAngle(0, angle);
+    setGlobalAngle(1, angle);
+    setGlobalAngle(2, angle);
+    setGlobalAngle(3, angle);
+  }
+
+  public void driveMotor(int motor, double power, double tarAngle, double range, boolean global) {
+    switch(motor) {
+      case 0:
+        if(global) {
+          m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isGlobalOriented(0, tarAngle, range) ? fl_dir : -fl_dir));
+        } else {
+          m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isOriented(0, tarAngle, range) ? fl_dir : -fl_dir));
+        }
+        break;
+
+      case 1:
+        if(global) {
+          m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isGlobalOriented(1, tarAngle, range) ? fr_dir : -fr_dir));
+        } else {
+          m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isOriented(1, tarAngle, range) ? fr_dir : -fr_dir));
+        }
+        break;
+
+      case 2:
+        if(global) {
+          m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isGlobalOriented(2, tarAngle, range) ? bl_dir : -bl_dir));
+        } else {
+          m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isOriented(2, tarAngle, range) ? bl_dir : -bl_dir));
+        }
+        break;
+
+      case 3:
+        if(global) {
+          m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isGlobalOriented(3, tarAngle, range) ? br_dir : -br_dir));
+        } else {
+          m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
+              m_steeringPower * power * (isOriented(3, tarAngle, range) ? br_dir : -br_dir));
+        }
+        break;
+    }
+  }
+
+  // *** Drive functions ***
 
   public void driveVector(Vector Vfl, Vector Vfr, Vector Vbl, Vector Vbr, boolean global) { // The good one
 
@@ -427,52 +423,6 @@ public class SwerveDrivetrain extends SubsystemBase {
     driveVector(fl, fr, bl, br, true);
   }
 
-
-  public void setSteeringAngle(double angle) {
-    setAngle(0, angle); // Front Left
-    setAngle(1, angle); // Front Right
-    setAngle(2, angle); // Back Left
-    setAngle(3, angle); // Back Right
-  }
-
-  public void setGlobalSteeringAngle(double angle) {
-    setGlobalAngle(0, angle);
-    setGlobalAngle(1, angle);
-    setGlobalAngle(2, angle);
-    setGlobalAngle(3, angle);
-  }
-
-  private boolean isOriented(int motor, double targetAngle, double range) { // FL, FR, BL, BR
-    boolean oriented = false;
-
-    if(motor == 0) {
-      if(Math.abs(
-          angleDiff(m_encoderFrontLeft.getAbsolutePosition() - fl_encoderOffset + 180.0, targetAngle + 180.0)) < range)
-        oriented = true;
-    } else if(motor == 1) {
-      if(Math.abs(
-          angleDiff(m_encoderFrontRight.getAbsolutePosition() - fr_encoderOffset + 180.0, targetAngle + 180.0)) < range) // -180 - 180 to 0 - 360 range
-        oriented = true;
-    } else if(motor == 2) {
-      if(Math.abs(
-          angleDiff(m_encoderBackLeft.getAbsolutePosition() - bl_encoderOffset + 180.0, targetAngle + 180.0)) < range)
-        oriented = true;
-    } else if(motor == 3) {
-      if(Math.abs(
-          angleDiff(m_encoderBackRight.getAbsolutePosition() - br_encoderOffset + 180.0, targetAngle + 180.0)) < range)
-        oriented = true;
-    }
-    return oriented;
-  }
-
-  private boolean isGlobalOriented(int motor, double targetAngle, double range) { // FL, FR, BL, BR
-    boolean oriented = false;
-    double motor_angle = getGlobalSteeringAngle(motor);
-    if(Math.abs(angleDiff(motor_angle + 180.0, targetAngle + 180.0)) < range)
-      oriented = true;
-    return oriented;
-  }
-
   public void driveMotors(double power, double tarAngle, double range, boolean global) {
     if(global) {
       m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
@@ -492,50 +442,6 @@ public class SwerveDrivetrain extends SubsystemBase {
           m_steeringPower * power * (isOriented(2, tarAngle, 30.0) ? bl_dir : -bl_dir));
       m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
           m_steeringPower * power * (isOriented(3, tarAngle, 10.0) ? br_dir : -br_dir));
-    }
-  }
-
-  public void driveMotor(int motor, double power, double tarAngle, double range, boolean global) {
-    switch(motor) {
-      case 0:
-        if(global) {
-          m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isGlobalOriented(0, tarAngle, range) ? fl_dir : -fl_dir));
-        } else {
-          m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isOriented(0, tarAngle, range) ? fl_dir : -fl_dir));
-        }
-        break;
-
-      case 1:
-        if(global) {
-          m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isGlobalOriented(1, tarAngle, range) ? fr_dir : -fr_dir));
-        } else {
-          m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isOriented(1, tarAngle, range) ? fr_dir : -fr_dir));
-        }
-        break;
-
-      case 2:
-        if(global) {
-          m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isGlobalOriented(2, tarAngle, range) ? bl_dir : -bl_dir));
-        } else {
-          m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isOriented(2, tarAngle, range) ? bl_dir : -bl_dir));
-        }
-        break;
-
-      case 3:
-        if(global) {
-          m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isGlobalOriented(3, tarAngle, range) ? br_dir : -br_dir));
-        } else {
-          m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-              m_steeringPower * power * (isOriented(3, tarAngle, range) ? br_dir : -br_dir));
-        }
-        break;
     }
   }
 
@@ -563,98 +469,6 @@ public class SwerveDrivetrain extends SubsystemBase {
     setAngle(1, 315);
   }
 
-  public void arcadeSwerve(double fwdPower, double turnPower, double dir) {
-    double turnDirFL = turnPower * 45.0 * (inFront(0, dir) ? 1.0 : -1.0);
-    double turnDirFR = turnPower * 45.0 * (inFront(1, dir) ? 1.0 : -1.0);
-    double turnDirBL = turnPower * 45.0 * (inFront(2, dir) ? 1.0 : -1.0);
-    double turnDirBR = turnPower * 45.0 * (inFront(3, dir) ? 1.0 : -1.0);
-    setGlobalAngle(0, dir + turnDirFL);
-    setGlobalAngle(1, dir + turnDirFR);
-    setGlobalAngle(2, dir + turnDirBL);
-    setGlobalAngle(3, dir + turnDirBR);
-
-    driveMotor(0, fwdPower, dir + turnDirFL, 30.0, true);
-    driveMotor(1, fwdPower, dir + turnDirFR, 30.0, true);
-    driveMotor(2, fwdPower, dir + turnDirBL, 30.0, true);
-    driveMotor(3, fwdPower, dir + turnDirBR, 30.0, true);
-    /*
-     * m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-     * m_steeringPower * fwdPower * fl_dir);
-     * m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-     * m_steeringPower * fwdPower * fr_dir);
-     * m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-     * m_steeringPower * fwdPower * bl_dir);
-     * m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-     * m_steeringPower * fwdPower * br_dir);
-     */
-  }
-
-  public void arcadeSwerveDemo(double fwdPower, double turnPower) {
-    double turnDirFL = turnPower * 45.0 * 1;
-    double turnDirFR = turnPower * 45.0 * 1;
-    double turnDirBL = turnPower * 45.0 * -1;
-    double turnDirBR = turnPower * 45.0 * -1;
-
-    setAngle(0, turnDirFL);
-    setAngle(1, turnDirFR);
-    setAngle(2, turnDirBL);
-    setAngle(3, turnDirBR);
-
-    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * fwdPower * fl_dir);
-    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * fwdPower * fr_dir);
-    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * fwdPower * -bl_dir);
-    m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * fwdPower * -br_dir);
-  }
-
-  public void circularStrafe(double power, double angle) { // None of this code works
-    double vxFL = clamp(Math.sin(135 * 3.1415 / 180), -1.0, 1.0);
-    double vxFR = clamp(Math.sin(45 * 3.1415 / 180), -1.0, 1.0);
-    double vxBL = clamp(Math.sin(225 * 3.1415 / 180), -1.0, 1.0);
-    double vxBR = clamp(Math.sin(315 * 3.1415 / 180), -1.0, 1.0);
-
-    double vyFL = clamp(Math.cos(135 * 3.1415 / 180), -1.0, 1.0);
-    double vyFR = clamp(Math.cos(45 * 3.1415 / 180), -1.0, 1.0);
-    double vyBL = clamp(Math.cos(225 * 3.1415 / 180), -1.0, 1.0);
-    double vyBR = clamp(Math.cos(315 * 3.1415 / 180), -1.0, 1.0);
-
-    double gxFL = clamp(Math.sin((getGlobalSteeringAngle(0) + angle) * 3.1415 / 180), -1.0, 1.0);
-    double gxFR = clamp(Math.sin((getGlobalSteeringAngle(1) + angle) * 3.1415 / 180), -1.0, 1.0);
-    double gxBL = clamp(Math.sin((getGlobalSteeringAngle(2) + angle) * 3.1415 / 180), -1.0, 1.0);
-    double gxBR = clamp(Math.sin((getGlobalSteeringAngle(3) + angle) * 3.1415 / 180), -1.0, 1.0);
-
-    double gyFL = clamp(Math.cos((getGlobalSteeringAngle(0) + angle) * 3.1415 / 180), -1.0, 1.0);
-    double gyFR = clamp(Math.cos((getGlobalSteeringAngle(1) + angle) * 3.1415 / 180), -1.0, 1.0);
-    double gyBL = clamp(Math.cos((getGlobalSteeringAngle(2) + angle) * 3.1415 / 180), -1.0, 1.0);
-    double gyBR = clamp(Math.cos((getGlobalSteeringAngle(3) + angle) * 3.1415 / 180), -1.0, 1.0);
-
-    double jx = clamp(Math.sin((angle + 180) * 3.1415 / 180), -1.0, 1.0); //Joystick
-    double jy = clamp(Math.sin((angle + 180) * 3.1415 / 180), -1.0, 1.0);
-
-
-    double frontleft = vecToAngle(vxFL + jx, vyFL + jy);
-    double frontright = vecToAngle(vxFR + jx, vyFR + jy);
-    double backleft = vecToAngle(vxBL + jx, vyBL + jy);
-    double backright = vecToAngle(vxBR + jx, vyBR + jy);
-
-    setGlobalAngle(0, frontleft);
-    setGlobalAngle(1, frontright);
-    setGlobalAngle(2, backleft);
-    setGlobalAngle(3, backright);
-
-    m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * power * (isGlobalOriented(0, frontleft, 30.0) ? 1.0 : -1.0));
-    m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * power * (isGlobalOriented(1, frontright, 30.0) ? 1.0 : -1.0)); // Inverted
-    m_backleftDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * power * (isGlobalOriented(2, backleft, 30.0) ? 1.0 : -1.0));
-    m_backrightDriveMotor.set(TalonFXControlMode.PercentOutput,
-        m_steeringPower * power * (isGlobalOriented(3, backright, 30.0) ? -1.0 : 1.0));
-  }
-
   public void brakeDrive() { // Set all drive motors to 0 power
     m_frontleftDriveMotor.set(TalonFXControlMode.PercentOutput, 0.0);
     m_frontrightDriveMotor.set(TalonFXControlMode.PercentOutput, 0.0);
@@ -668,7 +482,6 @@ public class SwerveDrivetrain extends SubsystemBase {
     m_backleftSteerMotor.set(0.0);
     m_backrightSteerMotor.set(0.0);
   }
-
 
   public static void sans() {
     if(!orcs.isPlaying()) {

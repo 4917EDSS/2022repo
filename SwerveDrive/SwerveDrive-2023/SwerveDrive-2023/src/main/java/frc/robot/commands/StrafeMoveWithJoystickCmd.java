@@ -43,27 +43,6 @@ public class StrafeMoveWithJoystickCmd extends CommandBase {
     } else if(m_controller.getCircleButton()) {
       m_swerveDrivetrainSub.resetGyro();
     }
-
-    /*
-     * double power = 0.0;
-     * 
-     * // Get facing direction
-     * if(m_controller.getSquareButton()) {
-     * if(m_controller.getRawAxis(Constants.R2Axis) > 0.1) { // Forwards
-     * power = m_controller.getRawAxis(Constants.R2Axis);
-     * } else if(m_controller.getRawAxis(Constants.L2Axis) > 0.1) { //Backwards
-     * power = -m_controller.getRawAxis(Constants.L2Axis);
-     * } else {
-     * power = 0.0;
-     * }
-     * m_swerveDrivetrainSub.circularDrive(power);
-     * } else if(m_controller.getCrossButton()) {
-     * m_swerveDrivetrainSub.brakes();//setSteeringAngle(0.0);
-     * } else {
-     * m_swerveDrivetrainSub.arcadeSwerve(fwdPower, turnPower, m_swerveDrivetrainSub.vecToAngle(rightX, rightY));
-     * }
-     */
-
   }
 
   // Called once the command ends or is interrupted.
